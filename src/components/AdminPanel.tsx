@@ -315,7 +315,7 @@ export const AdminPanel = () => {
       });
 
       axios
-        .post("http://185.70.185.67:5000/admin/image", object)
+        .post("http://localhost:3000/admin/image", object)
         .then((response) => {
           console.log(response.data);
         })

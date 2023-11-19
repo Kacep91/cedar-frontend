@@ -13,9 +13,10 @@ export const MainPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://185.70.185.67:5000/goods");
+      const res = await axios.get("http://localhost:3000/goods");
 
       if (res.data) {
+        console.log(res.data)
         setGoods(res.data);
       }
     };
