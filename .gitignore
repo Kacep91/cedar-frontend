@@ -1,0 +1,10 @@
+node_modules
+public
+dist
+dockercompose
+docker-compose.yml
+.DS_Store
+.vscode
+/.vs
+/.idea
+/.eslintcache
