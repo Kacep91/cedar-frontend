@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npm run dev",
-    "build": "webpack --mode localhost",
+    "build": "webpack --mode 185.70.185.67",
     "build:dev": "webpack --mode production --env settings=production",
     "build:prod": "webpack --mode production --env settings=production",
     "stats": "webpack --mode production --profile --json > stats.json",
