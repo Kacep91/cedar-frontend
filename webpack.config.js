@@ -43,7 +43,7 @@ module.exports = async (env = {}, args) => {
       },
       proxy: {
         "/api": {
-          target: "http://http://185.70.185.67",
+          target: "http://185.70.185.67",
           logLevel: "debug",
           pathRewrite: { "^/api": "" },
           changeOrigin: true,

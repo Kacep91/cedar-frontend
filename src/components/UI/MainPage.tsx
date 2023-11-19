@@ -13,7 +13,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://http://185.70.185.67/goods");
+      const res = await axios.get("http://185.70.185.67/goods");
 
       if (res.data) {
         setGoods(res.data);
