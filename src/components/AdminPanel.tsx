@@ -262,68 +262,98 @@ export const AdminPanel = () => {
     });
   }
 
-  async function blobToBuffer(blob: Blob): Promise<{ type: string; data: number[]; }> {
-    const arrayBuffer = await blob.arrayBuffer();
-    const data = Array.from(new Uint8Array(arrayBuffer));
-    return { type: "Buffer", data: data };
-  }
+  // async function blobToBuffer(blob: Blob): Promise<{ type: string; data: number[]; }> {
+  //   const arrayBuffer = await blob.arrayBuffer();
+  //   const data = Array.from(new Uint8Array(arrayBuffer));
+  //   return { type: "Buffer", data: data };
+  // }
 
-  function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  }
-  console.log(dayjs(randomDate(new Date(2023, 0, 1), new Date())).format('YYYY-MM-DD'))
+  // function randomDate(start, end) {
+  //   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  // }
 
   const handleSubmit = () => {
 
-    const bublik = mockCatalogue.map(item => {
-      return {
-        name: item.name,
-        volume: item.volume,
-        price: item.price || 0,
-        oldPrice: 0,
-        isSale: Boolean(random(0, 1)),
-        isHit: Boolean(random(0, 1)),
-        isNew: Boolean(random(0, 1)),
-        reviews: random(1, 500),
-        image: null,
-        description: JSON.stringify({ ...item }),
-        creationDate: dayjs(randomDate(new Date(2023, 0, 1), new Date())).format('YYYY-MM-DD')
-      }
-    })
+    axios
+      .get<File>(files[0]?.objectURL, { responseType: "blob" })
+      .then(async (res) => {
+        const result = new FormData();
+        const textedBlob = await blobToBase64(res.data);
 
-    return bublik.map(async (item, i) => {
-      const res = await axios.get<File>(files[i]?.objectURL, { responseType: "blob" });
-      const result = new FormData();
-      const textedBlob = await blobToBase64(res.data);
+        result.append("id", uuidv4());
+        result.append("name", formData.name);
+        result.append("weight", formData.weight);
+        result.append("price", formData.price);
+        result.append("oldPrice", formData.oldPrice);
+        result.append("isSale", formData.isSale);
+        result.append("isHit", formData.isHit);
+        result.append("isNew", formData.isNew);
+        result.append("reviews", formData.reviews);
+        result.append("image", textedBlob);
 
-      result.append("id", files[i]?.name?.split('.')?.[0]);
-      result.append("name", item.name);
-      result.append("volume", item.volume);
-      result.append("price", item.price);
-      result.append("oldPrice", item.oldPrice);
-      result.append("isSale", item.isSale);
-      result.append("isHit", item.isHit);
-      result.append("isNew", item.isNew);
-      result.append("reviews", item.reviews);
-      result.append("description", item.description);
-      result.append("creationDate", item.creationDate);
-      result.append("image", textedBlob);
-
-      let object = {};
-      result.forEach((value, key) => {
-        object[key] = value;
-      });
-
-      axios
-        .post("http://185.70.185.67:3000/admin/image", object)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
+        let object = {};
+        result.forEach((value, key) => {
+          object[key] = value;
         });
-    })
 
+        axios
+          .post("http://185.70.185.67:3000/goods", object)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      })
+
+    // const bublik = mockCatalogue.map(item => {
+    //   return {
+    //     name: item.name,
+    //     volume: item.volume,
+    //     price: item.price || 0,
+    //     oldPrice: 0,
+    //     isSale: Boolean(random(0, 1)),
+    //     isHit: Boolean(random(0, 1)),
+    //     isNew: Boolean(random(0, 1)),
+    //     reviews: random(1, 500),
+    //     image: null,
+    //     description: JSON.stringify({ ...item }),
+    //     creationDate: dayjs(randomDate(new Date(2023, 0, 1), new Date())).format('YYYY-MM-DD')
+    //   }
+    // })
+
+    // return bublik.map(async (item, i) => {
+    //   const res = await axios.get<File>(files[i]?.objectURL, { responseType: "blob" });
+    //   const result = new FormData();
+    //   const textedBlob = await blobToBase64(res.data);
+
+    //   result.append("id", files[i]?.name?.split('.')?.[0]);
+    //   result.append("name", item.name);
+    //   result.append("volume", item.volume);
+    //   result.append("price", item.price);
+    //   result.append("oldPrice", item.oldPrice);
+    //   result.append("isSale", item.isSale);
+    //   result.append("isHit", item.isHit);
+    //   result.append("isNew", item.isNew);
+    //   result.append("reviews", item.reviews);
+    //   result.append("description", item.description);
+    //   result.append("creationDate", item.creationDate);
+    //   result.append("image", textedBlob);
+
+    //   let object = {};
+    //   result.forEach((value, key) => {
+    //     object[key] = value;
+    //   });
+
+    //   axios
+    //     .post("http://localhost:3000/goods", object)
+    //     .then((response) => {
+    //       console.log(response.data);
+    //     })
+    //     .catch((error) => {
+    //       console.error(error);
+    //     });
+    // })
   };
 
   return (
