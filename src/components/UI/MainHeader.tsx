@@ -70,15 +70,14 @@ const togglerTemplate = (node: any, options: any) => {
   );
 };
 
-const MainHeader = ({ isCart }: { isCart: boolean; }) => {
-
+const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const [isPartnerModalVisible, setPartnerModalVisible] = useState(false);
   const [isPresentationModalVisible, setPresentationModalVisible] =
     useState(false);
 
   const list = useSelector(CartSelectors.list);
 
-  const listLength = list.length
+  const listLength = list.length;
 
   const nodes = [
     {
@@ -202,135 +201,233 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
     }
   }, [isMobileMenuOpened]);
 
-  return <>
-    {isTablet && (
-      <img
-        onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}
-        src={isMobileMenuOpened ? cross : menu}
-        width="30"
-        style={{ zIndex: 999, position: "fixed", top: 30, left: 30 }}
-        alt=""
-      />
-    )}
-    <Header isMobileMenuOpened={isMobileMenuOpened}>
-      {isTablet ? (
-        <>
-          {isMobileMenuOpened ? (
-            <Tree
-              value={nodes}
-              nodeTemplate={nodeTemplate}
-              togglerTemplate={togglerTemplate}
-              selectionMode="single"
-              onSelect={(
-                e: TreeEventNodeEvent & {
-                  node: TreeNode & { onClick: () => void };
-                },
-              ) => e.node?.onClick && e.node.onClick()}
-              style={{
-                width: "100vw",
-                height: "100vh",
-                paddingTop: "50px",
-                border: "none",
-                position: 'fixed'
-              }}
-            />
-          ) : (
-            <></>
-          )}
-        </>
-      ) : (
-        <>
-          {menuButtons.map((item) => {
-            return (
-              <MenuButtonWrapper key={item.text}>
-                <MenuButton onClick={item.onClick || undefined}>
-                  {item.text}{" "}
-                  {item.links && item.links.length > 0 && (
-                    <img src={arrowDown} alt="" />
-                  )}
-                </MenuButton>
-                {item.links && item.links.length > 0 && (
-                  <MenuDropdownContent>
-                    {item.links.map((item) => (
-                      <a key={item.url} href={`${item.url}`}>
-                        {item.text}
-                      </a>
-                    ))}
-                  </MenuDropdownContent>
-                )}
-              </MenuButtonWrapper>
-            );
-          })}
-          <MenuButtonWrapper>
-            <MenuButton>
-              <a
-                style={{ color: "#666", textDecoration: "none" }}
-                href="tel:+79230012345"
-              >
-                <img src={phone} alt="" />
-                +7-923-001-23-45
-              </a>{" "}
-              <img src={arrowDown} alt="" />
-            </MenuButton>
-            <MenuDropdownContent style={{ minWidth: "200px" }}>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <a href="mailto:123@mail.ru">123@mail.ru</a>
-                <a style={{ textDecoration: "none" }} href="tel:+79230012345">
-                  <img src={phone} width="16" alt="" />
-                  +7-923-001-23-45
-                </a>
-              </div>
-            </MenuDropdownContent>
-          </MenuButtonWrapper>
-        </>
+  return (
+    <>
+      {isTablet && (
+        <img
+          onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}
+          src={isMobileMenuOpened ? cross : menu}
+          width="30"
+          style={{ zIndex: 999, position: "fixed", top: 30, left: 30 }}
+          alt=""
+        />
       )}
-    </Header>
-    <NavigationHeader>
-      {isTablet ? (
-        <>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              flexDirection: 'column',
-              alignItems: "center",
-              gap: "10px",
-              width: '100%'
-            }}
-          >
-            <img
-              src={logo}
-              width="160"
+      <Header isMobileMenuOpened={isMobileMenuOpened}>
+        {isTablet ? (
+          <>
+            {isMobileMenuOpened ? (
+              <Tree
+                value={nodes}
+                nodeTemplate={nodeTemplate}
+                togglerTemplate={togglerTemplate}
+                selectionMode="single"
+                onSelect={(
+                  e: TreeEventNodeEvent & {
+                    node: TreeNode & { onClick: () => void };
+                  },
+                ) => e.node?.onClick && e.node.onClick()}
+                style={{
+                  width: "100vw",
+                  height: "100vh",
+                  paddingTop: "50px",
+                  border: "none",
+                  position: "fixed",
+                }}
+              />
+            ) : (
+              <></>
+            )}
+          </>
+        ) : (
+          <>
+            {menuButtons.map((item) => {
+              return (
+                <MenuButtonWrapper key={item.text}>
+                  <MenuButton onClick={item.onClick || undefined}>
+                    {item.text}{" "}
+                    {item.links && item.links.length > 0 && (
+                      <img src={arrowDown} alt="" />
+                    )}
+                  </MenuButton>
+                  {item.links && item.links.length > 0 && (
+                    <MenuDropdownContent>
+                      {item.links.map((item) => (
+                        <a key={item.url} href={`${item.url}`}>
+                          {item.text}
+                        </a>
+                      ))}
+                    </MenuDropdownContent>
+                  )}
+                </MenuButtonWrapper>
+              );
+            })}
+            <MenuButtonWrapper>
+              <MenuButton>
+                <a
+                  style={{ color: "#666", textDecoration: "none" }}
+                  href="tel:+79230012345"
+                >
+                  <img src={phone} alt="" />
+                  +7-923-001-23-45
+                </a>{" "}
+                <img src={arrowDown} alt="" />
+              </MenuButton>
+              <MenuDropdownContent style={{ minWidth: "200px" }}>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <a href="mailto:123@mail.ru">123@mail.ru</a>
+                  <a style={{ textDecoration: "none" }} href="tel:+79230012345">
+                    <img src={phone} width="16" alt="" />
+                    +7-923-001-23-45
+                  </a>
+                </div>
+              </MenuDropdownContent>
+            </MenuButtonWrapper>
+          </>
+        )}
+      </Header>
+      <NavigationHeader>
+        {isTablet ? (
+          <>
+            <div
               style={{
-                marginLeft: "20px",
-                cursor: 'pointer'
-              }}
-              alt=""
-              onClick={() => navigate("/")}
-            />
-            <span
-              className="p-input-icon-left"
-              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "10px",
                 width: "100%",
               }}
             >
-              <i className="pi pi-search" />
-              <InputText
-                placeholder="Поиск по сайту"
+              <img
+                src={logo}
+                width="160"
                 style={{
-                  borderRadius: "15px",
-                  height: "40px",
+                  marginLeft: "20px",
+                  cursor: "pointer",
+                }}
+                alt=""
+                onClick={() => navigate("/")}
+              />
+              <span
+                className="p-input-icon-left"
+                style={{
                   width: "100%",
                 }}
+              >
+                <i className="pi pi-search" />
+                <InputText
+                  placeholder="Поиск по сайту"
+                  style={{
+                    borderRadius: "15px",
+                    height: "40px",
+                    width: "100%",
+                  }}
+                />
+              </span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "10px",
+                  width: "100%",
+                }}
+              >
+                <Button
+                  icon="pi pi-heart"
+                  rounded
+                  text
+                  raised
+                  severity="success"
+                  aria-label="Favorite"
+                />
+                <Button
+                  icon="pi pi-user"
+                  rounded
+                  text
+                  raised
+                  severity="success"
+                  aria-label="User"
+                />
+                <div style={{ position: "relative" }}>
+                  <Button
+                    icon="pi pi-shopping-cart"
+                    rounded
+                    text
+                    raised
+                    severity="success"
+                    aria-label="Cart"
+                    onClick={() => (listLength ? navigate("/cart") : null)}
+                  />{" "}
+                  {listLength ? (
+                    <Badge
+                      className="small"
+                      size={"normal"}
+                      style={{ position: "absolute", right: "-5px" }}
+                      value={listLength}
+                    ></Badge>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <Button
+                  icon="pi pi-shield"
+                  rounded
+                  text
+                  raised
+                  severity="success"
+                  aria-label="Shield"
+                  onClick={() => navigate("/adminPanel")}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "10px",
+                width: "100%",
+              }}
+            >
+              <img
+                src={logo}
+                width="160"
+                style={{
+                  marginLeft: "20px",
+                  cursor: "pointer",
+                }}
+                alt=""
+                onClick={() => navigate("/")}
               />
-            </span>
-            <div style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "10px",
-              width: '100%'
-            }}>
+              <span
+                className="p-input-icon-left"
+                style={{
+                  width: "100%",
+                }}
+              >
+                <i className="pi pi-search" />
+                <InputText
+                  placeholder="Поиск по сайту"
+                  style={{
+                    borderRadius: "15px",
+                    height: "40px",
+                    width: "100%",
+                  }}
+                />
+              </span>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
               <Button
                 icon="pi pi-heart"
                 rounded
@@ -347,7 +444,7 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
                 severity="success"
                 aria-label="User"
               />
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: "relative" }}>
                 <Button
                   icon="pi pi-shopping-cart"
                   rounded
@@ -355,8 +452,18 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
                   raised
                   severity="success"
                   aria-label="Cart"
-                  onClick={() => navigate("/cart")}
-                /> {listLength ? <Badge className="small" size={'normal'} style={{ position: 'absolute', right: '-5px' }} value={listLength}></Badge> : <></>}
+                  onClick={() => (listLength ? navigate("/cart") : null)}
+                />{" "}
+                {listLength ? (
+                  <Badge
+                    className="small"
+                    size={"normal"}
+                    style={{ position: "absolute", right: "-5px" }}
+                    value={listLength}
+                  ></Badge>
+                ) : (
+                  <></>
+                )}
               </div>
               <Button
                 icon="pi pi-shield"
@@ -368,139 +475,58 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
                 onClick={() => navigate("/adminPanel")}
               />
             </div>
-          </div>
-        </>
-      ) : (
+          </>
+        )}
+      </NavigationHeader>
+      {!isCart && (
         <>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "10px",
-              width: "100%",
-            }}
-          >
-            <img
-              src={logo}
-              width="160"
-              style={{
-                marginLeft: "20px",
-                cursor: 'pointer'
-              }}
-              alt=""
-              onClick={() => navigate("/")}
-            />
-            <span
-              className="p-input-icon-left"
-              style={{
-                width: "100%",
-              }}
-            >
-              <i className="pi pi-search" />
-              <InputText
-                placeholder="Поиск по сайту"
-                style={{
-                  borderRadius: "15px",
-                  height: "40px",
-                  width: "100%",
-                }}
-              />
-            </span>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            <Button
-              icon="pi pi-heart"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="Favorite"
-            />
-            <Button
-              icon="pi pi-user"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="User"
-            />
-            <div style={{ position: 'relative' }}>
-              <Button
-                icon="pi pi-shopping-cart"
-                rounded
-                text
-                raised
-                severity="success"
-                aria-label="Cart"
-                onClick={() => navigate("/cart")}
-              /> {listLength ? <Badge className="small" size={'normal'} style={{ position: 'absolute', right: '-5px' }} value={listLength}></Badge> : <></>}
+          {" "}
+          <MenuHeader>
+            <GoodsButton style={{ fontWeight: "bold" }}>
+              <img src={snowFlake} alt="" />
+              Сладости
+            </GoodsButton>
+            <GoodsButton style={{ fontWeight: "bold" }}>
+              <img src={snowFlake} alt="" />
+              Снеки
+            </GoodsButton>
+            <GoodsButton style={{ fontWeight: "bold" }}>
+              <img src={snowFlake} alt="" />
+              Гранола
+            </GoodsButton>
+            <GoodsButton style={{ fontWeight: "bold" }}>
+              <img src={snowFlake} alt="" />
+              Чай
+            </GoodsButton>
+            <GoodsButton style={{ fontWeight: "bold" }}>
+              <img src={snowFlake} alt="" />
+              Суп
+            </GoodsButton>
+          </MenuHeader>
+          <SmallBackground>
+            <div className="catalog-banner-c1">
+              <div className="catalog-banner-head">
+                <h1>SIBERIA Organic</h1>
+              </div>
+              <div className="catalog-banner-text">
+                Уникальные напитки, сладости и снеки из натуральных сибирских
+                продуктов!{" "}
+              </div>
             </div>
-            <Button
-              icon="pi pi-shield"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="Shield"
-              onClick={() => navigate("/adminPanel")}
-            />
-          </div>
+          </SmallBackground>
         </>
       )}
-    </NavigationHeader >
-    {!isCart && <> <MenuHeader>
-      <GoodsButton style={{ fontWeight: "bold" }}>
-        <img src={snowFlake} alt="" />
-        Сладости
-      </GoodsButton>
-      <GoodsButton style={{ fontWeight: "bold" }}>
-        <img src={snowFlake} alt="" />
-        Снеки
-      </GoodsButton>
-      <GoodsButton style={{ fontWeight: "bold" }}>
-        <img src={snowFlake} alt="" />
-        Гранола
-      </GoodsButton>
-      <GoodsButton style={{ fontWeight: "bold" }}>
-        <img src={snowFlake} alt="" />
-        Чай
-      </GoodsButton>
-      <GoodsButton style={{ fontWeight: "bold" }}>
-        <img src={snowFlake} alt="" />
-        Суп
-      </GoodsButton>
-    </MenuHeader>
-      <SmallBackground>
-        <div className="catalog-banner-c1">
-          <div className="catalog-banner-head">
-            <h1>SIBERIA Organic</h1>
-          </div>
-          <div className="catalog-banner-text">
-            Уникальные напитки, сладости и снеки из натуральных сибирских
-            продуктов!{" "}
-          </div>
-        </div>
-      </SmallBackground></>
-    }
 
+      <PresentationModal
+        isOpen={isPresentationModalVisible}
+        setModalOpen={setPresentationModalVisible}
+      />
+      <PartnerModal
+        isOpen={isPartnerModalVisible}
+        setModalOpen={setPartnerModalVisible}
+      />
+    </>
+  );
+};
 
-    <PresentationModal
-      isOpen={isPresentationModalVisible}
-      setModalOpen={setPresentationModalVisible}
-    />
-    <PartnerModal
-      isOpen={isPartnerModalVisible}
-      setModalOpen={setPartnerModalVisible}
-    />
-  </>
-}
-
-export default MainHeader
+export default MainHeader;

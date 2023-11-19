@@ -278,9 +278,9 @@ button {
 }
 
 @media screen and (max-width: 1024px) {
-.p-dialog .p-dialog-title {
-  min-width: min-content;
-}
+  .p-dialog .p-dialog-title {
+    min-width: min-content;
+  }
 }
 
 .p-dialog .p-dialog-content {

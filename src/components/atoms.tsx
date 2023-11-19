@@ -332,7 +332,7 @@ export const ProductNewPrice = styled.div<{ isOldPrice: boolean }>`
   font-size: 22px;
   font-weight: bold;
 `;
-export const ProductBuyButton = styled.div<{ isDelete?: boolean; }>`
+export const ProductBuyButton = styled.div<{ isDelete?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -343,11 +343,10 @@ export const ProductBuyButton = styled.div<{ isDelete?: boolean; }>`
   padding: 10px 10px;
   transition: all 0.2s;
 
-
   &:hover {
     outline: none;
     transition: all 0.2s;
-    background-color: ${props => props.isDelete ? 'red' : '#37a26e'};
+    background-color: ${(props) => (props.isDelete ? "red" : "#37a26e")};
     color: white;
     i {
       color: white !important;
@@ -379,7 +378,7 @@ export const CartWrapper = styled.div`
   gap: 20px;
   width: 100%;
   padding: 0 20px;
-`
+`;
 
 export const CheckOrderWrapper = styled.div`
   border-radius: 15px;
@@ -388,16 +387,19 @@ export const CheckOrderWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+  box-shadow:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   width: 100%;
   padding: 20px;
-`
+`;
 
 export const CheckOrderHeading = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 export const OrderConfirmWrapper = styled.div`
   border-radius: 15px;
@@ -405,10 +407,13 @@ export const OrderConfirmWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+  box-shadow:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   width: 100%;
   padding: 20px;
-`
+`;
 
 export const OrderConfirmForm = styled.div`
   display: flex;
@@ -416,55 +421,82 @@ export const OrderConfirmForm = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 500px;
-`
 
-export const OrderSummaryWrapper = styled.div`
+  @media screen and (max-width: 1060px) {
+    width: 100%;
+  }
+`;
 
-`
+export const OrderSummaryWrapper = styled.div``;
 
-export const RadioGroup = styled.div`
+export const RadioGroup = styled.div<{ isMobile?: boolean }>`
   display: flex;
   align-items: center;
   gap: 20px;
-`
+  flex-direction: ${(props) => (props.isMobile ? "column" : "row")};
+  width: 100%;
+`;
 
 export const OrderListItem = styled.div`
   display: grid;
   width: 100%;
   padding: 20px;
-  grid-template-columns: 0.5fr 1fr 2fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 100%;
   gap: 20px;
   align-items: center;
-`
+
+  @media screen and (max-width: 1060px) {
+    display: grid;
+    width: 100%;
+    padding: 0px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+    grid-template-rows: 40% 40% 20%;
+  }
+`;
 
 export const OrderListImage = styled.img`
   width: 100px;
   height: 100px;
-  box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12);
+  box-shadow:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
-`
+`;
 
 export const OrderListName = styled.div`
   display: flex;
   flex-direction: column;
-
-  span {
+  position: "relative" span {
     font-weight: bold;
   }
-`
+`;
 
 export const OrderListPrice = styled.div`
   display: flex;
   font-size: 24px;
   font-weight: bold;
-`
+  position: relative;
+`;
 
 export const OrderListTotal = styled.div`
   display: flex;
   font-size: 24px;
   font-weight: bold;
-`
+  position: relative;
+`;
+export const OrderListHeaders = styled.div`
+  display: grid;
+  width: 100%;
+  padding: 20px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-template-rows: 100%;
+  gap: 20px;
+  align-items: center;
+`;
 
 export const OrderListCustom = styled.div`
   display: flex;
@@ -472,26 +504,29 @@ export const OrderListCustom = styled.div`
   padding: 20px;
   border-radius: 15px;
   width: 100%;
-`
+  @media screen and (max-width: 1060px) {
+    gap: 80px;
+  }
+`;
 
 export const ToastWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;  
+  justify-content: center;
   width: 100%;
   cursor: pointer;
-`
+`;
 
 export const ToastHeader = styled.div`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 10px;
-`
+`;
 export const ToastText = styled.div`
   font-size: 16px;
   margin-bottom: 10px;
-`
+`;
 
 export const ToastLink = styled.div`
   font-size: 16px;
@@ -501,27 +536,28 @@ export const ToastLink = styled.div`
   &::after {
     content: "→";
   }
-`
+`;
 
 export const RadioButtonWrapper = styled.div`
   position: relative;
   z-index: 99;
   display: flex;
   flex-direction: column;
-  justify-content:  center;
+  justify-content: center;
   align-items: flex-start;
   outline: thin solid grey;
   padding: 20px;
   border-radius: 15px;
   cursor: pointer;
+  width: 100%;
 
   .p-radiobutton.p-component {
-  display: flex;
+    display: flex;
   }
-`
+`;
 
 export const RadioButtonText = styled.div`
   margin-top: 20px;
   font-size: 16px;
   font-weight: 600;
-`
+`;

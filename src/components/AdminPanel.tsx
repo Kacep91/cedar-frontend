@@ -273,7 +273,6 @@ export const AdminPanel = () => {
   // }
 
   const handleSubmit = () => {
-
     axios
       .get<File>(files[0]?.objectURL, { responseType: "blob" })
       .then(async (res) => {
@@ -303,8 +302,8 @@ export const AdminPanel = () => {
           })
           .catch((error) => {
             console.error(error);
-          })
-      })
+          });
+      });
 
     // const bublik = mockCatalogue.map(item => {
     //   return {

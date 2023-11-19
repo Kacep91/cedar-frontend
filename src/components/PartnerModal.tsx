@@ -8,7 +8,6 @@ import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { phoneRegex, emailRegex } from "utils/utils";
 
-
 type PresentationModalType = {
   isOpen: boolean;
   setModalOpen: (value: boolean) => void;
@@ -121,11 +120,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
@@ -145,11 +144,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
@@ -177,11 +176,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
@@ -204,11 +203,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
@@ -240,11 +239,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
@@ -275,11 +274,11 @@ export const PartnerModal = ({
           style={
             error
               ? {
-                color: "red",
-                fontSize: "12px",
-                marginTop: "5px",
-                userSelect: "none",
-              }
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "5px",
+                  userSelect: "none",
+                }
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >

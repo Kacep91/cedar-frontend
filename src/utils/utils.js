@@ -55,7 +55,7 @@ export const formatPrice = (price) => {
   return value;
 };
 
-export function useHoldPress(callback = () => { }, ms = 300) {
+export function useHoldPress(callback = () => {}, ms = 300) {
   // хук для удобной горизонтальной прокрутки графиков на экранах мобильных устройств
   const [startHoldPress, setStartHoldPress] = useState(false);
 
@@ -89,19 +89,19 @@ export const roundPercent = (value, digitsAfterDot = 2, retainDot = false) => {
   // округление чисел до 2 цифр после запятой
   return value
     ? String(
-      Number(
-        Math.round(
-          value.toString().trim().replace(",", ".").slice(0, 18) +
-          "e" +
-          digitsAfterDot,
-        ) +
-        "e-" +
-        digitsAfterDot,
-      ),
-    )
+        Number(
+          Math.round(
+            value.toString().trim().replace(",", ".").slice(0, 18) +
+              "e" +
+              digitsAfterDot,
+          ) +
+            "e-" +
+            digitsAfterDot,
+        ),
+      )
     : retainDot
-      ? "0.0"
-      : "0";
+    ? "0.0"
+    : "0";
 };
 
 export const stringToBoolean = (string) => {
@@ -261,8 +261,8 @@ export function sumOfTime(timeOne, timeTwo) {
 
 export function secondsToTime(e, isMobile = false) {
   const m = Math.floor((e % 3600) / 60)
-    .toString()
-    .padStart(2, "0"),
+      .toString()
+      .padStart(2, "0"),
     s = Math.floor(e % 60)
       .toString()
       .padStart(2, "0");
@@ -324,6 +324,20 @@ export function stableSort(a, b) {
   return 0;
 }
 
-
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 export const phoneRegex = /^\\+7 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}$/;
+
+export const cardNotion = [
+  {
+    text: "Наименование",
+  },
+  {
+    text: "Цена за штуку",
+  },
+  {
+    text: "Итого",
+  },
+  {
+    text: "Количество",
+  },
+];

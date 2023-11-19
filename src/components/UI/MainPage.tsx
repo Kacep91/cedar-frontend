@@ -3,24 +3,27 @@ import { ProductCardType } from "./types";
 import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
 import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
-import { ItemListContainer, ItemListWrapper, SortingHeader } from "components/atoms";
+import {
+  ItemListContainer,
+  ItemListWrapper,
+  SortingHeader,
+} from "components/atoms";
 import { ItemListUnit } from "components/ItemListUnit";
 import MainHeader from "./MainHeader";
 import { ProgressSpinner } from "primereact/progressspinner";
 
 export const MainPage = () => {
-
   const [goods, setGoods] = useState([]);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
-      setIsLoading(true)
+      setIsLoading(true);
       const res = await axios.get("http://185.70.185.67:3000/goods");
 
       if (res.data) {
         setGoods(res.data);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     };
 
@@ -73,12 +76,12 @@ export const MainPage = () => {
 
   function arrayBufferToBase64(buffer: { type: string; data: any[] }) {
     if (!buffer) {
-      return ''
+      return "";
     }
-    console.log('buffer', buffer)
-    let binary = '';
+    console.log("buffer", buffer);
+    let binary = "";
     let bytes = new Uint8Array(buffer.data);
-    bytes.forEach((b) => binary += String.fromCharCode(b));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
     return binary;
   }
 
@@ -104,19 +107,48 @@ export const MainPage = () => {
           }}
         />
       </SortingHeader>
-      {isLoading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '30vh' }}><ProgressSpinner /></div> : <ItemListWrapper>
-        <ItemListContainer>
-          {goods.map((item: ProductCardType) => {
-            return <ItemListUnit key={item.name} {...item} image={item.image ? arrayBufferToBase64(item.image as unknown as { type: string; data: any[] }) : ''} />;
-          })}
-        </ItemListContainer>
-        <Paginator
-          first={pageData.first}
-          rows={pageData.rows}
-          totalRecords={goods.length}
-          onPageChange={onPageChange}
-        />
-      </ItemListWrapper>}
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "30vh",
+          }}
+        >
+          <ProgressSpinner />
+        </div>
+      ) : (
+        <ItemListWrapper>
+          <ItemListContainer>
+            {goods.map((item: ProductCardType) => {
+              return (
+                <ItemListUnit
+                  key={item.name}
+                  {...item}
+                  image={
+                    item.image
+                      ? arrayBufferToBase64(
+                          item.image as unknown as {
+                            type: string;
+                            data: any[];
+                          },
+                        )
+                      : ""
+                  }
+                />
+              );
+            })}
+          </ItemListContainer>
+          <Paginator
+            first={pageData.first}
+            rows={pageData.rows}
+            totalRecords={goods.length}
+            onPageChange={onPageChange}
+          />
+        </ItemListWrapper>
+      )}
     </>
   );
 };
