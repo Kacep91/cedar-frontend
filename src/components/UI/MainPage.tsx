@@ -6,18 +6,21 @@ import axios from "axios";
 import { ItemListContainer, ItemListWrapper, SortingHeader } from "components/atoms";
 import { ItemListUnit } from "components/ItemListUnit";
 import MainHeader from "./MainHeader";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 export const MainPage = () => {
 
   const [goods, setGoods] = useState([]);
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetch = async () => {
+      setIsLoading(true)
       const res = await axios.get("http://185.70.185.67:3000/goods");
 
       if (res.data) {
-        console.log(res.data)
         setGoods(res.data);
+        setIsLoading(false)
       }
     };
 
@@ -101,7 +104,7 @@ export const MainPage = () => {
           }}
         />
       </SortingHeader>
-      <ItemListWrapper>
+      {isLoading ? <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '30vh' }}><ProgressSpinner /></div> : <ItemListWrapper>
         <ItemListContainer>
           {goods.map((item: ProductCardType) => {
             return <ItemListUnit key={item.name} {...item} image={item.image ? arrayBufferToBase64(item.image as unknown as { type: string; data: any[] }) : ''} />;
@@ -113,7 +116,7 @@ export const MainPage = () => {
           totalRecords={goods.length}
           onPageChange={onPageChange}
         />
-      </ItemListWrapper>
+      </ItemListWrapper>}
     </>
   );
 };

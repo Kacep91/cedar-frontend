@@ -75,7 +75,7 @@ export const ItemListUnit = (props: ProductCardType) => {
         imageStyle={{ objectFit: "cover" }}
       />
       <ProductHeader>
-        {props.name} {props.volume}
+        {props.name} {props.volume || ''}
       </ProductHeader>
       <ProductReviews>
         {props.reviews ? (

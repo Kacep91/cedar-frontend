@@ -229,8 +229,9 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
               style={{
                 width: "100vw",
                 height: "100vh",
-                marginTop: "50px",
+                paddingTop: "50px",
                 border: "none",
+                position: 'fixed'
               }}
             />
           ) : (
@@ -291,8 +292,10 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
+              flexDirection: 'column',
               alignItems: "center",
-              gap: "10px"
+              gap: "10px",
+              width: '100%'
             }}
           >
             <img
@@ -308,7 +311,7 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
             <span
               className="p-input-icon-left"
               style={{
-                width: "60%",
+                width: "100%",
               }}
             >
               <i className="pi pi-search" />
@@ -321,40 +324,50 @@ const MainHeader = ({ isCart }: { isCart: boolean; }) => {
                 }}
               />
             </span>
-            <Button
-              icon="pi pi-heart"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="Favorite"
-            />
-            <Button
-              icon="pi pi-user"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="User"
-            />
-            <Button
-              icon="pi pi-shopping-cart"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="Cart"
-              onClick={() => navigate("/cart")}
-            >{listLength && <Badge className="small" size={'normal'} style={{ position: 'absolute', right: '-5px' }} value={listLength}></Badge>}</Button>
-            <Button
-              icon="pi pi-shield"
-              rounded
-              text
-              raised
-              severity="success"
-              aria-label="Shield"
-              onClick={() => navigate("/adminPanel")}
-            />
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "10px",
+              width: '100%'
+            }}>
+              <Button
+                icon="pi pi-heart"
+                rounded
+                text
+                raised
+                severity="success"
+                aria-label="Favorite"
+              />
+              <Button
+                icon="pi pi-user"
+                rounded
+                text
+                raised
+                severity="success"
+                aria-label="User"
+              />
+              <div style={{ position: 'relative' }}>
+                <Button
+                  icon="pi pi-shopping-cart"
+                  rounded
+                  text
+                  raised
+                  severity="success"
+                  aria-label="Cart"
+                  onClick={() => navigate("/cart")}
+                /> {listLength ? <Badge className="small" size={'normal'} style={{ position: 'absolute', right: '-5px' }} value={listLength}></Badge> : <></>}
+              </div>
+              <Button
+                icon="pi pi-shield"
+                rounded
+                text
+                raised
+                severity="success"
+                aria-label="Shield"
+                onClick={() => navigate("/adminPanel")}
+              />
+            </div>
           </div>
         </>
       ) : (
