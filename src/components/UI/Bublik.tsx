@@ -5,7 +5,7 @@ import {
   SiberiaLogo,
   SiberiaText,
 } from "components/atoms";
-import snowflake from "../../assets/images/snowflake.png";
+import snowFlake from "../../assets/images/snowFlake.png";
 import alcenero from "../../assets/images/alcenero.jpg";
 import React from "react";
 
@@ -15,7 +15,7 @@ export const Bublik = () => {
       <MainPageImageContainer>
         <MainPageImage src={alcenero} />
         <SiberiaLogo>
-          <img src={snowflake} alt="" width="200" height="200" />
+          <img src={snowFlake} alt="" width="200" height="200" />
         </SiberiaLogo>
         <SiberiaText>
           Siberia Organic <span>since 2021</span>
