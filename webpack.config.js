@@ -15,7 +15,7 @@ const {
 module.exports = async (env = {}, args) => {
   const mode = args.mode;
   const isProd = mode === "production";
-  const settings = env.settings || "185.70.185.67";
+  const settings = env.settings || "localhost";
   require("dotenv").config({ path: "./.env" });
   require("dotenv").config({ path: `.env.${settings}` });
 
