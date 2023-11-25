@@ -15,6 +15,10 @@ import { MainPage } from "./UI/MainPage";
 import { AdminPanel } from "./AdminPanel";
 import AuthCallback from "./Auth/AuthCallback";
 import { Cart } from "./Cart";
+import { AboutUs } from "./UI/AboutUs";
+import { PastaRecipe } from "./Recipes/PastaRecipe";
+import { RisottoRecipe } from "./Recipes/RisottoRecipe";
+import { ToastRecipe } from "./Recipes/ToastRecipe";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -81,6 +85,38 @@ const AppRoutes = () => {
         element={
           // <AuthRoute>
           <Cart />
+          // </AuthRoute>
+        }
+      />
+      <Route
+        path={"/aboutUs"}
+        element={
+          // <AuthRoute>
+          <AboutUs />
+          // </AuthRoute>
+        }
+      />
+      <Route
+        path={"/pastaRecipe"}
+        element={
+          // <AuthRoute>
+          <PastaRecipe />
+          // </AuthRoute>
+        }
+      />
+      <Route
+        path={"/risottoRecipe"}
+        element={
+          // <AuthRoute>
+          <RisottoRecipe />
+          // </AuthRoute>
+        }
+      />
+      <Route
+        path={"/toastRecipe"}
+        element={
+          // <AuthRoute>
+          <ToastRecipe />
           // </AuthRoute>
         }
       />

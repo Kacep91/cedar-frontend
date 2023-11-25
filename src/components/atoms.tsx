@@ -611,7 +611,7 @@ export const SiberiaText = styled.p`
   left: 50%;
   position: absolute;
   text-align: center;
-  top: 62%;
+  top: 65%;
   width: 230px;
   -webkit-transform: translate3d(-50%, -50%, 0);
   transform: translate3d(-50%, -50%, 0);
@@ -647,11 +647,11 @@ export const AdditionalInfoWrapper = styled.div<{ isOpened?: boolean }>`
   padding: 20px;
   min-height: 340px;
   height: 100%;
-  transition: all 0.5s;
+  transition: all 0.3s;
   transform: ${(props) =>
     props.isOpened ? "translate3d(0,7%,0)" : "translate3d(0,20%,0)"};
   position: absolute;
-  opacity: ${(props) => (props.isOpened ? 1 : 0)};
+  visibility: ${(props) => (props.isOpened ? "visible" : "hidden")};
   background-color: #ffffff;
   top: 92px;
   left: 0;
@@ -700,6 +700,7 @@ export const AboutUsWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 export const AboutUsImage = styled.img`
@@ -753,4 +754,80 @@ export const ProductsBlock = styled.div`
   h1 {
     margin: 40px 0;
   }
+`;
+
+export const Map = styled.img`
+  width: 860px;
+  height: 510px;
+  object-fit: cover;
+  border-radius: 15px;
+`;
+export const ProductsText = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  max-width: 630px;
+`;
+
+export const BlockQuote = styled.div`
+  position: relative;
+  font-size: 22px;
+  max-width: 600px;
+  line-height: 30px;
+  box-shadow:
+    -50px -50px 0 -45px grey,
+    50px 50px 0 -45px grey;
+
+  div {
+    display: block;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: 26px;
+  }
+`;
+
+export const RecipesContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 40px;
+  z-index: 2;
+`;
+
+export const RecipesImage = styled.img`
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+`;
+
+export const RecipeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const RecipeHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const RecipeText = styled.div`
+  font-size: 24px;
+  margin-top: 24px;
+`;
+
+export const RecipeHeaderImage = styled.img`
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 15px;
 `;
