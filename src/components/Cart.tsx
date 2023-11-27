@@ -52,7 +52,7 @@ type CartError = {
 export const Cart = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(CartSelectors.isLoading);
-  const isMobile = useScreenSize("wip");
+  const isMobile = useScreenSize("mobile");
 
   const [error, setError] = useState<CartError>({
     email: "",

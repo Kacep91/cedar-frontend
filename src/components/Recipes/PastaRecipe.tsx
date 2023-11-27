@@ -2,14 +2,19 @@ import { Footer } from "components/UI/Footer";
 import MainHeader from "components/UI/MainHeader";
 import pasta from "../../assets/images/pasta.jpg";
 import {
+  Ingridients,
+  Instructions,
+  InstructionsWrapper,
   RecipeHeader,
   RecipeHeaderImage,
   RecipeText,
   RecipeWrapper,
 } from "components/atoms";
 import { BackLinkAtom } from "components/UI/BackLink";
+import { useScreenSize } from "utils/hooks";
 
 export const PastaRecipe = (recipe: any) => {
+  const isTablet = useScreenSize("mobile");
   return (
     <>
       <MainHeader isCart={true} />
@@ -20,20 +25,12 @@ export const PastaRecipe = (recipe: any) => {
           <RecipeText>Кремовая паста с грибами</RecipeText>
         </RecipeHeader>
         <div style={{ margin: "50px 0" }}>
-          <h1>Способ приготовления</h1>
+          <h1 style={{ textAlign: "center" }}>Способ приготовления</h1>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "flex-start",
-            margin: "0 auto",
-            gap: "50px",
-          }}
-        >
-          <div style={{ width: "50%" }}>
+        <InstructionsWrapper>
+          <Ingridients>
             <h3 style={{ textAlign: "center" }}>Ингредиенты:</h3>
-            <ol className="gradient-list line">
+            <ol className={isTablet ? "gradient-list" : "gradient-list line"}>
               <li>
                 1 стакан (240 мл) домашнего или купленного в магазине
                 низкосолевого куриного бульона (см. примечание)
@@ -71,8 +68,8 @@ export const PastaRecipe = (recipe: any) => {
                 листа
               </li>
             </ol>
-          </div>
-          <div style={{ width: "50%" }}>
+          </Ingridients>
+          <Instructions>
             <h3 style={{ textAlign: "center" }}>Инструкции:</h3>
             <ol className="gradient-list">
               <li>
@@ -128,16 +125,8 @@ export const PastaRecipe = (recipe: any) => {
                 немедленно, подавая оставшийся тертый сыр на столе.
               </li>
             </ol>
-          </div>
-          {/* Специальное оборудование:
-                Большая сковорода из чугуна или нержавеющей стали, ситечко для пасты
-                Примечания:
-                Удалите стебли от грибов с твердыми стеблями, таких как шиитаке, перед использованием; грибы с нежными стеблями, такие как устричные, можно использовать со стеблем. Более твердые грибы, такие как шиитаке, лучше нарезать, тогда как более нежные грибы можно легко разорвать на кусочки подходящего размера вручную.
-                Приготовление заранее и хранение:
-                Эта паста наиболее вкусна, когда ее сразу же подают, особенно если она сделана из свежей пасты. Если используется сухая паста, она хорошо сохраняется для остатков и может храниться в холодильнике в герметичном контейнере до 3 дней
-                1
-                . */}
-        </div>
+          </Instructions>
+        </InstructionsWrapper>
       </RecipeWrapper>
 
       <Footer />

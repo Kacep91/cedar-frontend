@@ -6,10 +6,15 @@ import {
   RecipeHeaderImage,
   RecipeText,
   RecipeWrapper,
+  InstructionsWrapper,
+  Ingridients,
+  Instructions,
 } from "components/atoms";
 import { BackLinkAtom } from "components/UI/BackLink";
+import { useScreenSize } from "utils/hooks";
 
 export const ToastRecipe = (recipe: any) => {
+  const isTablet = useScreenSize("mobile");
   return (
     <>
       <MainHeader isCart={true} />
@@ -20,27 +25,19 @@ export const ToastRecipe = (recipe: any) => {
           <RecipeText>Тост с лисичками</RecipeText>
         </RecipeHeader>
         <div style={{ margin: "50px 0" }}>
-          <h1>Способ приготовления</h1>
+          <h1 style={{ textAlign: "center" }}>Способ приготовления</h1>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "flex-start",
-            margin: "0 auto",
-            gap: "50px",
-          }}
-        >
-          <div style={{ width: "50%" }}>
+        <InstructionsWrapper>
+          <Ingridients>
             <h3 style={{ textAlign: "center" }}>Ингредиенты:</h3>
-            <ol className="gradient-list line">
+            <ol className={isTablet ? "gradient-list" : "gradient-list line"}>
               <li>1/4 фунта лисичек (около 1,5-2 стакана целых лисичек)</li>
               <li>2 столовые ложки сливочного масла</li>
               <li>1/4 стакана сливок</li>
               <li>соль по вкусу</li>
             </ol>
-          </div>
-          <div style={{ width: "50%" }}>
+          </Ingridients>
+          <Instructions>
             <h3 style={{ textAlign: "center" }}>Инструкции:</h3>
             <ol className="gradient-list">
               <li>
@@ -60,8 +57,8 @@ export const ToastRecipe = (recipe: any) => {
                 любимый хрустящий хлеб.
               </li>
             </ol>
-          </div>
-        </div>
+          </Instructions>
+        </InstructionsWrapper>
       </RecipeWrapper>
 
       <Footer />

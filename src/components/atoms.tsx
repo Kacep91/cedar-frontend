@@ -74,6 +74,9 @@ export const NavigationWrapper = styled.div<{ isOnTop?: boolean }>`
   position: ${(props) => (props.isOnTop ? "fixed" : "sticky")};
   width: 100%;
   z-index: 997;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
 `;
 
 export const NavigationHeader = styled.div`
@@ -632,10 +635,43 @@ export const Sale = styled.div`
   height: 26px;
   color: white;
   cursor: pointer;
+  text-align: center;
 
   &:hover {
     background-color: #454545;
   }
+
+  @media screen and (max-width: 1024px) {
+    height: 40px;
+    font-size: 14px;
+  }
+`;
+
+export const AdditionalInfoGrid = styled.div<{ isOpened?: boolean }>`
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 100%;
+  width: 100%;
+  gap: 40px;
+  transition: opacity 0.3s ease-in;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  opacity: ${(props) => (props.isOpened ? 1 : 0)};
+  padding: 40px;
+`;
+
+export const AdditionalInfoBg = styled.div<{ isOpened?: boolean }>`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: 40px;
+  transition: opacity 0.3s ease-in;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  background-color: #ffffff;
+  opacity: ${(props) => (props.isOpened ? 1 : 0)};
 `;
 
 export const AdditionalInfoWrapper = styled.div<{ isOpened?: boolean }>`
@@ -644,19 +680,20 @@ export const AdditionalInfoWrapper = styled.div<{ isOpened?: boolean }>`
   align-items: flex-start;
   width: 100%;
   gap: 40px;
-  padding: 20px;
   min-height: 340px;
-  height: 100%;
-  transition: all 0.3s;
-  transform: ${(props) =>
-    props.isOpened ? "translate3d(0,7%,0)" : "translate3d(0,20%,0)"};
+  transition: all 0.3s ease-in;
   position: absolute;
   visibility: ${(props) => (props.isOpened ? "visible" : "hidden")};
   background-color: #ffffff;
-  top: 92px;
+  top: 117px;
   left: 0;
-  padding: 0 120px;
   z-index: 999;
+  box-shadow: 0 31px 39px rgba(0, 0, 0, 0.15);
+
+  @media screen and (max-width: 1370px) {
+    top: 92px;
+    padding: 0 120px;
+  }
 `;
 
 export const InfoCardHeader = styled.div`
@@ -692,6 +729,14 @@ export const AboutUsBlock = styled.div`
 
   h1 {
     margin: 40px 0;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 1024px) {
+    h1 {
+      font-size: 30px !important;
+      text-align: center;
+    }
   }
 `;
 
@@ -708,17 +753,58 @@ export const AboutUsImage = styled.img`
   height: 655px;
   object-fit: cover;
   border-radius: 15px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+
+  @media screen and (max-width: 1024px) {
+    width: 700px;
+    height: 700px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 450px;
+    height: 450px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 250px;
+    height: 250px;
+  }
 `;
 export const ProductPageImage = styled.img`
   width: 250px;
   height: 250px;
   object-fit: cover;
   border-radius: 15px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+
+  @media screen and (max-width: 1024px) {
+    width: 350px;
+    height: 350px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 450px;
+    height: 450px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 250px;
+    height: 250px;
+  }
 `;
 
 export const AboutUsText = styled.div`
   font-size: 2rem;
   margin: 20px 0;
+  text-align: center;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const AboutUsContainer = styled.div`
@@ -727,6 +813,7 @@ export const AboutUsContainer = styled.div`
   align-items: center;
   gap: 40px;
   z-index: 2;
+  flex-wrap: wrap;
 `;
 
 export const Branch = styled.img`
@@ -740,6 +827,18 @@ export const Branch = styled.img`
   transform: translate3d(-45%, 0, 0);
   width: auto;
   transform: rotate(-87deg);
+
+  @media screen and (max-width: 1024px) {
+    top: 260px;
+    height: 18vh;
+    left: -207px;
+  }
+
+  @media screen and (max-width: 460px) {
+    top: 116px;
+    height: 23vh;
+    left: -250px;
+  }
 `;
 
 export const ProductsBlock = styled.div`
@@ -753,6 +852,14 @@ export const ProductsBlock = styled.div`
 
   h1 {
     margin: 40px 0;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 1024px) {
+    h1 {
+      font-size: 30px !important;
+      text-align: center;
+    }
   }
 `;
 
@@ -766,6 +873,10 @@ export const ProductsText = styled.div`
   font-size: 24px;
   font-weight: bold;
   max-width: 630px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const BlockQuote = styled.div`
@@ -797,6 +908,23 @@ export const RecipesContainer = styled.div`
   align-items: center;
   gap: 40px;
   z-index: 2;
+  flex-wrap: wrap;
+`;
+
+export const FeaturedProductsImage = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
+
+  @media screen and (max-width: 1024px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 export const RecipesImage = styled.img`
@@ -804,6 +932,24 @@ export const RecipesImage = styled.img`
   height: 400px;
   object-fit: cover;
   border-radius: 15px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+
+  @media screen and (max-width: 1024px) {
+    width: 550px;
+    height: 550px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 250px;
+    height: 250px;
+  }
 `;
 
 export const RecipeWrapper = styled.div`
@@ -823,6 +969,10 @@ export const RecipeHeader = styled.div`
 export const RecipeText = styled.div`
   font-size: 24px;
   margin-top: 24px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const RecipeHeaderImage = styled.img`
@@ -830,4 +980,83 @@ export const RecipeHeaderImage = styled.img`
   height: 600px;
   object-fit: cover;
   border-radius: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 800px;
+    height: 800px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 250px;
+    height: 250px;
+  }
+`;
+
+export const GridSectionFavourite = styled.div`
+  border-right: 1px solid #d4cdcd;
+`;
+
+export const GridSectionFeatured = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  border-left: 1px solid #d4cdcd;
+`;
+
+export const InstructionsWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin: 0 auto;
+  gap: 50px;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+`;
+
+export const Ingridients = styled.div`
+  width: 50%;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    li {
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 80%;
+    margin: 0 auto;
+
+    li {
+      font-size: 16px;
+    }
+  }
+`;
+export const Instructions = styled.div`
+  width: 50%;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+
+    li {
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 80%;
+    margin: 0 auto;
+
+    li {
+      font-size: 16px;
+    }
+  }
 `;

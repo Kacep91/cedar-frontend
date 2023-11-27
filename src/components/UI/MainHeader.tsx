@@ -60,7 +60,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const nodes = [
     {
       key: "0",
-      label: "Siberia Organic",
+      label: "О нас",
       icon: "pi pi-fw pi-inbox",
       children: [
         { key: "0-0", label: "О нас", url: "/aboutUs" },
@@ -73,13 +73,57 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       label: "Наша продукция",
       icon: "pi pi-fw pi-inbox",
       children: [
-        { key: "1-0", label: "Чипсы яблочные", url: "" },
-        { key: "1-1", label: "Гранола", url: "" },
-        { key: "1-2", label: "Контакты", url: "" },
-        { key: "1-3", label: "Сироп", url: "" },
-        { key: "1-4", label: "Сосновое варенье", url: "" },
-        { key: "1-5", label: "Грибной суп", url: "" },
-        { key: "1-6", label: "Чай", url: "" },
+        {
+          key: "1-0",
+          label: "Соки, сиропы, сбитни, пр. напитки",
+          url: "",
+        },
+        {
+          key: "1-1",
+          label: "Мёд натуральный и продукты пчеловодства",
+          url: "",
+        },
+        {
+          key: "1-2",
+          label: "Сибирское варенье из шишек и ягод",
+          url: "",
+        },
+        {
+          key: "1-3",
+          label: "Сушеная ягода, вяленая ягода",
+          url: "",
+        },
+        {
+          key: "1-4",
+          label: "Грибы (в т.ч. продукция из грибов)",
+          url: "",
+        },
+        {
+          key: "1-5",
+          label:
+            "Десерты таежные (пралине, сгущеное молоко, урбеч, цукаты и т.д.), десерты из яблок (печенье и пр.)",
+          url: "",
+        },
+        {
+          key: "1-6",
+          label: "Иван-чай, травяные чаи/сборы",
+          url: "",
+        },
+        {
+          key: "1-7",
+          label: "Масла",
+          url: "",
+        },
+        {
+          key: "1-8",
+          label: "Косметическая продукция, эфирные масла",
+          url: "",
+        },
+        {
+          key: "1-9",
+          label: "Бады",
+          url: "",
+        },
       ],
     },
     {
@@ -103,9 +147,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
   ];
 
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
-  const isTablet = useScreenSize("wip");
+  const isMobile = useScreenSize("smallMobile");
+  const isTablet = useScreenSize("mobile");
 
   const [isSticky, setSticky] = useState(false);
+  const [isLongPopupVisible, setLongPopupVisible] = useState(false);
+  const [isProductsPopupVisible, setProductsPopupVisible] = useState(false);
 
   useEffect(() => {
     if (isMobileMenuOpened) {
@@ -122,12 +169,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
           onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}
           src={isMobileMenuOpened ? cross : menu}
           width="30"
-          style={{ zIndex: 999, position: "fixed", top: 30, right: 30 }}
+          style={{ zIndex: 999, position: "fixed", top: 50, right: 30 }}
           alt=""
         />
       )}
       <Header isMobileMenuOpened={isMobileMenuOpened}>
-        {isTablet ? (
+        {isMobile ? (
           <>
             {isMobileMenuOpened ? (
               <Tree
@@ -142,10 +189,11 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
                 ) => e.node?.onClick && e.node.onClick()}
                 style={{
                   width: "100vw",
-                  height: "100vh",
-                  paddingTop: "50px",
+                  height: "103vh",
+                  paddingTop: "60px",
                   border: "none",
                   position: "fixed",
+                  zIndex: 99999,
                 }}
               />
             ) : (
@@ -153,37 +201,20 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
             )}
           </>
         ) : (
-          <>
-            {/* <MenuButtonWrapper>
-              <MenuButton>
-                <a
-                  style={{ color: "#666", textDecoration: "none" }}
-                  href="tel:+79230012345"
-                >
-                  <img src={phone} alt="" />
-                  +7-923-001-23-45
-                </a>{" "}
-                <img src={arrowDown} alt="" />
-              </MenuButton>
-              <MenuDropdownContent style={{ minWidth: "200px" }}>
-                <div style={{ display: "flex", flexDirection: "column" }}>
-                  <a href="mailto:123@mail.ru">123@mail.ru</a>
-                  <a style={{ textDecoration: "none" }} href="tel:+79230012345">
-                    <img src={phone} width="16" alt="" />
-                    +7-923-001-23-45
-                  </a>
-                </div>
-              </MenuDropdownContent>
-            </MenuButtonWrapper> */}
-          </>
+          <></>
         )}
       </Header>
-      {isSticky ? <div style={{ height: "127.5px" }}></div> : null}
+      {!isMobile && isSticky ? <div style={{ height: "127.5px" }}></div> : null}
       <Navbar
         setSticky={setSticky}
         isSticky={isSticky}
         setPresentationModalVisible={setPresentationModalVisible}
         setPartnerModalVisible={setPartnerModalVisible}
+        setLongPopupVisible={setLongPopupVisible}
+        isLongPopupVisible={isLongPopupVisible}
+        isMobileMenuOpened={isMobileMenuOpened}
+        setProductsPopupVisible={setProductsPopupVisible}
+        isProductsPopupVisible={isProductsPopupVisible}
       />
       {!isCart && (
         <>

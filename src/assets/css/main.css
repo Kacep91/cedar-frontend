@@ -499,3 +499,15 @@ ol.gradient-list > li:nth-child(10n + 10)::before {
 ol.gradient-list > li + li {
   margin-top: 2rem;
 }
+
+.productsList {
+  margin: 0;
+  padding: 0 40px;
+  width: 100%;
+}
+
+@media screen and (max-width: 1024px) {
+  ol.gradient-list {
+    max-width: 800px;
+  }
+}

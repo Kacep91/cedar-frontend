@@ -2,14 +2,19 @@ import { Footer } from "components/UI/Footer";
 import MainHeader from "components/UI/MainHeader";
 import risotto from "../../assets/images/risotto.jpg";
 import {
+  Ingridients,
+  Instructions,
+  InstructionsWrapper,
   RecipeHeader,
   RecipeHeaderImage,
   RecipeText,
   RecipeWrapper,
 } from "components/atoms";
 import { BackLinkAtom } from "components/UI/BackLink";
+import { useScreenSize } from "utils/hooks";
 
 export const RisottoRecipe = (recipe: any) => {
+  const isTablet = useScreenSize("mobile");
   return (
     <>
       <MainHeader isCart={true} />
@@ -20,20 +25,12 @@ export const RisottoRecipe = (recipe: any) => {
           <RecipeText>Ризотто с лисичками</RecipeText>
         </RecipeHeader>
         <div style={{ margin: "50px 0" }}>
-          <h1>Способ приготовления</h1>
+          <h1 style={{ textAlign: "center" }}>Способ приготовления</h1>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            alignItems: "flex-start",
-            margin: "0 auto",
-            gap: "50px",
-          }}
-        >
-          <div style={{ width: "50%" }}>
+        <InstructionsWrapper>
+          <Ingridients>
             <h3 style={{ textAlign: "center" }}>Ингредиенты:</h3>
-            <ol className="gradient-list line">
+            <ol className={isTablet ? "gradient-list" : "gradient-list line"}>
               <li>6 стаканов бульона</li>
               <li>1 пинта сухого яблочного сидра (или сухого белого вина)</li>
               <li>1 маленькая луковица, мелко нарезанная</li>
@@ -45,8 +42,8 @@ export const RisottoRecipe = (recipe: any) => {
               <li>1/2 стакана пармезана или пекорино, тонко натертого</li>
               <li>2 столовые ложки масла</li>
             </ol>
-          </div>
-          <div style={{ width: "50%" }}>
+          </Ingridients>
+          <Instructions>
             <h3 style={{ textAlign: "center" }}>Инструкции:</h3>
             <ol className="gradient-list">
               <li>
@@ -89,8 +86,8 @@ export const RisottoRecipe = (recipe: any) => {
               </li>
               <li>Подавайте немедленно, добавив соль по вкусу</li>
             </ol>
-          </div>
-        </div>
+          </Instructions>
+        </InstructionsWrapper>
       </RecipeWrapper>
 
       <Footer />
