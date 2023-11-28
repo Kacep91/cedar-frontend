@@ -19,6 +19,7 @@ import { AboutUs } from "./UI/AboutUs";
 import { PastaRecipe } from "./Recipes/PastaRecipe";
 import { RisottoRecipe } from "./Recipes/RisottoRecipe";
 import { ToastRecipe } from "./Recipes/ToastRecipe";
+import { Goods } from "./UI/Goods";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -80,46 +81,12 @@ const AppRoutes = () => {
           // </AuthRoute>
         }
       />
-      <Route
-        path={"/cart"}
-        element={
-          // <AuthRoute>
-          <Cart />
-          // </AuthRoute>
-        }
-      />
-      <Route
-        path={"/aboutUs"}
-        element={
-          // <AuthRoute>
-          <AboutUs />
-          // </AuthRoute>
-        }
-      />
-      <Route
-        path={"/pastaRecipe"}
-        element={
-          // <AuthRoute>
-          <PastaRecipe />
-          // </AuthRoute>
-        }
-      />
-      <Route
-        path={"/risottoRecipe"}
-        element={
-          // <AuthRoute>
-          <RisottoRecipe />
-          // </AuthRoute>
-        }
-      />
-      <Route
-        path={"/toastRecipe"}
-        element={
-          // <AuthRoute>
-          <ToastRecipe />
-          // </AuthRoute>
-        }
-      />
+      <Route path={"/cart"} element={<Cart />} />
+      <Route path={"/goods"} element={<Goods />} />
+      <Route path={"/aboutUs"} element={<AboutUs />} />
+      <Route path={"/pastaRecipe"} element={<PastaRecipe />} />
+      <Route path={"/risottoRecipe"} element={<RisottoRecipe />} />
+      <Route path={"/toastRecipe"} element={<ToastRecipe />} />
 
       <Route path={"/"} element={<MainPage />} />
 

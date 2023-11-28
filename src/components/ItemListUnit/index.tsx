@@ -39,35 +39,6 @@ export const ItemListUnit = (props: ProductCardType) => {
     <>
       <Toast ref={toast} />
       <ProductCard>
-        <div className="shop-item-badges">
-          {props.isSale && (
-            <div className="shop-item-badge">
-              <div className="b-badge b-badge-sale">
-                <img src={sale} width="60" alt="" />
-                <span className="b-badge-text">Скидка</span>
-              </div>
-            </div>
-          )}
-          {props.isHit && (
-            <div className="shop-item-badge">
-              <div className="b-badge b-badge-hit">
-                <img src={hit} width="60" height={60} alt="Хит продаж" />
-                <span className="b-badge-text">
-                  Хит <br />
-                  продаж
-                </span>
-              </div>
-            </div>
-          )}
-          {props.isNew && (
-            <div className="shop-item-badge">
-              <div className="b-badge b-badge-new">
-                <div className="b-badge-icon"></div>
-                <span className="b-badge-text">Новинка</span>
-              </div>
-            </div>
-          )}
-        </div>
         <ProductImage
           src={`${props.image || placeHolder}`}
           width="250"
@@ -153,7 +124,7 @@ export const ItemListUnit = (props: ProductCardType) => {
                 });
               }}
             >
-              Купить{" "}
+              Купить
               <i
                 className="pi pi-cart-plus"
                 style={{ color: "#708090", width: "16px", height: "16px" }}

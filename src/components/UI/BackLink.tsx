@@ -34,5 +34,6 @@ export const BackLinkAtom = styled(NavLink)`
     text-decoration: none;
     font-size: 14px;
     margin-left: 40px;
+    margin-top: 15px;
   }
 `;

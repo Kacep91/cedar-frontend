@@ -205,8 +205,8 @@ export const Cart = () => {
             </span>
           )}
           <Dropdown
-            defaultValue={item.amount}
-            value={item.amount}
+            defaultValue={item.amount || 1}
+            value={item.amount || 1}
             onChange={(e) => {
               dispatch(
                 CartActions.setItem({ ...item, amount: e.target.value }),

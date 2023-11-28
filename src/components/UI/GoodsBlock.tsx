@@ -93,7 +93,14 @@ export const GoodsBlock = () => {
 
   return (
     <>
-      <SortingHeader>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginTop: "40px",
+          marginRight: "40px",
+        }}
+      >
         <Dropdown
           defaultValue={sorting}
           value={sorting}
@@ -105,13 +112,13 @@ export const GoodsBlock = () => {
             display: "flex",
             justifyContent: "space-between",
             height: "40px",
-            backgroundColor: "#008054",
+            backgroundColor: "#FFFFFF",
             width: "240px",
-            color: "white",
+            color: "black",
             outline: "none",
           }}
         />
-      </SortingHeader>
+      </div>
       {isLoading ? (
         <div
           style={{

@@ -388,9 +388,9 @@ export function Navbar({
           <AdditionalInfoWrapper isOpened={isProductsPopupVisible}>
             <AdditionalInfoGrid isOpened={isProductsPopupVisible}>
               <GridSectionFavourite>
-                <h4>Избранное</h4>
-                <a href="#">
-                  <h5>Перейти к просмотру избранных товаров</h5>
+                <h4>Каталог</h4>
+                <a href="/goods">
+                  <h5>Перейти к просмотру товаров</h5>
                 </a>
               </GridSectionFavourite>
 

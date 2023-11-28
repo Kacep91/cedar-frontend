@@ -264,14 +264,6 @@ export const ProductCard = styled.div`
   outline: none;
   border-radius: 0px;
   transition: all 0.1s;
-  border-bottom: thin solid grey;
-
-  &:hover {
-    outline: thin solid grey;
-    transition: all 0.2s;
-    border-bottom: none;
-    border-radius: 25px;
-  }
 `;
 export const ProductImage = styled(Image)`
   width: 250px;
@@ -345,7 +337,6 @@ export const ProductBuyButton = styled.div<{ isDelete?: boolean }>`
   max-width: 120px;
   width: 120px;
   outline: thin solid black;
-  border-radius: 15px;
   padding: 10px 10px;
   transition: all 0.2s;
 
@@ -733,10 +724,15 @@ export const AboutUsBlock = styled.div`
   }
 
   @media screen and (max-width: 1024px) {
+    padding: 0 60px;
     h1 {
       font-size: 30px !important;
       text-align: center;
     }
+  }
+
+  @media screen and (max-width: 460px) {
+    padding: 0 20px;
   }
 `;
 
@@ -805,6 +801,9 @@ export const AboutUsText = styled.div`
   @media screen and (max-width: 1024px) {
     font-size: 1.5rem;
   }
+  @media screen and (max-width: 460px) {
+    font-size: 1rem;
+  }
 `;
 
 export const AboutUsContainer = styled.div`
@@ -868,6 +867,16 @@ export const Map = styled.img`
   height: 510px;
   object-fit: cover;
   border-radius: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 660px;
+    height: 310px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 390px;
+    height: 250px;
+  }
 `;
 export const ProductsText = styled.div`
   font-size: 24px;
@@ -876,6 +885,10 @@ export const ProductsText = styled.div`
 
   @media screen and (max-width: 1024px) {
     font-size: 1.5rem;
+  }
+  @media screen and (max-width: 460px) {
+    font-size: 1.2rem;
+    text-align: center;
   }
 `;
 
@@ -899,6 +912,10 @@ export const BlockQuote = styled.div`
   span {
     font-weight: bold;
     font-size: 26px;
+  }
+
+  @media screen and (max-width: 460px) {
+    font-size: 16px;
   }
 `;
 

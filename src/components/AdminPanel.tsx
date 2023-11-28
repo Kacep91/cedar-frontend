@@ -20,9 +20,7 @@ import { Heading } from "ui/Typography";
 import { Checkbox } from "ui/Checkbox";
 import axios from "axios";
 import { BackLinkAtom } from "./atoms";
-import { mockCatalogue } from "mocks/catalogue";
-import { random } from "lodash";
-import dayjs from "dayjs";
+import { useScreenSize } from "utils/hooks";
 
 const Row = styled.div`
   margin: 15px 0 10px 0;
@@ -44,6 +42,19 @@ const AdminContainer = styled.div`
   background: #cccccc7b;
 `;
 
+const FileUploadWrapper = styled.div`
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  max-width: 600px;
+  width: 100%;
+
+  @media screen and (max-width: 460px) {
+    max-width: 400px;
+  }
+`;
+
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -54,6 +65,10 @@ const Form = styled.form`
   background-color: #ffffff;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+
+  @media screen and (max-width: 460px) {
+    max-width: 400px;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -65,6 +80,10 @@ const SubmitButton = styled.button`
   cursor: pointer;
   max-width: 570px;
   width: 100%;
+
+  @media screen and (max-width: 460px) {
+    max-width: 400px;
+  }
 `;
 
 export const AdminPanel = () => {
@@ -80,6 +99,8 @@ export const AdminPanel = () => {
     isNew: false,
     reviews: "",
   });
+
+  const isMobile = useScreenSize("mobile");
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -448,16 +469,7 @@ export const AdminPanel = () => {
         </Row>
       </Form>
 
-      <div
-        style={{
-          padding: "20px",
-          backgroundColor: "#ffffff",
-          borderBottomLeftRadius: "15px",
-          borderBottomRightRadius: "15px",
-          maxWidth: "600px",
-          width: "100%",
-        }}
-      >
+      <FileUploadWrapper>
         <Toast ref={toast}></Toast>
         <Tooltip
           target=".custom-choose-btn"
@@ -489,12 +501,12 @@ export const AdminPanel = () => {
           onClear={onTemplateClear}
           headerTemplate={headerTemplate}
           itemTemplate={itemTemplate}
-          emptyTemplate={emptyTemplate}
+          emptyTemplate={!isMobile ? emptyTemplate : undefined}
           chooseOptions={chooseOptions}
           uploadOptions={uploadOptions}
           cancelOptions={cancelOptions}
         />
-      </div>
+      </FileUploadWrapper>
       <Row style={{ display: "flex", justifyContent: "center" }}>
         <SubmitButton onClick={handleSubmit}>Загрузить</SubmitButton>
       </Row>
