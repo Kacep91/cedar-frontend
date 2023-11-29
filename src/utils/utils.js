@@ -55,7 +55,7 @@ export const formatPrice = (price) => {
   return value;
 };
 
-export function useHoldPress(callback = () => { }, ms = 300) {
+export function useHoldPress(callback = () => {}, ms = 300) {
   // хук для удобной горизонтальной прокрутки графиков на экранах мобильных устройств
   const [startHoldPress, setStartHoldPress] = useState(false);
 
@@ -89,16 +89,16 @@ export const roundPercent = (value, digitsAfterDot = 2, retainDot = false) => {
   // округление чисел до 2 цифр после запятой
   return value
     ? String(
-      Number(
-        Math.round(
-          value.toString().trim().replace(",", ".").slice(0, 18) +
-          "e" +
-          digitsAfterDot,
-        ) +
-        "e-" +
-        digitsAfterDot,
-      ),
-    )
+        Number(
+          Math.round(
+            value.toString().trim().replace(",", ".").slice(0, 18) +
+              "e" +
+              digitsAfterDot,
+          ) +
+            "e-" +
+            digitsAfterDot,
+        ),
+      )
     : retainDot
       ? "0.0"
       : "0";
@@ -261,8 +261,8 @@ export function sumOfTime(timeOne, timeTwo) {
 
 export function secondsToTime(e, isMobile = false) {
   const m = Math.floor((e % 3600) / 60)
-    .toString()
-    .padStart(2, "0"),
+      .toString()
+      .padStart(2, "0"),
     s = Math.floor(e % 60)
       .toString()
       .padStart(2, "0");
@@ -355,13 +355,13 @@ export function arrayBufferToBase64(buffer) {
 export function categorizeProducts(products, labels) {
   const result = {};
 
-  labels.forEach(label => {
+  labels.forEach((label) => {
     result[label.label] = [];
   });
 
-  products.forEach(product => {
-    labels.forEach(label => {
-      label.match.some(match => {
+  products.forEach((product) => {
+    labels.forEach((label) => {
+      label.match.some((match) => {
         if (product.name.toLowerCase().includes(match.toLowerCase())) {
           result[label.label].push(product);
           return true;
@@ -373,3 +373,47 @@ export function categorizeProducts(products, labels) {
 
   return result;
 }
+
+export const selectedLabels = [
+  {
+    label: "Соки, сиропы, сбитни, пр. напитки",
+    match: ["сбитень", "медово-", "кофе"],
+  },
+  {
+    label: "Мёд натуральный и продукты пчеловодства",
+    match: ["десерт"],
+  },
+  {
+    label: "Сибирское варенье из шишек и ягод",
+    match: ["варенье", "джем"],
+  },
+  {
+    label: "Сушеная ягода, вяленая ягода",
+    match: ["вяленая", "сушеная"],
+  },
+  {
+    label: "Грибы (в т.ч. продукция из грибов)",
+    match: ["гриб", "лисичка", "приправа", "суп"],
+  },
+  {
+    label:
+      "Десерты таежные (пралине, сгущеное молоко, урбеч, цукаты и т.д.), десерты из яблок (печенье и пр.)",
+    match: ["печенье", "цукаты", "урбеч", "пралине"],
+  },
+  {
+    label: "Иван-чай, травяные чаи/сборы",
+    match: ["чай", "-чай"],
+  },
+  {
+    label: "Масла",
+    match: ["пищевое масло"],
+  },
+  {
+    label: "Косметическая продукция, эфирные масла",
+    match: ["эфирное масло"],
+  },
+  {
+    label: "Бады",
+    match: ["спрей", "комплекс"],
+  },
+];

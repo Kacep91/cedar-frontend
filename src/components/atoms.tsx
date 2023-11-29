@@ -243,6 +243,13 @@ export const ItemListWrapper = styled.div`
   min-height: 400px;
 `;
 
+export const ItemListLabel = styled.div`
+  font-size: 36px;
+  text-align: center;
+  font-weight: bold;
+  margin: 20px auto;
+`;
+
 export const ItemListContainer = styled.div`
   display: flex;
   gap: 20px;
@@ -1099,12 +1106,12 @@ export const ProductPresentationWrapper = styled.div`
 export const ProductPresentationHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content:  flex-start;
+  justify-content: flex-start;
   flex-direction: column;
 
   @media screen and (max-width: 1024px) {
     flex-direction: column;
-     justify-content: center;
+    justify-content: center;
   }
 `;
 

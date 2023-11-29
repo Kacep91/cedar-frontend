@@ -80,7 +80,7 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
             <ProductBuyButton
               isDelete={true}
               onClick={() => {
-                dispatch(CartActions.deleteItem({ id: id || '' }));
+                dispatch(CartActions.deleteItem({ id: id || "" }));
                 toast?.current?.show({
                   severity: "warn",
                   content: (

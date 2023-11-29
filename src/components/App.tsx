@@ -120,14 +120,14 @@ const useConcurrentTransition = () => {
   useEffect(() => {
     setOldLocation((oldLocation) =>
       oldLocation.pathname !== location.pathname ||
-        oldLocation.search !== location.search
+      oldLocation.search !== location.search
         ? location
         : oldLocation,
     );
   }, [location]);
 
   useEffect(() => {
-    startTransition(() => { });
+    startTransition(() => {});
   }, [oldLocation]);
 
   return oldLocation;

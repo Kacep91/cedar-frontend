@@ -86,43 +86,43 @@ export function Navbar({
       links: [
         {
           text: "Соки, сиропы, сбитни, пр. напитки",
-          url: "/goods",
+          url: "/goods/#product_id_0",
         },
         {
           text: "Мёд натуральный и продукты пчеловодства",
-          url: "/goods",
+          url: "/goods/#product_id_1",
         },
         {
           text: "Сибирское варенье из шишек и ягод",
-          url: "/goods",
+          url: "/goods/#product_id_2",
         },
         {
           text: "Сушеная ягода, вяленая ягода",
-          url: "/goods",
+          url: "/goods/#product_id_3",
         },
         {
           text: "Грибы (в т.ч. продукция из грибов)",
-          url: "/goods",
+          url: "/goods/#product_id_4",
         },
         {
           text: "Десерты таежные (пралине, сгущеное молоко, урбеч, цукаты и т.д.), десерты из яблок (печенье и пр.)",
-          url: "/goods",
+          url: "/goods/#product_id_5",
         },
         {
           text: "Иван-чай, травяные чаи/сборы",
-          url: "/goods",
+          url: "/goods/#product_id_6",
         },
         {
           text: "Масла",
-          url: "/goods",
+          url: "/goods/#product_id_7",
         },
         {
           text: "Косметическая продукция, эфирные масла",
-          url: "/goods",
+          url: "/goods/#product_id_8",
         },
         {
           text: "Бады",
-          url: "/goods",
+          url: "/goods/#product_id_9",
         },
       ],
       onClick: () => {
@@ -398,43 +398,43 @@ export function Navbar({
                 {[
                   {
                     text: "Соки, сиропы, сбитни, пр. напитки",
-                    url: "",
+                    url: "/goods/#product_id_0",
                   },
                   {
                     text: "Мёд натуральный и продукты пчеловодства",
-                    url: "",
+                    url: "/goods/#product_id_1",
                   },
                   {
                     text: "Сибирское варенье из шишек и ягод",
-                    url: "",
+                    url: "/goods/#product_id_2",
                   },
                   {
                     text: "Сушеная ягода, вяленая ягода",
-                    url: "",
+                    url: "/goods/#product_id_3",
                   },
                   {
                     text: "Грибы (в т.ч. продукция из грибов)",
-                    url: "",
+                    url: "/goods/#product_id_4",
                   },
                   {
                     text: "Десерты таежные (пралине, сгущеное молоко, урбеч, цукаты и т.д.), десерты из яблок (печенье и пр.)",
-                    url: "",
+                    url: "/goods/#product_id_5",
                   },
                   {
                     text: "Иван-чай, травяные чаи/сборы",
-                    url: "",
+                    url: "/goods/#product_id_6",
                   },
                   {
                     text: "Масла",
-                    url: "",
+                    url: "/goods/#product_id_7",
                   },
                   {
                     text: "Косметическая продукция, эфирные масла",
-                    url: "",
+                    url: "/goods/#product_id_8",
                   },
                   {
                     text: "Бады",
-                    url: "",
+                    url: "/goods/#product_id_9",
                   },
                 ].map((item) => {
                   return (
