@@ -6,7 +6,6 @@ import {
   ProductCard,
   ProductImage,
   ProductHeader,
-  ProductWeight,
   ProductReviews,
   ProductReviewsText,
   ProductBuySection,
@@ -25,8 +24,9 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { Toast } from "primereact/toast";
 import { useNavigate } from "react-router";
+import { ProductPresentationPageProps } from "components/UI/ProductPresentationPage";
 
-export const ItemListUnit = (props: ProductCardType) => {
+export const ItemListUnit = (props: ProductPresentationPageProps) => {
   const toast = useRef<Toast>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export const ItemListUnit = (props: ProductCardType) => {
             <ProductBuyButton
               isDelete={true}
               onClick={() => {
-                dispatch(CartActions.deleteItem({ id }));
+                dispatch(CartActions.deleteItem({ id: id || '' }));
                 toast?.current?.show({
                   severity: "warn",
                   content: (
@@ -106,7 +106,7 @@ export const ItemListUnit = (props: ProductCardType) => {
           ) : (
             <ProductBuyButton
               onClick={() => {
-                dispatch(CartActions.setItem(props));
+                dispatch(CartActions.setItem(props as any));
                 toast?.current?.show({
                   severity: "success",
                   content: (

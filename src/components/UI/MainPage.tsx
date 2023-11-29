@@ -46,11 +46,11 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   const products2 = [
-    { src: jam, text: "Джемы" },
-    { src: granola, text: "Гранола" },
-    { src: soup, text: "Супы" },
-    { src: honey1, text: "Мёд" },
-    { src: willow, text: "Напитки из ивы" },
+    { src: jam, text: "Джемы", url: '/jams' },
+    { src: granola, text: "Гранола", url: '/granola' },
+    { src: soup, text: "Супы", url: '/soups' },
+    { src: honey1, text: "Мёд", url: '/honey' },
+    { src: willow, text: "Напитки из ивы", url: '/willow' },
   ];
 
   return (
@@ -81,7 +81,7 @@ export const MainPage = () => {
         <h1>Наши продукты</h1>
         <AboutUsContainer>
           {products2.map((product) => (
-            <AboutUsWrapper key={product.text}>
+            <AboutUsWrapper key={product.text} onClick={() => navigate(product.url)}>
               <ProductPageImage src={product.src} />
               <AboutUsText>{product.text}</AboutUsText>
             </AboutUsWrapper>

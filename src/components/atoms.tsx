@@ -1087,20 +1087,25 @@ export const Instructions = styled.div`
 
 export const ProductPresentationWrapper = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
   gap: 50px;
 
   @media screen and (max-width: 1024px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
 export const ProductPresentationHeader = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:  flex-start;
   flex-direction: column;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+     justify-content: center;
+  }
 `;
 
 export const ProductPresentationText = styled.div`

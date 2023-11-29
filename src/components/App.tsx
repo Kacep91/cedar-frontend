@@ -21,6 +21,11 @@ import { RisottoRecipe } from "./Recipes/RisottoRecipe";
 import { ToastRecipe } from "./Recipes/ToastRecipe";
 import { Goods } from "./UI/Goods";
 import { ProductPresentationPage } from "./UI/ProductPresentationPage";
+import { Honey } from "./UI/Honey";
+import { Soup } from "./UI/Soup";
+import { Granola } from "./UI/Granola";
+import { Jams } from "./UI/Jams";
+import { Willow } from "./UI/Willow";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -88,6 +93,11 @@ const AppRoutes = () => {
       <Route path="/goods/product/:id" element={<ProductPresentationPage />} />
 
       <Route path={"/goods"} element={<Goods />} />
+      <Route path={"/honey"} element={<Honey />} />
+      <Route path={"/soups"} element={<Soup />} />
+      <Route path={"/granola"} element={<Granola />} />
+      <Route path={"/willow"} element={<Willow />} />
+      <Route path={"/jams"} element={<Jams />} />
       <Route path={"/aboutUs"} element={<AboutUs />} />
       <Route path={"/pastaRecipe"} element={<PastaRecipe />} />
       <Route path={"/risottoRecipe"} element={<RisottoRecipe />} />
@@ -110,14 +120,14 @@ const useConcurrentTransition = () => {
   useEffect(() => {
     setOldLocation((oldLocation) =>
       oldLocation.pathname !== location.pathname ||
-      oldLocation.search !== location.search
+        oldLocation.search !== location.search
         ? location
         : oldLocation,
     );
   }, [location]);
 
   useEffect(() => {
-    startTransition(() => {});
+    startTransition(() => { });
   }, [oldLocation]);
 
   return oldLocation;
