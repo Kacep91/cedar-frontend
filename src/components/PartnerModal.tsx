@@ -7,6 +7,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { phoneRegex, emailRegex } from "utils/utils";
+import { useScreenSize } from "utils/hooks";
 
 type PresentationModalType = {
   isOpen: boolean;
@@ -76,6 +77,9 @@ export const PartnerModal = ({
     setUserMessage("");
   };
 
+  const isTablet = useScreenSize("mobile");
+  const isMobile = useScreenSize("smallMobile");
+
   return (
     <Dialog
       draggable={false}
@@ -87,7 +91,7 @@ export const PartnerModal = ({
       header="Хочу стать партнёром"
       visible={isOpen}
       onHide={onClose}
-      style={{ width: "28vw" }}
+      style={!isMobile && !isTablet ? { width: "28vw" } : {}}
       breakpoints={{ "960px": "50vw", "641px": "75vw" }}
     >
       <div

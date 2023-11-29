@@ -100,8 +100,8 @@ export const roundPercent = (value, digitsAfterDot = 2, retainDot = false) => {
         ),
       )
     : retainDot
-    ? "0.0"
-    : "0";
+      ? "0.0"
+      : "0";
 };
 
 export const stringToBoolean = (string) => {

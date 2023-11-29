@@ -165,8 +165,8 @@ export const IconAtom = styled.span<IconAtomProps>`
     background
       ? backgroundSizeCss[size || "xxs"]
       : size
-      ? sizeCss[size] || ""
-      : ""}
+        ? sizeCss[size] || ""
+        : ""}
 
   ${({ background, iconColor }) => {
     const bckgrnd = `background: ${colors[iconColor].background};`;

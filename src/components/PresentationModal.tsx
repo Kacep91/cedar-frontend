@@ -3,6 +3,7 @@ import { PersonalDataAgreement } from "./atoms";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Dialog } from "primereact/dialog";
+import { useScreenSize } from "utils/hooks";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -26,6 +27,9 @@ export const PresentationModal = ({
     setUserEmail("");
   };
 
+  const isTablet = useScreenSize("mobile");
+  const isMobile = useScreenSize("smallMobile");
+
   return (
     <Dialog
       draggable={false}
@@ -37,7 +41,7 @@ export const PresentationModal = ({
       header="Запрос на презентацию/каталог"
       visible={isOpen}
       onHide={onClose}
-      style={{ width: "28vw" }}
+      style={!isMobile && !isTablet ? { width: "28vw" } : {}}
       breakpoints={{ "960px": "50vw", "641px": "75vw" }}
     >
       <div
