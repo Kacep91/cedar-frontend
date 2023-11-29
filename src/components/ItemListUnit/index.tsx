@@ -38,11 +38,11 @@ export const ItemListUnit = (props: ProductCardType) => {
   return (
     <>
       <Toast ref={toast} />
-      <ProductCard>
+      <ProductCard onClick={() => navigate(`/goods/product/${props.id}`)}>
         <ProductImage
           src={`${props.image || placeHolder}`}
           width="250"
-          preview
+          // preview
           height="250"
           loading="lazy"
           imageStyle={{ objectFit: "cover" }}

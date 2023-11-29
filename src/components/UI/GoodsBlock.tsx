@@ -10,11 +10,15 @@ import {
 } from "components/atoms";
 import { ItemListUnit } from "components/ItemListUnit";
 import { ProgressSpinner } from "primereact/progressspinner";
+import { arrayBufferToBase64 } from "utils/utils";
+import { GoodsActions, GoodsSelectors } from "store/goods";
+import { useDispatch, useSelector } from "react-redux";
 
 export const GoodsBlock = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [goods, setGoods] = useState([]);
   const [sorting, setSorting] = useState("popularFirst");
+  const dispatch = useDispatch();
 
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 
@@ -39,6 +43,7 @@ export const GoodsBlock = () => {
       const res = await axios.get("http://185.70.185.67:3000/goods");
 
       if (res.data) {
+        dispatch(GoodsActions.setGoods(res.data));
         setGoods(res.data);
         setIsLoading(false);
       }
@@ -61,16 +66,6 @@ export const GoodsBlock = () => {
       page: pageData.page + 1,
     });
   };
-
-  function arrayBufferToBase64(buffer: { type: string; data: any[] }) {
-    if (!buffer) {
-      return "";
-    }
-    let binary = "";
-    let bytes = new Uint8Array(buffer.data);
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return binary;
-  }
 
   const sortingOptions = [
     {

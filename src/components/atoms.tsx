@@ -992,6 +992,13 @@ export const RecipeText = styled.div`
   }
 `;
 
+export const DecriptionBlock = styled.div`
+  font-size: 18px;
+  margin-top: 16px;
+  width: 600px;
+  padding: 20px;
+`;
+
 export const RecipeHeaderImage = styled.img`
   width: 600px;
   height: 600px;
@@ -1076,4 +1083,61 @@ export const Instructions = styled.div`
       font-size: 16px;
     }
   }
+`;
+
+export const ProductPresentationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+`;
+
+export const ProductPresentationHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+export const ProductPresentationText = styled.div`
+  font-size: 24px;
+  margin-top: 24px;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 1.5rem;
+  }
+`;
+
+export const ProductPresentationHeaderImage = styled.img`
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 250px;
+    height: 250px;
+  }
+`;
+
+export const ProductPresentationDescriptionWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 50px;
+  flex-direction: column;
 `;

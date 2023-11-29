@@ -341,3 +341,13 @@ export const cardNotion = [
     text: "Количество",
   },
 ];
+
+export function arrayBufferToBase64(buffer) {
+  if (!buffer) {
+    return "";
+  }
+  let binary = "";
+  let bytes = new Uint8Array(buffer.data);
+  bytes.forEach((b) => (binary += String.fromCharCode(b)));
+  return binary;
+}

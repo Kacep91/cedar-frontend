@@ -20,6 +20,7 @@ import { PastaRecipe } from "./Recipes/PastaRecipe";
 import { RisottoRecipe } from "./Recipes/RisottoRecipe";
 import { ToastRecipe } from "./Recipes/ToastRecipe";
 import { Goods } from "./UI/Goods";
+import { ProductPresentationPage } from "./UI/ProductPresentationPage";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -83,6 +84,9 @@ const AppRoutes = () => {
         }
       />
       <Route path={"/cart"} element={<Cart />} />
+
+      <Route path="/goods/product/:id" element={<ProductPresentationPage />} />
+
       <Route path={"/goods"} element={<Goods />} />
       <Route path={"/aboutUs"} element={<AboutUs />} />
       <Route path={"/pastaRecipe"} element={<PastaRecipe />} />
