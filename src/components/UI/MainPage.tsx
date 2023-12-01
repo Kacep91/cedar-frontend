@@ -16,9 +16,7 @@ import pasta from "../../assets/images/pasta.jpg";
 import risotto from "../../assets/images/risotto.jpg";
 import toast from "../../assets/images/toast.jpg";
 import aboutUs from "../../assets/images/aboutUs.jpg";
-import aboutUs2 from "../../assets/images/aboutUs2.jpg";
 import branch from "../../assets/images/branch.png";
-import jam from "../../assets/images/jam.jpg";
 import granola from "../../assets/images/granola.jpg";
 import soup from "../../assets/images/soup.jpg";
 import honey1 from "../../assets/images/honey1.jpg";
@@ -29,11 +27,6 @@ import { Footer } from "./Footer";
 
 export const products = [
   { src: aboutUs, text: "Наше производство", link: "/aboutUs" },
-  {
-    src: aboutUs2,
-    text: "Наши мероприятия",
-    href: "https://vk.com/siberia.organic",
-  },
 ];
 
 const recipes = [
@@ -46,11 +39,10 @@ export const MainPage = () => {
   const navigate = useNavigate();
 
   const products2 = [
-    { src: jam, text: "Джемы", url: "/jams" },
-    { src: granola, text: "Гранола", url: "/granola" },
-    { src: soup, text: "Супы", url: "/soups" },
+    { src: granola, text: "Ягоды", url: "/berries" },
+    { src: soup, text: "Грибы", url: "/mushrooms" },
     { src: honey1, text: "Мёд", url: "/honey" },
-    { src: willow, text: "Напитки из ивы", url: "/willow" },
+    { src: willow, text: "Чай", url: "/willow" },
   ];
 
   return (
@@ -64,11 +56,7 @@ export const MainPage = () => {
           {products.map((product) => (
             <AboutUsWrapper
               key={product.text}
-              onClick={() =>
-                product.link
-                  ? navigate(product.link)
-                  : window.open(product.href, "_blank")
-              }
+              onClick={() => navigate(product.link)}
             >
               <AboutUsImage src={product.src} />
               <AboutUsText>{product.text}</AboutUsText>

@@ -4,13 +4,56 @@ import {
   ProductPresentationHeaderImage,
   DecriptionBlock,
   ProductPresentationDescriptionWrapper,
+  ItemListContainer,
+  ItemListLabel,
+  ItemListWrapper,
 } from "components/atoms";
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
 import honey1 from "../../assets/images/honey1.jpg";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import axios from "axios";
+import { ItemListUnit } from "components/ItemListUnit";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { GoodsSelectors, GoodsActions } from "store/goods";
+import {
+  categorizeProducts,
+  selectedLabels,
+  arrayBufferToBase64,
+} from "utils/utils";
+import { ProductPresentationPageProps } from "./ProductPresentationPage";
 
 export const Honey = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("http://185.70.185.67:3000/goods");
+
+      if (res.data) {
+        dispatch(GoodsActions.setGoods(res.data));
+        const categorizedProducts = Object.entries(
+          categorizeProducts(res.data, selectedLabels),
+        ).map((item) => ({
+          label: item[0],
+          items: item[1],
+        })) as {
+          label: string;
+          items: ProductPresentationPageProps[];
+        }[];
+        dispatch(GoodsActions.setCategorizedData(categorizedProducts));
+        setIsLoading(false);
+      }
+    };
+
+    categorizedProducts.length === 0 && fetch();
+  }, [categorizedProducts]);
   return (
     <>
       <MainHeader isCart={false} />
@@ -20,6 +63,7 @@ export const Honey = () => {
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>Сибирский мёд</h1>
       </div>
       <ProductPresentationWrapper>
+        <ScrollToTopOnMount />
         <ProductPresentationHeader>
           <ProductPresentationHeaderImage src={honey1} />
           <DecriptionBlock>
@@ -79,6 +123,61 @@ export const Honey = () => {
           </ol>
         </ProductPresentationDescriptionWrapper>
       </ProductPresentationWrapper>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: "30vh",
+          }}
+        >
+          <ProgressSpinner />
+        </div>
+      ) : (
+        <ItemListWrapper>
+          {categorizedProducts && categorizedProducts.length > 0
+            ? categorizedProducts
+                .filter((item) => item.label.includes("десерт"))
+                .map(
+                  (
+                    item: {
+                      label: string;
+                      items: ProductPresentationPageProps[];
+                    },
+                    index: number,
+                  ) => {
+                    const allItems = item.items.map((item2) => (
+                      <ItemListUnit
+                        key={item2.name}
+                        {...item2}
+                        image={
+                          item2.image
+                            ? arrayBufferToBase64(
+                                item2.image as unknown as {
+                                  type: string;
+                                  data: any[];
+                                },
+                              )
+                            : ""
+                        }
+                      />
+                    ));
+
+                    return (
+                      <>
+                        <ItemListLabel id={`product_id_${index}`}>
+                          {item.label}
+                        </ItemListLabel>
+                        <ItemListContainer>{allItems}</ItemListContainer>
+                      </>
+                    );
+                  },
+                )
+            : null}
+        </ItemListWrapper>
+      )}
       <Footer />
     </>
   );

@@ -70,7 +70,7 @@ export const SortingHeader = styled.div`
 `;
 
 export const NavigationWrapper = styled.div<{ isOnTop?: boolean }>`
-  top: 0;
+  top: -1px;
   position: ${(props) => (props.isOnTop ? "fixed" : "sticky")};
   width: 100%;
   z-index: 997;
@@ -248,6 +248,11 @@ export const ItemListLabel = styled.div`
   text-align: center;
   font-weight: bold;
   margin: 20px auto;
+  background-color: #cccccc79;
+  box-shadow:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
 `;
 
 export const ItemListContainer = styled.div`
@@ -362,7 +367,6 @@ export const PersonalDataAgreement = styled.p`
   text-align: center;
   font-size: 12px;
   font-style: italic;
-  max-width: 300px;
   margin: 10px auto;
 `;
 
@@ -700,6 +704,7 @@ export const InfoCardHeader = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  cursor: pointer;
 `;
 
 export const InfoCardImage = styled.img`
@@ -1152,4 +1157,15 @@ export const ProductPresentationDescriptionWrapper = styled.div`
   align-items: flex-start;
   gap: 50px;
   flex-direction: column;
+`;
+
+export const PersonalAgreementWrapper = styled.div`
+  display: flex;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 15px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
 `;

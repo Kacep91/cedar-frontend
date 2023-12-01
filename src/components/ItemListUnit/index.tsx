@@ -38,7 +38,7 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
   return (
     <>
       <Toast ref={toast} />
-      <ProductCard onClick={() => navigate(`/goods/product/${props.id}`)}>
+      <ProductCard>
         <ProductImage
           src={`${props.image || placeHolder}`}
           width="250"
@@ -46,8 +46,9 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
           height="250"
           loading="lazy"
           imageStyle={{ objectFit: "cover" }}
+          onClick={() => navigate(`/goods/product/${props.id}`)}
         />
-        <ProductHeader>
+        <ProductHeader onClick={() => navigate(`/goods/product/${props.id}`)}>
           {props.name} {props.volume || ""}
         </ProductHeader>
         <ProductReviews>

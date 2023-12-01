@@ -11,22 +11,22 @@ import {
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
-import willow from "../../assets/images/willow.jpg";
-import ScrollToTopOnMount from "utils/scrollRestorationFix";
-import axios from "axios";
+import granola from "../../assets/images/granola.jpg";
 import { ItemListUnit } from "components/ItemListUnit";
-import { ProgressSpinner } from "primereact/progressspinner";
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GoodsSelectors, GoodsActions } from "store/goods";
+import { GoodsActions, GoodsSelectors } from "store/goods";
 import {
+  arrayBufferToBase64,
   categorizeProducts,
   selectedLabels,
-  arrayBufferToBase64,
 } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ProgressSpinner } from "primereact/progressspinner";
 
-export const Willow = () => {
+export const Berries = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
@@ -54,6 +54,7 @@ export const Willow = () => {
 
     categorizedProducts.length === 0 && fetch();
   }, [categorizedProducts]);
+
   return (
     <>
       <ScrollToTopOnMount />
@@ -61,60 +62,48 @@ export const Willow = () => {
       <BackLinkAtom to={"/"} children={"Назад"} />
 
       <div>
-        <h1 style={{ textAlign: "center", margin: "60px 0" }}>Иван-чай</h1>
+        <h1 style={{ textAlign: "center", margin: "60px 0" }}>Таежные ягоды</h1>
       </div>
       <ProductPresentationWrapper>
         <ProductPresentationHeader>
-          <ProductPresentationHeaderImage src={willow} />
+          <ProductPresentationHeaderImage src={granola} />
           <DecriptionBlock>
-            Напитки из ивы обладают уникальными свойствами, которые делают их не
-            только вкусными, но и полезными для здоровья. Они могут быть
-            приготовлены из различных частей растения, включая кору, листья и
-            молодые веточки
+            Таежные ягоды - это не только вкусное лакомство, но и настоящий
+            кладезь полезных веществ. Они обладают уникальными свойствами,
+            которые благотворно влияют на здоровье человека и красоту его кожи.
           </DecriptionBlock>
         </ProductPresentationHeader>
         <ProductPresentationDescriptionWrapper>
           <ol className={"gradient-list"}>
             <li>
-              Одним из ключевых свойств напитков из ивы является их способность
-              стимулировать выработку интерферона в организме. Это делает их
-              незаменимым средством при простуде и вирусных заболеваниях, а
-              также при болезнях верхних дыхательных путей и воспалении
-              мочеполовой системы
+              Таежные ягоды, такие как клюква, брусника, черника и земляника,
+              богаты витаминами, минералами и биологически активными
+              соединениями, которые невозможно воссоздать искусственно. Они
+              обладают противовоспалительным и антибактериальным действием, что
+              делает их незаменимыми в медицине и косметологии
             </li>
 
             <li>
-              Кроме того, напитки из ивы обладают противовоспалительными,
-              жаропонижающими, антисептическими, обезболивающими, тонизирующими
-              и кровоостанавливающими свойствами
+              Клюква, например, защищает кишечник, снижает уровень холестерина,
+              укрепляет иммунитет и улучшает работу мозга. Брусника обладает
+              общеукрепляющим, ранозаживляющим, тонизирующим и многими другими
+              свойствами. Черника помогает регулировать менструальный цикл,
+              снижает уровень сахара в крови и стабилизирует работу органов и
+              желез.
             </li>
 
             <li>
-              {" "}
-              Они также могут использоваться в качестве успокаивающего средства
+              В косметологии таежные ягоды используются для увлажнения и
+              подтяжки кожи, борьбы с морщинами и старением, а также для
+              улучшения состояния волос. Они делают кожу сияющей, возвращают ей
+              здоровье и насыщают витаминами
             </li>
 
             <li>
-              Напитки из ивы также могут быть использованы в косметических
-              целях. Ванны из ивы могут помочь избавиться от неприятного запаха
-              при потливости ног, устранить зуд, а отвары советуют мыть голову,
-              чтобы избавиться от перхоти, и умываться, чтобы надолго сохранить
-              молодость лица
-            </li>
-
-            <li>
-              Приготовление напитка из ивы довольно простое. Для приготовления
-              отвара из коры ивы нужно залить столовую ложку измельченной коры
-              стаканом кипятка и варить в течение 30 минут на водяной бане.
-              Затем отвар следует процедить и довести до первоначального объема.
-              Принимать его рекомендуется по столовой ложке три-пять раз в день
-              до еды
-            </li>
-
-            <li>
-              Напитки из ивы - это не только вкусное, но и полезное дополнение к
-              вашему рациону. Они обладают целым рядом полезных свойств, которые
-              могут помочь улучшить ваше здоровье и благополучие.
+              Таким образом, таежные ягоды - это настоящий дар природы, который
+              помогает поддерживать здоровье и красоту. Они являются ценным
+              источником питательных веществ и обладают уникальными свойствами,
+              которые делают их незаменимыми в медицине и косметологии.
             </li>
           </ol>
         </ProductPresentationDescriptionWrapper>
@@ -135,7 +124,7 @@ export const Willow = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-                .filter((item) => item.label.includes("чай"))
+                .filter((item) => item.label.includes("Сушеная ягода"))
                 .map(
                   (
                     item: {

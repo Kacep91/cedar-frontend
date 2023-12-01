@@ -25,7 +25,7 @@ export const GoodsBlock = () => {
   const [sorting, setSorting] = useState("popularFirst");
   const dispatch = useDispatch();
   const goods = useSelector(GoodsSelectors.goodsList);
-
+  const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
 
   useEffect(() => {
@@ -50,6 +50,16 @@ export const GoodsBlock = () => {
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
+        const categorizedProducts = Object.entries(
+          categorizeProducts(res.data, selectedLabels),
+        ).map((item) => ({
+          label: item[0],
+          items: item[1],
+        })) as {
+          label: string;
+          items: ProductPresentationPageProps[];
+        }[];
+        dispatch(GoodsActions.setCategorizedData(categorizedProducts));
         setIsLoading(false);
       }
     };
@@ -90,20 +100,6 @@ export const GoodsBlock = () => {
       value: "newFirst",
     },
   ];
-
-  const categorizedProducts = useMemo(
-    () => categorizeProducts(goods, selectedLabels),
-    [goods, selectedLabels],
-  );
-
-  const result = useMemo(
-    () =>
-      Object.entries(categorizedProducts).map((item) => ({
-        label: item[0],
-        items: item[1],
-      })),
-    [categorizedProducts],
-  );
 
   return (
     <>
@@ -147,38 +143,43 @@ export const GoodsBlock = () => {
         </div>
       ) : (
         <ItemListWrapper>
-          {result.map(
-            (
-              item: { label: string; items: ProductPresentationPageProps[] },
-              index: number,
-            ) => {
-              const allItems = item.items.map((item2) => (
-                <ItemListUnit
-                  key={item2.name}
-                  {...item2}
-                  image={
-                    item2.image
-                      ? arrayBufferToBase64(
-                          item2.image as unknown as {
-                            type: string;
-                            data: any[];
-                          },
-                        )
-                      : ""
-                  }
-                />
-              ));
+          {categorizedProducts && categorizedProducts.length > 0
+            ? categorizedProducts.map(
+                (
+                  item: {
+                    label: string;
+                    items: ProductPresentationPageProps[];
+                  },
+                  index: number,
+                ) => {
+                  const allItems = item.items.map((item2) => (
+                    <ItemListUnit
+                      key={item2.name}
+                      {...item2}
+                      image={
+                        item2.image
+                          ? arrayBufferToBase64(
+                              item2.image as unknown as {
+                                type: string;
+                                data: any[];
+                              },
+                            )
+                          : ""
+                      }
+                    />
+                  ));
 
-              return (
-                <>
-                  <ItemListLabel id={`product_id_${index}`}>
-                    {item.label}
-                  </ItemListLabel>
-                  <ItemListContainer>{allItems}</ItemListContainer>
-                </>
-              );
-            },
-          )}
+                  return (
+                    <>
+                      <ItemListLabel id={`product_id_${index}`}>
+                        {item.label}
+                      </ItemListLabel>
+                      <ItemListContainer>{allItems}</ItemListContainer>
+                    </>
+                  );
+                },
+              )
+            : null}
           <Paginator
             first={pageData.first}
             rows={pageData.rows}

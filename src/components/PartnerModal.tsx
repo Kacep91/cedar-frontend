@@ -8,6 +8,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { phoneRegex, emailRegex } from "utils/utils";
 import { useScreenSize } from "utils/hooks";
+import { Checkbox } from "ui/Checkbox";
 
 type PresentationModalType = {
   isOpen: boolean;
@@ -18,26 +19,27 @@ type ModalError = {
   email: string;
   name: string;
   regionOrCity: string;
+  userSurname: string;
   phone: string;
   tradeType: string;
 };
 
 const tradeTypes = [
   {
-    label: "Дистрибьютор (опт)",
-    value: "distributor",
+    label: "Собирать и сдавать дикоросы на заготовительный пункт",
+    value: "wildGrowthGathering",
   },
   {
-    label: "Торговая точка",
-    value: "tradePoint",
+    label: "Организовать заготовительный пункт по сбору дикоросов",
+    value: "wildGrowthPoint",
   },
   {
-    label: "Сеть магазинов",
-    value: "tradeNetwork",
+    label: "Участвовать как производитель органической продукции",
+    value: "participation",
   },
   {
-    label: "Online-торговля",
-    value: "onlineTrade",
+    label: "Не определился, но интересуюсь этой темой и прошу направлять",
+    value: "dontKnow",
   },
 ];
 
@@ -49,28 +51,33 @@ export const PartnerModal = ({
     email: "",
     name: "",
     regionOrCity: "",
+    userSurname: "",
     phone: "",
     tradeType: "",
   });
   const [userName, setUserName] = useState("");
-  const [userPosition, setUserPosition] = useState("");
   const [userRegionOrCity, setUserRegionOrCity] = useState("");
+  const [userPatronymic, setUserPatronymic] = useState("");
+  const [userSurname, setUserSurname] = useState("");
   const [userTradeType, setUserTradeType] = useState();
   const [userPhone, setUserPhone] = useState<string | undefined>(undefined);
   const [userEmail, setUserEmail] = useState("");
   const [userMessage, setUserMessage] = useState("");
+  const [agreement, setAgreement] = useState(false);
   const onClose = () => {
     setModalOpen(false);
     setError({
       email: "",
       name: "",
       regionOrCity: "",
+      userSurname: "",
       phone: "",
       tradeType: "",
     });
     setUserName("");
     setUserEmail("");
-    setUserPosition("");
+    setUserSurname("");
+    setUserPatronymic("");
     setUserRegionOrCity("");
     setUserTradeType(undefined);
     setUserPhone("");
@@ -94,6 +101,20 @@ export const PartnerModal = ({
       style={!isMobile && !isTablet ? { width: "28vw" } : {}}
       breakpoints={{ "960px": "50vw", "641px": "75vw" }}
     >
+      <p>
+        Siberia organic- проект по развитию заготовки и переработки дикоросов в
+        Красноярском крае.
+      </p>
+      <p>
+        {" "}
+        Уже открыто более 10 заготовительных пунктов, принимающих у населения по
+        справедливой рыночной цене широкий перечень дикорастущего сырья.
+      </p>
+      <p>
+        Вы можете стать участником масштабного международного проекта в качестве
+        сборщика, переработчика или открыть свой заготовительный пункт.
+      </p>
+      <p>Заполните заявку и мы обязательно с Вами свяжемся</p>
       <div
         style={{
           display: "flex",
@@ -136,15 +157,35 @@ export const PartnerModal = ({
         </small>
 
         <InputText
-          id="userPosition"
-          aria-describedby="userPosition-help"
-          placeholder="Ваша должность"
-          value={userPosition}
+          id="userPatronymic"
+          required
+          aria-describedby="userPatronymic-help"
+          placeholder="Ваше отчество"
+          value={userPatronymic}
           style={{ width: "100%", margin: "10px 0 0 0" }}
-          onChange={(e) => setUserPosition(e.target.value)}
+          onChange={(e) => setUserPatronymic(e.target.value)}
+          validateOnly={true}
+        />
+
+        <InputText
+          id="userSurname"
+          required
+          aria-describedby="userSurname-help"
+          placeholder="Ваша фамилия"
+          value={userSurname}
+          style={{ width: "100%", margin: "10px 0 0 0" }}
+          className={error?.userSurname ? "p-invalid" : ""}
+          onChange={(e) => setUserSurname(e.target.value)}
+          validateOnly={true}
+          onFocus={() => setError({ ...error, userSurname: "" })}
+          onBlur={() => {
+            if (!userSurname) {
+              setError({ ...error, userSurname: "Поле не может быть пустым" });
+            }
+          }}
         />
         <small
-          id="userPosition-help"
+          id="userSurname-help"
           style={
             error
               ? {
@@ -156,8 +197,9 @@ export const PartnerModal = ({
               : { fontSize: "10px", marginTop: "5px", userSelect: "none" }
           }
         >
-          {""}
+          {error.userSurname || ""}
         </small>
+
         <InputText
           id="userRegionOrCity"
           required
@@ -198,7 +240,7 @@ export const PartnerModal = ({
           options={tradeTypes}
           optionLabel="label"
           showClear
-          placeholder="Выберите тип продаж"
+          placeholder="В рамках проекта Вы хотите"
           style={{ width: "100%", margin: "10px 0 0 0" }}
         />
 
@@ -301,6 +343,7 @@ export const PartnerModal = ({
         <Button
           rounded
           text
+          disabled={!agreement}
           style={{
             display: "flex",
             justifyContent: "center",
@@ -366,7 +409,22 @@ export const PartnerModal = ({
           Отправить
         </Button>
         <PersonalDataAgreement>
-          Заполняя данные, Вы даёте согласие на обработку персональных данных.
+          <Checkbox
+            onChange={() => setAgreement(!agreement)}
+            checked={agreement}
+            value={agreement}
+            label=""
+          >
+            <div>
+              <span>
+                Согласен с{" "}
+                <a href="/personalAgreement">
+                  условиями использования формы заявки
+                </a>{" "}
+                и политикой конфиденциальности лица, разместившего форму заявки
+              </span>
+            </div>
+          </Checkbox>
         </PersonalDataAgreement>
       </div>
     </Dialog>

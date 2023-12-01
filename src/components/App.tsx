@@ -22,10 +22,10 @@ import { ToastRecipe } from "./Recipes/ToastRecipe";
 import { Goods } from "./UI/Goods";
 import { ProductPresentationPage } from "./UI/ProductPresentationPage";
 import { Honey } from "./UI/Honey";
-import { Soup } from "./UI/Soup";
-import { Granola } from "./UI/Granola";
-import { Jams } from "./UI/Jams";
+import { Berries } from "./UI/Berries";
+import { Mushrooms } from "./UI/Mushrooms";
 import { Willow } from "./UI/Willow";
+import { PersonalDataCollection } from "./UI/PersonalDataCollection";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -94,14 +94,14 @@ const AppRoutes = () => {
 
       <Route path={"/goods"} element={<Goods />} />
       <Route path={"/honey"} element={<Honey />} />
-      <Route path={"/soups"} element={<Soup />} />
-      <Route path={"/granola"} element={<Granola />} />
+      <Route path={"/mushrooms"} element={<Mushrooms />} />
+      <Route path={"/berries"} element={<Berries />} />
       <Route path={"/willow"} element={<Willow />} />
-      <Route path={"/jams"} element={<Jams />} />
       <Route path={"/aboutUs"} element={<AboutUs />} />
       <Route path={"/pastaRecipe"} element={<PastaRecipe />} />
       <Route path={"/risottoRecipe"} element={<RisottoRecipe />} />
       <Route path={"/toastRecipe"} element={<ToastRecipe />} />
+      <Route path={"/personalAgreement"} element={<PersonalDataCollection />} />
 
       <Route path={"/"} element={<MainPage />} />
 

@@ -17,10 +17,10 @@ import {
   Sale,
 } from "../atoms";
 import logo from "../../assets/images/logo.png";
-import lees from "../../assets/images/lees.jpg";
+import aboutUs from "../../assets/images/aboutUs.jpg";
 import goods from "../../assets/images/goods.jpg";
 import offer from "../../assets/images/offer.jpg";
-import teaPot from "../../assets/images/teaPot.png";
+import lees from "../../assets/images/lees.jpg";
 import snowFlake from "../../assets/images/snowFlake.png";
 import chips1 from "../../assets/images/chips1.png";
 import granola2 from "../../assets/images/granola2.jpg";
@@ -162,7 +162,7 @@ export function Navbar({
   return (
     <NavigationWrapper isOnTop={isSticky}>
       {!isMobileMenuOpened && (
-        <Sale>
+        <Sale onClick={() => navigate("/goods")}>
           {isMobile ? (
             <span>
               Нет минимального заказа. <br />
@@ -354,11 +354,10 @@ export function Navbar({
           )}
           <AdditionalInfoWrapper isOpened={isLongPopupVisible}>
             <AdditionalInfoBg isOpened={isLongPopupVisible}>
-              <InfoCardHeader>
-                <InfoCardImage src={lees} />
+              <InfoCardHeader onClick={() => navigate("/aboutUs")}>
+                <InfoCardImage src={aboutUs} />
                 <InfoCardText>
-                  Именно из этих лисичек, бережно собранных, вымытых и
-                  отобранных - мы и делаем наше варенье
+                  Кто мы? Подробнее о том, что мы делаем
                 </InfoCardText>
               </InfoCardHeader>
 
@@ -377,9 +376,10 @@ export function Navbar({
               </InfoCardHeader>
 
               <InfoCardHeader>
-                <InfoCardImage src={teaPot} />
+                <InfoCardImage src={lees} />
                 <InfoCardText>
-                  Для чая всегда есть время, особенно с нашим вареньем
+                  Именно из этих лисичек, бережно собранных, вымытых и
+                  отобранных - мы и делаем наше варенье
                 </InfoCardText>
               </InfoCardHeader>
             </AdditionalInfoBg>

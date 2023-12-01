@@ -7,11 +7,13 @@ export type CheckboxType<T> = {
   onChange: CheckboxProps["onChange"];
   value: T;
   label: string;
+  children: any;
 };
 export function Checkbox<T>({
   value,
   checked,
   label,
+  children,
   onChange,
 }: CheckboxType<T>) {
   return (
@@ -25,6 +27,7 @@ export function Checkbox<T>({
       <Label htmlFor={label}>
         <Text.T3Medium>{label}</Text.T3Medium>
       </Label>
+      {children}
     </Wrapper>
   );
 }
