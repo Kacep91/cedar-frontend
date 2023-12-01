@@ -1,19 +1,23 @@
+import vkLogo from "../../assets/images/vkLogo.svg";
 export const Footer = () => {
   return (
     <div className="footer-basic">
       <footer>
         <div className="social">
-          <a href="#">
+          <a href="https://instagram.com/siberia.organic?igshid=OGQ5ZDc2ODk2ZA==">
             <i className="icon ion-social-instagram"></i>
           </a>
-          <a href="#">
-            <i className="icon ion-social-snapchat"></i>
-          </a>
-          <a href="#">
-            <i className="icon ion-social-twitter"></i>
-          </a>
-          <a href="#">
-            <i className="icon ion-social-facebook"></i>
+          <a href="https://vk.com/siberia.organic">
+            <img
+              width="24"
+              height="24"
+              style={{
+                marginLeft: "-2px",
+                marginTop: "-4px",
+                filter: "grayscale(100%)",
+              }}
+              src={vkLogo}
+            />
           </a>
         </div>
         <ul className="list-inline">
@@ -21,10 +25,10 @@ export const Footer = () => {
             <a href="#">Наверх</a>
           </li>
           <li className="list-inline-item">
-            <a href="#">О нас</a>
+            <a href="/aboutUs">О нас</a>
           </li>
           <li className="list-inline-item">
-            <a href="#">Продукты</a>
+            <a href="/goods">Продукты</a>
           </li>
           <li className="list-inline-item">
             <a href="#">Документы</a>

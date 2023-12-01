@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AboutUsBlock,
   AboutUsContainer,
@@ -24,6 +24,11 @@ import willow from "../../assets/images/willow.jpg";
 import { Bublik } from "./Bublik";
 import { useNavigate } from "react-router";
 import { Footer } from "./Footer";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { GoodsSelectors, GoodsActions } from "store/goods";
+import { categorizeProducts, selectedLabels } from "utils/utils";
+import { ProductPresentationPageProps } from "./ProductPresentationPage";
 
 export const products = [
   { src: aboutUs, text: "Наше производство", link: "/aboutUs" },
@@ -37,6 +42,30 @@ const recipes = [
 
 export const MainPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios.get("http://185.70.185.67:3000/goods");
+
+      if (res.data) {
+        dispatch(GoodsActions.setGoods(res.data));
+        const categorizedProducts = Object.entries(
+          categorizeProducts(res.data, selectedLabels),
+        ).map((item) => ({
+          label: item[0],
+          items: item[1],
+        })) as {
+          label: string;
+          items: ProductPresentationPageProps[];
+        }[];
+        dispatch(GoodsActions.setCategorizedData(categorizedProducts));
+      }
+    };
+
+    categorizedProducts.length === 0 && fetch();
+  }, [categorizedProducts]);
 
   const products2 = [
     { src: granola, text: "Ягоды", url: "/berries" },

@@ -15,7 +15,7 @@ export const AboutUs = () => {
   return (
     <>
       <MainHeader isCart={true} />
-      <BackLinkAtom to={"/"} children={"Назад"} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <AboutUsBlock>
         <h1>О нас</h1>
         <AboutUsContainer>

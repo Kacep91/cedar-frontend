@@ -16,8 +16,6 @@ export function GoogleButton({
     scope: ["https://www.googleapis.com/auth/userinfo.email"],
   };
 
-  console.log(options);
-
   const qs = new URLSearchParams(options);
 
   const link = `https://accounts.google.com/o/oauth2/v2/auth?${qs.toString()}`;

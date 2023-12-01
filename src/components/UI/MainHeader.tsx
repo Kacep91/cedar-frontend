@@ -164,6 +164,9 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
 
   return (
     <>
+      <div id={"backButton"} style={{ visibility: "hidden", height: "0" }}>
+        O_o
+      </div>
       {isTablet && (
         <img
           onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}

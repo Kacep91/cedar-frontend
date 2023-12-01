@@ -378,7 +378,7 @@ export const AdminPanel = () => {
 
   return (
     <AdminContainer>
-      <BackLinkAtom to={"/"} children={"Назад"} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <Form>
         <Row style={{ display: "flex", justifyContent: "center" }}>
           <Heading.H1>Добавление нового товара</Heading.H1>

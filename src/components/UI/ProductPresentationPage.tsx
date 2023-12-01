@@ -88,7 +88,7 @@ export const ProductPresentationPage = () => {
   return (
     <>
       <MainHeader isCart={true} />
-      <BackLinkAtom to={"/goods"} children={"Назад"} />
+      <BackLinkAtom id={"backButton"} to={"/goods"} children={"Назад"} />
       {isLoading ? (
         <div
           style={{

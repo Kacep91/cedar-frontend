@@ -13,8 +13,8 @@ import soup from "../../assets/images/soup.jpg";
 export const Soup = () => {
   return (
     <>
-      <MainHeader isCart={false} />
-      <BackLinkAtom to={"/"} children={"Назад"} />
+      <MainHeader isCart={true} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
 
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>

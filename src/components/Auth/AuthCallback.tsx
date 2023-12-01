@@ -8,7 +8,6 @@ function AuthCallback() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("location", location);
 
   let match = location.search.split("?code=");
   let code = match[1];

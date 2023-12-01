@@ -7,6 +7,7 @@ import {
   ItemListContainer,
   ItemListLabel,
   ItemListWrapper,
+  LoadMoreButton,
 } from "components/atoms";
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
@@ -31,6 +32,10 @@ export const Mushrooms = () => {
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
 
+  const [listLength, setListLength] = useState(4);
+  const totalLength =
+    [...categorizedProducts].filter((item) => item.label.includes("гриб"))?.[0]
+      ?.items.length || 1;
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
@@ -57,9 +62,8 @@ export const Mushrooms = () => {
   return (
     <>
       <ScrollToTopOnMount />
-      <MainHeader isCart={false} />
-      <BackLinkAtom to={"/"} children={"Назад"} />
-
+      <MainHeader isCart={true} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>Грибы</h1>
       </div>
@@ -132,22 +136,24 @@ export const Mushrooms = () => {
                     },
                     index: number,
                   ) => {
-                    const allItems = item.items.map((item2) => (
-                      <ItemListUnit
-                        key={item2.name}
-                        {...item2}
-                        image={
-                          item2.image
-                            ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                            : ""
-                        }
-                      />
-                    ));
+                    const allItems = item.items
+                      .slice(0, listLength)
+                      .map((item2) => (
+                        <ItemListUnit
+                          key={item2.name}
+                          {...item2}
+                          image={
+                            item2.image
+                              ? arrayBufferToBase64(
+                                  item2.image as unknown as {
+                                    type: string;
+                                    data: any[];
+                                  },
+                                )
+                              : ""
+                          }
+                        />
+                      ));
 
                     return (
                       <>
@@ -161,6 +167,23 @@ export const Mushrooms = () => {
                 )
             : null}
         </ItemListWrapper>
+      )}{" "}
+      {listLength >= totalLength ? null : (
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <LoadMoreButton
+            text
+            rounded
+            onClick={() =>
+              setListLength(
+                listLength + 4 < totalLength ? listLength + 4 : totalLength,
+              )
+            }
+          >
+            Загрузить еще...
+          </LoadMoreButton>
+        </div>
       )}
       <Footer />
     </>

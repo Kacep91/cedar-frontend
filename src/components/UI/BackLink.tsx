@@ -17,7 +17,12 @@ export const BackLink = ({
   className,
 }: BackLinkProps) => {
   return (
-    <BackLinkAtom to={to} onClick={onClick} className={className}>
+    <BackLinkAtom
+      id={"backButton"}
+      to={to}
+      onClick={onClick}
+      className={className}
+    >
       <Icon name="lessThan" /> {children}
     </BackLinkAtom>
   );

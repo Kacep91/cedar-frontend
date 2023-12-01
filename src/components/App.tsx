@@ -26,6 +26,7 @@ import { Berries } from "./UI/Berries";
 import { Mushrooms } from "./UI/Mushrooms";
 import { Willow } from "./UI/Willow";
 import { PersonalDataCollection } from "./UI/PersonalDataCollection";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -66,6 +67,7 @@ const App = () => {
         }
       >
         <AppWrapper>
+          <ScrollToTopOnMount />
           <AppRoutes />
         </AppWrapper>
       </Suspense>

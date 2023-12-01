@@ -12,6 +12,7 @@ import {
   ItemListContainer,
   ItemListLabel,
   ItemListWrapper,
+  LoadMoreButton,
 } from "components/atoms";
 import { BackLinkAtom } from "components/UI/BackLink";
 import { useScreenSize } from "utils/hooks";
@@ -32,6 +33,10 @@ export const ToastRecipe = (recipe: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
+  const [listLength, setListLength] = useState(4);
+  const totalLength =
+    [...categorizedProducts].filter((item) => item.label.includes("гриб"))?.[0]
+      ?.items.length || 1;
 
   useEffect(() => {
     const fetch = async () => {
@@ -60,7 +65,7 @@ export const ToastRecipe = (recipe: any) => {
   return (
     <>
       <MainHeader isCart={true} />
-      <BackLinkAtom to={"/"} children={"Назад"} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <RecipeWrapper>
         <RecipeHeader>
           <RecipeHeaderImage src={toast} />
@@ -127,22 +132,24 @@ export const ToastRecipe = (recipe: any) => {
                     },
                     index: number,
                   ) => {
-                    const allItems = item.items.map((item2) => (
-                      <ItemListUnit
-                        key={item2.name}
-                        {...item2}
-                        image={
-                          item2.image
-                            ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                            : ""
-                        }
-                      />
-                    ));
+                    const allItems = item.items
+                      .slice(0, listLength)
+                      .map((item2) => (
+                        <ItemListUnit
+                          key={item2.name}
+                          {...item2}
+                          image={
+                            item2.image
+                              ? arrayBufferToBase64(
+                                  item2.image as unknown as {
+                                    type: string;
+                                    data: any[];
+                                  },
+                                )
+                              : ""
+                          }
+                        />
+                      ));
 
                     return (
                       <>
@@ -156,6 +163,23 @@ export const ToastRecipe = (recipe: any) => {
                 )
             : null}
         </ItemListWrapper>
+      )}
+      {listLength >= totalLength ? null : (
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <LoadMoreButton
+            text
+            rounded
+            onClick={() =>
+              setListLength(
+                listLength + 4 < totalLength ? listLength + 4 : totalLength,
+              )
+            }
+          >
+            Загрузить еще...
+          </LoadMoreButton>
+        </div>
       )}
       <Footer />
     </>

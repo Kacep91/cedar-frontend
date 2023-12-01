@@ -1169,3 +1169,9 @@ export const PersonalAgreementWrapper = styled.div`
   align-items: center;
   margin: 20px auto;
 `;
+
+export const LoadMoreButton = styled(Button)`
+  background-color: #56af31;
+  padding: 8px 16px;
+  color: white !important;
+`;

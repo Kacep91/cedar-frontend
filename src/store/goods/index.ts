@@ -32,8 +32,6 @@ export const goodsSlice = createSlice({
       state,
       action: PayloadAction<ProductPresentationPageProps[]>
     ) => {
-      console.log("action.payload", action.payload);
-
       return {
         ...state,
         goodsList: action.payload,

@@ -67,7 +67,7 @@ const Auth = () => {
     <AuthWrapper>
       <AuthModal>
         <Toast ref={toast} />
-        <BackLinkAtom to={"/"} children={"Назад"} />
+        <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
         <AuthHeader>Вход в админку</AuthHeader>
         <GoogleButton clientId={googleId} redirectUrl={googleRedirect} />
         {isLoading && <ProgressSpinner />}

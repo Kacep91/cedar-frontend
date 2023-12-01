@@ -152,22 +152,24 @@ export const GoodsBlock = () => {
                   },
                   index: number,
                 ) => {
-                  const allItems = item.items.map((item2) => (
-                    <ItemListUnit
-                      key={item2.name}
-                      {...item2}
-                      image={
-                        item2.image
-                          ? arrayBufferToBase64(
-                              item2.image as unknown as {
-                                type: string;
-                                data: any[];
-                              },
-                            )
-                          : ""
-                      }
-                    />
-                  ));
+                  const allItems = item.items
+                    .slice(0, listLength)
+                    .map((item2) => (
+                      <ItemListUnit
+                        key={item2.name}
+                        {...item2}
+                        image={
+                          item2.image
+                            ? arrayBufferToBase64(
+                                item2.image as unknown as {
+                                  type: string;
+                                  data: any[];
+                                },
+                              )
+                            : ""
+                        }
+                      />
+                    ));
 
                   return (
                     <>

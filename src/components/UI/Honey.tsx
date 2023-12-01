@@ -7,6 +7,7 @@ import {
   ItemListContainer,
   ItemListLabel,
   ItemListWrapper,
+  LoadMoreButton,
 } from "components/atoms";
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
@@ -30,6 +31,11 @@ export const Honey = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
+  const [listLength, setListLength] = useState(4);
+  const totalLength =
+    [...categorizedProducts].filter((item) =>
+      item.label.includes("десерт"),
+    )?.[0]?.items.length || 1;
 
   useEffect(() => {
     const fetch = async () => {
@@ -56,14 +62,14 @@ export const Honey = () => {
   }, [categorizedProducts]);
   return (
     <>
-      <MainHeader isCart={false} />
-      <BackLinkAtom to={"/"} children={"Назад"} />
+      <MainHeader isCart={true} />
+      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
+      <ScrollToTopOnMount />
 
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>Сибирский мёд</h1>
       </div>
       <ProductPresentationWrapper>
-        <ScrollToTopOnMount />
         <ProductPresentationHeader>
           <ProductPresentationHeaderImage src={honey1} />
           <DecriptionBlock>
@@ -148,22 +154,24 @@ export const Honey = () => {
                     },
                     index: number,
                   ) => {
-                    const allItems = item.items.map((item2) => (
-                      <ItemListUnit
-                        key={item2.name}
-                        {...item2}
-                        image={
-                          item2.image
-                            ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                            : ""
-                        }
-                      />
-                    ));
+                    const allItems = item.items
+                      .slice(0, listLength)
+                      .map((item2) => (
+                        <ItemListUnit
+                          key={item2.name}
+                          {...item2}
+                          image={
+                            item2.image
+                              ? arrayBufferToBase64(
+                                  item2.image as unknown as {
+                                    type: string;
+                                    data: any[];
+                                  },
+                                )
+                              : ""
+                          }
+                        />
+                      ));
 
                     return (
                       <>
@@ -177,6 +185,23 @@ export const Honey = () => {
                 )
             : null}
         </ItemListWrapper>
+      )}
+      {listLength >= totalLength ? null : (
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <LoadMoreButton
+            text
+            rounded
+            onClick={() =>
+              setListLength(
+                listLength + 4 < totalLength ? listLength + 4 : totalLength,
+              )
+            }
+          >
+            Загрузить еще...
+          </LoadMoreButton>
+        </div>
       )}
       <Footer />
     </>
