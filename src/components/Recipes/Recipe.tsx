@@ -28,7 +28,7 @@ export const GeneralRecipe = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:3000/recipes");
+      const res = await axios.get("http://185.70.185.67:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));

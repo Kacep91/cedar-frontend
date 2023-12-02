@@ -135,7 +135,7 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://localhost:3000/goods/${item.id}`).then(() => {
+    return axios.delete(`http://185.70.185.67:3000/goods/${item.id}`).then(() => {
       setDeleteModalOpen(false);
       toast.current?.show({
         severity: "info",
@@ -150,7 +150,7 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://localhost:3000/recipes/${item.id}`).then(() => {
+    return axios.delete(`http://185.70.185.67:3000/recipes/${item.id}`).then(() => {
       setDeleteModalRecipeOpen(false);
       toast.current?.show({
         severity: "info",
@@ -165,7 +165,7 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://localhost:3000/slides/${item.id}`).then(() => {
+    return axios.delete(`http://185.70.185.67:3000/slides/${item.id}`).then(() => {
       setDeleteModalSlideOpen(false);
       toast.current?.show({
         severity: "info",
@@ -238,7 +238,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:3000/goods");
+      const res = await axios.get("http://185.70.185.67:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -262,7 +262,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:3000/recipes");
+      const res = await axios.get("http://185.70.185.67:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
@@ -276,7 +276,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:3000/slides");
+      const res = await axios.get("http://185.70.185.67:3000/slides");
 
       if (res.data) {
         dispatch(GoodsActions.setSlides(res.data));
@@ -499,7 +499,7 @@ export const AdminPanel = () => {
         console.log("object", object);
 
         axios
-          .post("http://localhost:3000/recipes", object)
+          .post("http://185.70.185.67:3000/recipes", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -539,7 +539,7 @@ export const AdminPanel = () => {
         console.log("object", object);
 
         const response = await axios.post(
-          "http://localhost:3000/slides",
+          "http://185.70.185.67:3000/slides",
           object,
         );
         console.log(response.data);
@@ -581,7 +581,7 @@ export const AdminPanel = () => {
         console.log("object", object);
 
         axios
-          .post("http://localhost:3000/goods", object)
+          .post("http://185.70.185.67:3000/goods", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -640,7 +640,7 @@ export const AdminPanel = () => {
     //   });
 
     //   axios
-    //     .post("http://localhost:3000/goods", object)
+    //     .post("http://185.70.185.67:3000/goods", object)
     //     .then((response) => {
     //       console.log(response.data);
     //     })

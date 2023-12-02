@@ -65,7 +65,7 @@ export const ProductPresentationPage = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://localhost:3000/goods");
+      const res = await axios.get("http://185.70.185.67:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -102,11 +102,11 @@ export const ProductPresentationPage = () => {
           image={
             item2.image
               ? arrayBufferToBase64(
-                  item2.image as unknown as {
-                    type: string;
-                    data: any[];
-                  },
-                )
+                item2.image as unknown as {
+                  type: string;
+                  data: any[];
+                },
+              )
               : ""
           }
         />
@@ -146,11 +146,11 @@ export const ProductPresentationPage = () => {
                 src={
                   data?.image
                     ? arrayBufferToBase64(
-                        data.image as unknown as {
-                          type: string;
-                          data: any[];
-                        },
-                      )
+                      data.image as unknown as {
+                        type: string;
+                        data: any[];
+                      },
+                    )
                     : placeHolder
                 }
               />
