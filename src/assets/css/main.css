@@ -8,6 +8,10 @@
   --white: #fafafa;
 }
 
+button {
+  outline: none !important;
+}
+
 body {
   font-family: "Raleway", sans-serif;
   color: #008054 !important;

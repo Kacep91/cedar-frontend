@@ -26,7 +26,7 @@ import { Berries } from "./UI/Berries";
 import { Mushrooms } from "./UI/Mushrooms";
 import { Willow } from "./UI/Willow";
 import { PersonalDataCollection } from "./UI/PersonalDataCollection";
-import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import { GeneralRecipe } from "./Recipes/Recipe";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -67,7 +67,6 @@ const App = () => {
         }
       >
         <AppWrapper>
-          <ScrollToTopOnMount />
           <AppRoutes />
         </AppWrapper>
       </Suspense>
@@ -103,6 +102,8 @@ const AppRoutes = () => {
       <Route path={"/pastaRecipe"} element={<PastaRecipe />} />
       <Route path={"/risottoRecipe"} element={<RisottoRecipe />} />
       <Route path={"/toastRecipe"} element={<ToastRecipe />} />
+      <Route path={"/recipe/:id"} element={<GeneralRecipe />} />
+
       <Route path={"/personalAgreement"} element={<PersonalDataCollection />} />
 
       <Route path={"/"} element={<MainPage />} />

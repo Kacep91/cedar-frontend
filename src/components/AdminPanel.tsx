@@ -1,11 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Toast } from "primereact/toast";
 import { v4 as uuidv4 } from "uuid";
 import {
   FileUpload,
-  FileUploadHandlerEvent,
   FileUploadHeaderTemplateOptions,
-  FileUploadSelectEvent,
   FileUploadUploadEvent,
   ItemTemplateOptions,
 } from "primereact/fileupload";
@@ -19,8 +17,20 @@ import styled from "styled-components";
 import { Heading } from "ui/Typography";
 import { Checkbox } from "ui/Checkbox";
 import axios from "axios";
-import { BackLinkAtom } from "./atoms";
+import MainHeader from "./UI/MainHeader";
+import { BackLinkAtom } from "./UI/BackLink";
+import { AdminControlWrapper, ButtonFacade } from "./atoms";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { useDispatch, useSelector } from "react-redux";
+import { GoodsSelectors, GoodsActions } from "store/goods";
+import { categorizeProducts, selectedLabels } from "utils/utils";
+import { ProductPresentationPageProps } from "./UI/ProductPresentationPage";
+import { FilterMatchMode } from "primereact/api";
+import { Dialog } from "primereact/dialog";
+import { InputTextarea } from "primereact/inputtextarea";
 import { useScreenSize } from "utils/hooks";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 const Row = styled.div`
   margin: 15px 0 10px 0;
@@ -34,12 +44,12 @@ const Row = styled.div`
 const AdminContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  width: 80%;
+  min-height: 100%;
   align-items: center;
-  justify-content: center;
-
-  background: #cccccc7b;
+  justify-content: flex-start;
+  height: 100%;
+  padding: 0 0 17vh 0;
 `;
 
 const FileUploadWrapper = styled.div`
@@ -86,24 +96,226 @@ const SubmitButton = styled.button`
   }
 `;
 
+const buttons = [
+  { text: "Загрузить продукты", content: "loadGoods" },
+
+  { text: "Удалить продукты", content: "removeGoods" },
+
+  { text: "Загрузить рецепты", content: "loadRecipes" },
+
+  { text: "Удалить рецепты", content: "removeRecipes" },
+
+  { text: "Загрузить фото для слайдера", content: "loadSlider" },
+
+  { text: "Удалить фото для слайдера", content: "removeSlider" },
+];
+
 export const AdminPanel = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const goods = useSelector(GoodsSelectors.goodsList);
+  const recipes = useSelector(GoodsSelectors.recipesList);
+  const slides = useSelector(GoodsSelectors.slidesList);
+
+  const [isDeleteModalOpened, setDeleteModalOpen] = useState(false);
+  const [isDeleteModalRecipeOpened, setDeleteModalRecipeOpen] = useState(false);
+  const [isDeleteModalSlideOpened, setDeleteModalSlideOpen] = useState(false);
+
+  const [itemForDelete, setItemForDelete] = useState<{
+    id: string | null;
+    name: string;
+  }>({ id: null, name: "" });
+
+  const [globalFilterValue, setGlobalFilterValue] = useState("");
+  const [onlyImages, setOnlyImages] = useState(false);
+  const isMobile = useScreenSize("mobile");
+
+  const deleteItem = (item: { id: string | null; name: string }) => {
+    if (!item) {
+      return;
+    }
+
+    return axios.delete(`http://localhost:3000/goods/${item.id}`).then(() => {
+      setDeleteModalOpen(false);
+      toast.current?.show({
+        severity: "info",
+        summary: "Успех",
+        detail: "Данные успешно удалены",
+      });
+    });
+  };
+
+  const deleteItemRecipe = (item: { id: string | null; name: string }) => {
+    if (!item) {
+      return;
+    }
+
+    return axios.delete(`http://localhost:3000/recipes/${item.id}`).then(() => {
+      setDeleteModalRecipeOpen(false);
+      toast.current?.show({
+        severity: "info",
+        summary: "Успех",
+        detail: "Данные успешно удалены",
+      });
+    });
+  };
+
+  const deleteItemSlide = (item: { id: string | null; name: string }) => {
+    if (!item) {
+      return;
+    }
+
+    return axios.delete(`http://localhost:3000/slides/${item.id}`).then(() => {
+      setDeleteModalSlideOpen(false);
+      toast.current?.show({
+        severity: "info",
+        summary: "Успех",
+        detail: "Данные успешно удалены",
+      });
+    });
+  };
+
+  const [filters, setFilters] = useState({
+    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+  });
+
+  const onGlobalFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement> | string,
+  ) => {
+    if (typeof e === "string") {
+      const value = e?.trim();
+      let _filters = { ...filters };
+
+      // @ts-ignore
+      _filters["global"].value = value;
+
+      setFilters(_filters);
+      setGlobalFilterValue(value);
+    } else {
+      const value = e.target.value?.trim();
+      let _filters = { ...filters };
+
+      // @ts-ignore
+      _filters["global"].value = value;
+
+      setFilters(_filters);
+      setGlobalFilterValue(value);
+    }
+  };
+
+  const renderHeader = () => {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+        }}
+      >
+        <span className="p-input-icon-left">
+          <i className="pi pi-search" />
+          <InputText
+            style={{ width: "150%" }}
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Поиск продукта по ID или имени"
+          />
+        </span>
+        <Button
+          type="button"
+          icon="pi pi-times"
+          style={{ marginLeft: "160px" }}
+          className="p-button-outlined p-button-rounded p-button-danger"
+          onClick={() => onGlobalFilterChange("")}
+        />
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("http://localhost:3000/goods");
+
+      if (res.data) {
+        dispatch(GoodsActions.setGoods(res.data));
+        const categorizedProducts = Object.entries(
+          categorizeProducts(res.data, selectedLabels),
+        ).map((item) => ({
+          label: item[0],
+          items: item[1],
+        })) as {
+          label: string;
+          items: ProductPresentationPageProps[];
+        }[];
+        dispatch(GoodsActions.setCategorizedData(categorizedProducts));
+        setIsLoading(false);
+      }
+    };
+
+    goods.length === 0 && fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("http://localhost:3000/recipes");
+
+      if (res.data) {
+        dispatch(GoodsActions.setRecipes(res.data));
+        setIsLoading(false);
+      }
+    };
+
+    recipes.length === 0 && fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("http://localhost:3000/slides");
+
+      if (res.data) {
+        dispatch(GoodsActions.setSlides(res.data));
+        setIsLoading(false);
+      }
+    };
+
+    slides.length === 0 && fetch();
+  }, []);
+
   const [files, setFiles] = useState<File[]>([]);
+  const [content, setContent] = useState("loadGoods");
+  const [recipiesFormData, setRecipiesFormData] = useState({
+    id: "",
+    name: "",
+    ingridients: "",
+    instructions: "",
+  });
+
   const [formData, setFormData] = useState({
     id: "",
     name: "",
     weight: "",
     price: "",
     oldPrice: "",
-    isSale: false,
-    isHit: false,
-    isNew: false,
-    reviews: "",
+    volume: "",
+    dueDate: "",
+    package: "",
+    minRequest: "",
+    description: "",
+    ingridients: "",
   });
-
-  const isMobile = useScreenSize("mobile");
 
   const handleChange = (name: string, value: any) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleChangeRecipe = (name: string, value: any) => {
+    setRecipiesFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const toast = useRef<Toast>(null);
@@ -167,7 +379,7 @@ export const AdminPanel = () => {
         {uploadButton}
         {cancelButton}
         <div className="flex align-items-center gap-3 ml-auto">
-          <span>{formatedValue} / 5 МБ</span>
+          <span>{formatedValue} / 50 МБ</span>
           <ProgressBar
             value={value}
             showValue={false}
@@ -225,34 +437,6 @@ export const AdminPanel = () => {
     );
   };
 
-  const emptyTemplate = () => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <i
-          className="pi pi-image mt-3 p-5"
-          style={{
-            fontSize: "5em",
-            borderRadius: "50%",
-            backgroundColor: "var(--surface-b)",
-            color: "var(--surface-d)",
-          }}
-        ></i>
-        <span
-          style={{ fontSize: "1.2em", color: "var(--text-color-secondary)" }}
-          className="my-5"
-        >
-          Выберите изображение или перетащите его в поле
-        </span>
-      </div>
-    );
-  };
-
   const chooseOptions = {
     icon: "pi pi-fw pi-images",
     iconOnly: true,
@@ -293,6 +477,88 @@ export const AdminPanel = () => {
   //   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   // }
 
+  const handleSubmitRecipe = () => {
+    axios
+      .get<File>(files[0]?.objectURL, { responseType: "blob" })
+      .then(async (res) => {
+        const result = new FormData();
+        const textedBlob = await blobToBase64(res.data);
+
+        result.append("id", uuidv4());
+        result.append("name", recipiesFormData.name);
+        result.append("ingridients", recipiesFormData.ingridients);
+        result.append("instructions", recipiesFormData.instructions);
+        result.append("name", recipiesFormData.name);
+        result.append("image", textedBlob);
+
+        let object = {};
+        result.forEach((value, key) => {
+          object[key] = value;
+        });
+
+        console.log("object", object);
+
+        axios
+          .post("http://localhost:3000/recipes", object)
+          .then((response) => {
+            console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
+          });
+      });
+  };
+
+  const handleSlidesSubmit = async () => {
+    for (const item of files) {
+      try {
+        const res = await axios.get<File>(item?.objectURL, {
+          responseType: "blob",
+        });
+        const result = new FormData();
+        const textedBlob = await blobToBase64(res.data);
+
+        result.append("id", uuidv4());
+        result.append("image", textedBlob);
+
+        let object = {};
+        result.forEach((value, key) => {
+          object[key] = value;
+        });
+
+        console.log("object", object);
+
+        const response = await axios.post(
+          "http://localhost:3000/slides",
+          object,
+        );
+        console.log(response.data);
+        toast.current?.show({
+          severity: "info",
+          summary: "Успех",
+          detail: "Данные успешно загружены",
+        });
+      } catch (error) {
+        console.error(error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Неудача",
+          detail: "Во время загрузки произошла ошибка",
+        });
+      }
+    }
+  };
+
   const handleSubmit = () => {
     axios
       .get<File>(files[0]?.objectURL, { responseType: "blob" })
@@ -305,10 +571,6 @@ export const AdminPanel = () => {
         result.append("weight", formData.weight);
         result.append("price", formData.price);
         result.append("oldPrice", formData.oldPrice);
-        result.append("isSale", formData.isSale);
-        result.append("isHit", formData.isHit);
-        result.append("isNew", formData.isNew);
-        result.append("reviews", formData.reviews);
         result.append("image", textedBlob);
 
         let object = {};
@@ -316,13 +578,25 @@ export const AdminPanel = () => {
           object[key] = value;
         });
 
+        console.log("object", object);
+
         axios
-          .post("http://185.70.185.67:3000/goods", object)
+          .post("http://localhost:3000/goods", object)
           .then((response) => {
             console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
           })
           .catch((error) => {
             console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
           });
       });
 
@@ -376,140 +650,675 @@ export const AdminPanel = () => {
     // })
   };
 
-  return (
-    <AdminContainer>
-      <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
-      <Form>
+  const contentMapper = {
+    loadGoods: (
+      <>
+        <Form>
+          <Checkbox
+            value={onlyImages}
+            checked={onlyImages}
+            onChange={() => {
+              setOnlyImages(!onlyImages);
+              setFormData({
+                id: "",
+                name: "",
+                weight: "",
+                price: "",
+                oldPrice: "",
+                volume: "",
+                dueDate: "",
+                package: "",
+                minRequest: "",
+                description: "",
+                ingridients: "",
+              });
+            }}
+            label="Нажмите, если нужно просто обновить фото у существующего товара"
+          ></Checkbox>
+
+          {onlyImages ? (
+            <>
+              <p style={{ margin: " 20px 0", fontFamily: "arial" }}>
+                Каждая картинка должна иметь название равное id товара, картинку
+                которого вы хотите обновить
+                <br />
+                Например: <b>9c5cf625-387b-43be-b278-1386086cf7e5.jpg</b>
+                <br />
+                ID товара можно узнать на странице{" "}
+                <b>&quot;Удалить продукты&quot;</b> (кнопка вверху)
+              </p>
+            </>
+          ) : (
+            <>
+              <Row style={{ display: "flex", justifyContent: "center" }}>
+                <Heading.H1>Добавление нового товара</Heading.H1>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="name"
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleChange("name", e.target.value)}
+                  />
+                  <label htmlFor="name">Название товара</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="volume"
+                    id="volume"
+                    value={formData?.volume}
+                    onChange={(e) => handleChange("volume", e.target.value)}
+                  />
+                  <label htmlFor="volume">Вес или объем</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="dueDate"
+                    id="dueDate"
+                    value={formData?.dueDate}
+                    onChange={(e) => handleChange("dueDate", e.target.value)}
+                  />
+                  <label htmlFor="dueDate">Срок годности</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="package"
+                    id="package"
+                    value={formData?.package}
+                    onChange={(e) => handleChange("package", e.target.value)}
+                  />
+                  <label htmlFor="package">Упаковка</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputTextarea
+                    name="description"
+                    id="description"
+                    style={{ width: "100%" }}
+                    rows={3}
+                    value={formData?.description}
+                    onChange={(e) =>
+                      handleChange("description", e.target.value)
+                    }
+                  />
+                  <label htmlFor="description">
+                    Свободное описание (под картинкой)
+                  </label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputTextarea
+                    name="ingridients"
+                    id="ingridients"
+                    style={{ width: "100%" }}
+                    rows={3}
+                    value={formData?.ingridients}
+                    onChange={(e) =>
+                      handleChange("ingridients", e.target.value)
+                    }
+                  />
+                  <label htmlFor="ingridients">Ингридиенты</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    keyfilter="money"
+                    name="price"
+                    id="price"
+                    value={formData.price}
+                    onChange={(e) => handleChange("price", e.target.value)}
+                  />
+                  <label htmlFor="price">Цена (руб)</label>
+                </span>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="oldPrice"
+                    keyfilter="money"
+                    id="oldPrice"
+                    value={formData.oldPrice}
+                    onChange={(e) => handleChange("oldPrice", e.target.value)}
+                  />
+                  <label htmlFor="oldPrice">Старая цена (необязательно)</label>
+                </span>
+              </Row>
+            </>
+          )}
+        </Form>
+
+        <FileUploadWrapper>
+          <Toast ref={toast}></Toast>
+          <Tooltip
+            target=".custom-choose-btn"
+            content="Выберите файл"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-upload-btn"
+            content="Загрузить"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-cancel-btn"
+            content="Очистить"
+            position="bottom"
+          />
+
+          <FileUpload
+            ref={fileUploadRef}
+            invalidFileSizeMessageDetail={"Максимальный размер файла - 50 МБ"}
+            invalidFileSizeMessageSummary={"Размер файла превышен"}
+            name="files"
+            accept="image/*"
+            maxFileSize={500000000}
+            onUpload={onTemplateUpload}
+            onSelect={onTemplateSelect}
+            multiple
+            onError={onTemplateClear}
+            onClear={onTemplateClear}
+            headerTemplate={headerTemplate}
+            itemTemplate={itemTemplate}
+            // emptyTemplate={!isMobile ? emptyTemplate : undefined}
+            chooseOptions={chooseOptions}
+            uploadOptions={uploadOptions}
+            cancelOptions={cancelOptions}
+          />
+        </FileUploadWrapper>
         <Row style={{ display: "flex", justifyContent: "center" }}>
-          <Heading.H1>Добавление нового товара</Heading.H1>
+          <SubmitButton onClick={handleSubmit}>Загрузить</SubmitButton>
         </Row>
+      </>
+    ),
+    removeGoods: (
+      <>
+        <DataTable
+          dataKey="id"
+          size={"small"}
+          globalFilterFields={["name", "id"]}
+          filters={filters}
+          removableSort
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 25, 50]}
+          header={renderHeader()}
+          showGridlines
+          value={goods}
+          tableStyle={
+            isMobile
+              ? { maxWidth: "50rem" }
+              : { minWidth: "50rem", maxWidth: "70rem", width: "100%" }
+          }
+        >
+          <Column style={{ width: "45%" }} field="id" header="ID"></Column>
+          <Column
+            style={{ width: "35%" }}
+            field="name"
+            sortable
+            header="Название"
+          ></Column>
+          <Column
+            style={{ width: "20%" }}
+            field="remove"
+            body={(data) => (
+              <Button
+                style={{
+                  backgroundColor: "#fffffff",
+                  color: "red",
+                  padding: "8px 16px",
+                  borderRadius: "15px",
+                }}
+                text
+                onClick={() => {
+                  setItemForDelete({ id: data.id, name: data.name });
+                  setDeleteModalOpen(true);
+                }}
+              >
+                Удалить запись
+              </Button>
+            )}
+            header="Удалить"
+          ></Column>
+        </DataTable>
+      </>
+    ),
+    loadRecipes: (
+      <>
+        <Form>
+          <Row style={{ display: "flex", justifyContent: "center" }}>
+            <Heading.H1>Добавление нового рецепта</Heading.H1>
+          </Row>
 
-        <Row>
-          <span className="p-float-label">
-            <InputText
-              name="name"
-              id="name"
-              value={formData.name}
-              onChange={(e) => handleChange("name", e.target.value)}
-            />
-            <label htmlFor="name">Название товара</label>
-          </span>
-        </Row>
-        <Row>
-          <span className="p-float-label">
-            <InputText
-              keyfilter="pnum"
-              name="volume"
-              id="volume"
-              value={formData.volume}
-              onChange={(e) => handleChange("volume", e.target.value)}
-            />
-            <label htmlFor="volume">Вес или объем</label>
-          </span>
-        </Row>
-        <Row>
-          <span className="p-float-label">
-            <InputText
-              keyfilter="money"
-              name="price"
-              id="price"
-              value={formData.price}
-              onChange={(e) => handleChange("price", e.target.value)}
-            />
-            <label htmlFor="price">Цена (руб)</label>
-          </span>
-        </Row>
-        <Row>
-          <span className="p-float-label">
-            <InputText
-              name="oldPrice"
-              keyfilter="money"
-              id="oldPrice"
-              value={formData.oldPrice}
-              onChange={(e) => handleChange("oldPrice", e.target.value)}
-            />
-            <label htmlFor="oldPrice">Старая цена (необязательно)</label>
-          </span>
-        </Row>
-        <Row>
-          <Checkbox
-            label="Распродажа"
-            checked={formData.isSale}
-            value={formData.isSale}
-            onChange={(e) => handleChange("isSale", e.target.checked)}
-          />
-        </Row>
-        <Row>
-          <Checkbox
-            label="Хит"
-            checked={formData.isHit}
-            value={formData.isHit}
-            onChange={(e) => handleChange("isHit", e.target.checked)}
-          />
-        </Row>
-        <Row>
-          <Checkbox
-            label="Новый"
-            checked={formData.isNew}
-            value={formData.isNew}
-            onChange={(e) => handleChange("isNew", e.target.checked)}
-          />
-        </Row>
-        <Row>
-          <span className="p-float-label">
-            <InputText
-              keyfilter="pint"
-              name="reviews"
-              id="reviews"
-              value={formData.reviews}
-              onChange={(e) => handleChange("reviews", e.target.value)}
-            />
-            <label htmlFor="reviews">Количество отзывов</label>
-          </span>
-        </Row>
-      </Form>
+          <Row>
+            <span className="p-float-label">
+              <InputText
+                name="name"
+                id="name"
+                value={recipiesFormData.name}
+                onChange={(e) => handleChangeRecipe("name", e.target.value)}
+              />
+              <label htmlFor="name">Название рецепта</label>
+            </span>
+          </Row>
+          <Row>
+            <span className="p-float-label">
+              <InputTextarea
+                name="ingridients"
+                id="ingridients"
+                style={{ width: "100%" }}
+                rows={3}
+                value={recipiesFormData?.ingridients}
+                onChange={(e) =>
+                  handleChangeRecipe("ingridients", e.target.value)
+                }
+              />
+              <label htmlFor="ingridients">Ингридиенты</label>
+            </span>
+          </Row>
+          <Row>
+            <span className="p-float-label">
+              <InputTextarea
+                name="instructions"
+                id="instructions"
+                style={{ width: "100%" }}
+                rows={3}
+                value={recipiesFormData?.instructions}
+                onChange={(e) =>
+                  handleChangeRecipe("instructions", e.target.value)
+                }
+              />
+              <label htmlFor="instructions">Инструкции</label>
+            </span>
+          </Row>
+        </Form>
 
-      <FileUploadWrapper>
-        <Toast ref={toast}></Toast>
-        <Tooltip
-          target=".custom-choose-btn"
-          content="Выберите файл"
-          position="bottom"
-        />
-        <Tooltip
-          target=".custom-upload-btn"
-          content="Загрузить"
-          position="bottom"
-        />
-        <Tooltip
-          target=".custom-cancel-btn"
-          content="Очистить"
-          position="bottom"
-        />
+        <FileUploadWrapper>
+          <Toast ref={toast}></Toast>
+          <Tooltip
+            target=".custom-choose-btn"
+            content="Выберите файл"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-upload-btn"
+            content="Загрузить"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-cancel-btn"
+            content="Очистить"
+            position="bottom"
+          />
 
-        <FileUpload
-          ref={fileUploadRef}
-          invalidFileSizeMessageDetail={"Максимальный размер файла - 5 МБ"}
-          invalidFileSizeMessageSummary={"Размер файла превышен"}
-          name="files"
-          accept="image/*"
-          maxFileSize={5000000000}
-          onUpload={onTemplateUpload}
-          onSelect={onTemplateSelect}
-          multiple
-          onError={onTemplateClear}
-          onClear={onTemplateClear}
-          headerTemplate={headerTemplate}
-          itemTemplate={itemTemplate}
-          emptyTemplate={!isMobile ? emptyTemplate : undefined}
-          chooseOptions={chooseOptions}
-          uploadOptions={uploadOptions}
-          cancelOptions={cancelOptions}
-        />
-      </FileUploadWrapper>
-      <Row style={{ display: "flex", justifyContent: "center" }}>
-        <SubmitButton onClick={handleSubmit}>Загрузить</SubmitButton>
-      </Row>
-    </AdminContainer>
+          <FileUpload
+            ref={fileUploadRef}
+            invalidFileSizeMessageDetail={"Максимальный размер файла - 5 МБ"}
+            invalidFileSizeMessageSummary={"Размер файла превышен"}
+            name="files"
+            accept="image/*"
+            maxFileSize={5000000000}
+            onUpload={onTemplateUpload}
+            onSelect={onTemplateSelect}
+            multiple
+            onError={onTemplateClear}
+            onClear={onTemplateClear}
+            headerTemplate={headerTemplate}
+            itemTemplate={itemTemplate}
+            // emptyTemplate={!isMobile ? emptyTemplate : undefined}
+            chooseOptions={chooseOptions}
+            uploadOptions={uploadOptions}
+            cancelOptions={cancelOptions}
+          />
+        </FileUploadWrapper>
+        <Row style={{ display: "flex", justifyContent: "center" }}>
+          <SubmitButton onClick={handleSubmitRecipe}>Загрузить</SubmitButton>
+        </Row>
+      </>
+    ),
+    removeRecipes: (
+      <>
+        <DataTable
+          dataKey="id"
+          size={"small"}
+          globalFilterFields={["name", "id"]}
+          filters={filters}
+          removableSort
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 25, 50]}
+          header={renderHeader()}
+          showGridlines
+          value={recipes}
+          tableStyle={
+            isMobile
+              ? { maxWidth: "50rem" }
+              : { minWidth: "50rem", maxWidth: "70rem", width: "100%" }
+          }
+        >
+          <Column style={{ width: "45%" }} field="id" header="ID"></Column>
+          <Column
+            style={{ width: "35%" }}
+            field="name"
+            sortable
+            header="Название"
+          ></Column>
+          <Column
+            style={{ width: "20%" }}
+            field="remove"
+            body={(data) => (
+              <Button
+                style={{
+                  backgroundColor: "#fffffff",
+                  color: "red",
+                  padding: "8px 16px",
+                  borderRadius: "15px",
+                }}
+                text
+                onClick={() => {
+                  setItemForDelete({ id: data.id, name: data.name });
+                  setDeleteModalRecipeOpen(true);
+                }}
+              >
+                Удалить запись
+              </Button>
+            )}
+            header="Удалить"
+          ></Column>
+        </DataTable>
+      </>
+    ),
+    loadSlider: (
+      <>
+        <FileUploadWrapper>
+          <Toast ref={toast}></Toast>
+          <Tooltip
+            target=".custom-choose-btn"
+            content="Выберите файл"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-upload-btn"
+            content="Загрузить"
+            position="bottom"
+          />
+          <Tooltip
+            target=".custom-cancel-btn"
+            content="Очистить"
+            position="bottom"
+          />
+
+          <FileUpload
+            ref={fileUploadRef}
+            invalidFileSizeMessageDetail={"Максимальный размер файла - 5 МБ"}
+            invalidFileSizeMessageSummary={"Размер файла превышен"}
+            name="files"
+            accept="image/*"
+            maxFileSize={5000000000}
+            onUpload={onTemplateUpload}
+            onSelect={onTemplateSelect}
+            multiple
+            onError={onTemplateClear}
+            onClear={onTemplateClear}
+            headerTemplate={headerTemplate}
+            itemTemplate={itemTemplate}
+            // emptyTemplate={!isMobile ? emptyTemplate : undefined}
+            chooseOptions={chooseOptions}
+            uploadOptions={uploadOptions}
+            cancelOptions={cancelOptions}
+          />
+        </FileUploadWrapper>
+        <Row style={{ display: "flex", justifyContent: "center" }}>
+          <SubmitButton onClick={handleSlidesSubmit}>Загрузить</SubmitButton>
+        </Row>
+      </>
+    ),
+    removeSlider: (
+      <>
+        <DataTable
+          dataKey="id"
+          size={"small"}
+          globalFilterFields={["name", "id"]}
+          filters={filters}
+          removableSort
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 25, 50]}
+          header={renderHeader()}
+          showGridlines
+          value={slides}
+          tableStyle={
+            isMobile
+              ? { maxWidth: "50rem" }
+              : { minWidth: "50rem", maxWidth: "70rem", width: "100%" }
+          }
+        >
+          <Column style={{ width: "45%" }} field="id" header="ID"></Column>
+          <Column
+            style={{ width: "35%" }}
+            field="name"
+            sortable
+            header="Название"
+          ></Column>
+          <Column
+            style={{ width: "20%" }}
+            field="remove"
+            body={(data) => (
+              <Button
+                style={{
+                  backgroundColor: "#fffffff",
+                  color: "red",
+                  padding: "8px 16px",
+                  borderRadius: "15px",
+                }}
+                text
+                onClick={() => {
+                  setItemForDelete({ id: data.id, name: data.name });
+                  setDeleteModalSlideOpen(true);
+                }}
+              >
+                Удалить запись
+              </Button>
+            )}
+            header="Удалить"
+          ></Column>
+        </DataTable>
+      </>
+    ),
+  };
+
+  return (
+    <>
+      <MainHeader isCart={true} />
+      <ScrollToTopOnMount />
+      <div
+        style={{
+          width: "100%",
+          background: "#cccccc7b",
+          marginTop: "-20px",
+          paddingTop: "30px",
+        }}
+      >
+        {" "}
+        <BackLinkAtom id={"backButton"} to={"/goods"} children={"Назад"} />
+      </div>
+      <AdminControlWrapper>
+        <ButtonFacade>
+          {buttons.map((item) => {
+            return (
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "#008054",
+                    color: "white",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                  }}
+                  text
+                  onClick={() => {
+                    setContent(item.content);
+                    setFormData({
+                      id: "",
+                      name: "",
+                      weight: "",
+                      price: "",
+                      oldPrice: "",
+                      volume: "",
+                      dueDate: "",
+                      package: "",
+                      minRequest: "",
+                      description: "",
+                      ingridients: "",
+                    });
+                    setItemForDelete({ id: null, name: "" });
+                  }}
+                >
+                  {item.text}
+                </Button>
+              </>
+            );
+          })}
+        </ButtonFacade>
+
+        <AdminContainer>
+          {contentMapper[content as keyof typeof contentMapper]}
+
+          <Dialog
+            header="Подтвердите удаление записи"
+            visible={isDeleteModalOpened}
+            style={isMobile ? { width: "94vw" } : { width: "50vw" }}
+            onHide={() => setDeleteModalOpen(false)}
+            footer={
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "red",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                    marginRight: "20px",
+                  }}
+                  text
+                  onClick={() => deleteItem(itemForDelete)}
+                >
+                  УДАЛИТЬ
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "#0f0080",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                  }}
+                  text
+                  onClick={() => setDeleteModalOpen(false)}
+                >
+                  ОТМЕНА
+                </Button>
+              </>
+            }
+          >
+            <p className="m-0">
+              Вы действительно хотите удалить <b>{itemForDelete.name}</b> под
+              номером: <b>{itemForDelete.id}</b>?
+            </p>
+          </Dialog>
+
+          <Dialog
+            header="Подтвердите удаление записи"
+            visible={isDeleteModalRecipeOpened}
+            style={isMobile ? { width: "94vw" } : { width: "50vw" }}
+            onHide={() => setDeleteModalRecipeOpen(false)}
+            footer={
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "red",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                    marginRight: "20px",
+                  }}
+                  text
+                  onClick={() => deleteItemRecipe(itemForDelete)}
+                >
+                  УДАЛИТЬ
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "#0f0080",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                  }}
+                  text
+                  onClick={() => setDeleteModalRecipeOpen(false)}
+                >
+                  ОТМЕНА
+                </Button>
+              </>
+            }
+          >
+            <p className="m-0">
+              Вы действительно хотите удалить <b>{itemForDelete.name}</b> под
+              номером: <b>{itemForDelete.id}</b>?
+            </p>
+          </Dialog>
+
+          <Dialog
+            header="Подтвердите удаление записи"
+            visible={isDeleteModalSlideOpened}
+            style={isMobile ? { width: "94vw" } : { width: "50vw" }}
+            onHide={() => setDeleteModalSlideOpen(false)}
+            footer={
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "red",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                    marginRight: "20px",
+                  }}
+                  text
+                  onClick={() => deleteItemSlide(itemForDelete)}
+                >
+                  УДАЛИТЬ
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "#0f0080",
+                    color: "#ffffff",
+                    padding: "8px 16px",
+                    borderRadius: "15px",
+                  }}
+                  text
+                  onClick={() => setDeleteModalSlideOpen(false)}
+                >
+                  ОТМЕНА
+                </Button>
+              </>
+            }
+          >
+            <p className="m-0">
+              Вы действительно хотите удалить слайд под номером:{" "}
+              <b>{itemForDelete.id}</b>?
+            </p>
+          </Dialog>
+        </AdminContainer>
+      </AdminControlWrapper>
+    </>
   );
 };

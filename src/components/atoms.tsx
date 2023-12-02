@@ -244,6 +244,7 @@ export const ItemListWrapper = styled.div`
 `;
 
 export const ItemListLabel = styled.div`
+  position: "relative";
   font-size: 36px;
   text-align: center;
   font-weight: bold;
@@ -267,10 +268,9 @@ export const ProductCard = styled.div`
   position: relative;
   width: auto;
   padding: 20px;
-  margin-top: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: flex-start;
   cursor: pointer;
   outline: none;
@@ -809,6 +809,7 @@ export const AboutUsText = styled.div`
   font-size: 2rem;
   margin: 20px 0;
   text-align: center;
+  max-width: 320px;
 
   @media screen and (max-width: 1024px) {
     font-size: 1.5rem;
@@ -933,8 +934,8 @@ export const BlockQuote = styled.div`
 
 export const RecipesContainer = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   gap: 40px;
   z-index: 2;
   flex-wrap: wrap;
@@ -1174,4 +1175,31 @@ export const LoadMoreButton = styled(Button)`
   background-color: #56af31;
   padding: 8px 16px;
   color: white !important;
+`;
+
+export const ButtonFacade = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 20%;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+  }
+`;
+
+export const AdminControlWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  background: #cccccc7b;
 `;

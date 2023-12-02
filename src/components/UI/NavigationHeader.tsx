@@ -13,7 +13,6 @@ import {
   MenuButtonWrapper,
   NavigationHeader,
   NavigationWrapper,
-  RecipesImage,
   Sale,
 } from "../atoms";
 import logo from "../../assets/images/logo.png";
@@ -389,7 +388,12 @@ export function Navbar({
             <AdditionalInfoGrid isOpened={isProductsPopupVisible}>
               <GridSectionFavourite>
                 <h4>Каталог</h4>
-                <a href="/goods">
+                <a
+                  href="/goods"
+                  onClick={() => {
+                    setProductsPopupVisible(false);
+                  }}
+                >
                   <h5>Перейти к просмотру товаров</h5>
                 </a>
               </GridSectionFavourite>
@@ -439,7 +443,14 @@ export function Navbar({
                 ].map((item) => {
                   return (
                     <li key={item.text}>
-                      <a href={item.url}>{item.text}</a>
+                      <a
+                        href={item.url}
+                        onClick={() => {
+                          setProductsPopupVisible(false);
+                        }}
+                      >
+                        {item.text}
+                      </a>
                     </li>
                   );
                 })}

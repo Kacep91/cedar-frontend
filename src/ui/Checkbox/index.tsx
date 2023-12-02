@@ -7,7 +7,7 @@ export type CheckboxType<T> = {
   onChange: CheckboxProps["onChange"];
   value: T;
   label: string;
-  children: any;
+  children?: any;
 };
 export function Checkbox<T>({
   value,

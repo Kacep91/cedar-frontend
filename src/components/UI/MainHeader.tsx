@@ -9,6 +9,11 @@ import { Tree, TreeEventNodeEvent } from "primereact/tree";
 import { classNames } from "primereact/utils";
 import { TreeNode } from "primereact/treenode";
 import Navbar from "./NavigationHeader";
+import { Galleria } from "primereact/galleria";
+import { GoodsActions, GoodsSelectors, Slide } from "store/goods";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 const nodeTemplate = (node: any, options: any) => {
   let label = <b>{node.label}</b>;
@@ -52,10 +57,44 @@ const togglerTemplate = (node: any, options: any) => {
   );
 };
 
+const itemTemplate = (item: Slide) => {
+  return (
+    <img
+      src={item.image}
+      alt={""}
+      style={{
+        height: "500px",
+        width: "100%",
+        display: "block",
+        objectFit: "cover",
+      }}
+    />
+  );
+};
+
 const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const [isPartnerModalVisible, setPartnerModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPresentationModalVisible, setPresentationModalVisible] =
     useState(false);
+
+  const dispatch = useDispatch();
+
+  const slides = useSelector(GoodsSelectors.slidesList);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("http://localhost:3000/slides");
+
+      if (res.data) {
+        dispatch(GoodsActions.setSlides(res.data));
+      }
+      setIsLoading(false);
+    };
+
+    slides.length === 0 && fetch();
+  }, []);
 
   const nodes = [
     {
@@ -221,17 +260,44 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       />
       {!isCart && (
         <>
-          <SmallBackground>
-            <div className="catalog-banner-c1">
-              <div className="catalog-banner-head">
-                <h1>SIBERIA Organic</h1>
-              </div>
-              <div className="catalog-banner-text">
-                Уникальные напитки, сладости и снеки из натуральных сибирских
-                продуктов!{" "}
-              </div>
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: "500px",
+              }}
+            >
+              <ProgressSpinner />
             </div>
-          </SmallBackground>
+          ) : !isLoading && slides.length === 0 ? (
+            <SmallBackground>
+              <div className="catalog-banner-c1">
+                <div className="catalog-banner-head">
+                  <h1>SIBERIA Organic</h1>
+                </div>
+                <div className="catalog-banner-text">
+                  Уникальные напитки, сладости и снеки из натуральных сибирских
+                  продуктов!{" "}
+                </div>
+              </div>
+            </SmallBackground>
+          ) : (
+            <Galleria
+              value={slides}
+              numVisible={1}
+              circular
+              style={{ height: "500px", width: "100%" }}
+              showItemNavigatorsOnHover
+              showItemNavigators
+              showThumbnails={false}
+              item={itemTemplate}
+              autoPlay
+              transitionInterval={5000}
+            />
+          )}
         </>
       )}
 

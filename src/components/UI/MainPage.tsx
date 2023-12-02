@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AboutUsBlock,
   AboutUsContainer,
@@ -6,6 +6,7 @@ import {
   AboutUsText,
   AboutUsWrapper,
   Branch,
+  LoadMoreButton,
   ProductPageImage,
   ProductsBlock,
   RecipesContainer,
@@ -34,20 +35,48 @@ export const products = [
   { src: aboutUs, text: "Наше производство", link: "/aboutUs" },
 ];
 
-const recipes = [
-  { src: pasta, text: "Кремовая паста с грибами", link: "/pastaRecipe" },
-  { src: risotto, text: "Ризотто с лисичками", link: "/risottoRecipe" },
-  { src: toast, text: "Тост с лисичками", link: "/toastRecipe" },
-];
-
 export const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
 
+  const recipes = [
+    { src: pasta, text: "Кремовая паста с грибами", link: "/pastaRecipe" },
+    { src: risotto, text: "Ризотто с лисичками", link: "/risottoRecipe" },
+    { src: toast, text: "Тост с лисичками", link: "/toastRecipe" },
+  ];
+
+  const recipesList = useSelector(GoodsSelectors.recipesList);
+  const recipesResult = [
+    ...recipes,
+    ...recipesList.map((item) => {
+      return {
+        id: item.id,
+        text: item.name,
+        src: item.image,
+        link: `/recipe/${item.id}`,
+      };
+    }),
+  ];
+
+  const [listLength, setListLength] = useState(3);
+  const totalLength = [...recipesResult].length || 1;
+
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://185.70.185.67:3000/goods");
+      const res = await axios.get("http://localhost:3000/recipes");
+
+      if (res.data) {
+        dispatch(GoodsActions.setRecipes(res.data));
+      }
+    };
+
+    recipesList.length === 0 && fetch();
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await axios.get("http://localhost:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -65,7 +94,7 @@ export const MainPage = () => {
     };
 
     categorizedProducts.length === 0 && fetch();
-  }, [categorizedProducts]);
+  }, []);
 
   const products2 = [
     { src: granola, text: "Ягоды", url: "/berries" },
@@ -112,7 +141,7 @@ export const MainPage = () => {
       <AboutUsBlock>
         <h1>Рецепты</h1>
         <RecipesContainer>
-          {recipes.map((product) => (
+          {recipesResult.slice(0, listLength).map((product) => (
             <AboutUsWrapper
               key={product.text}
               onClick={() => navigate(product.link)}
@@ -121,6 +150,27 @@ export const MainPage = () => {
               <AboutUsText>{product.text}</AboutUsText>
             </AboutUsWrapper>
           ))}
+          {listLength >= totalLength ? null : (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <LoadMoreButton
+                text
+                rounded
+                onClick={() =>
+                  setListLength(
+                    listLength + 4 < totalLength ? listLength + 4 : totalLength,
+                  )
+                }
+              >
+                Загрузить еще...
+              </LoadMoreButton>
+            </div>
+          )}
         </RecipesContainer>
       </AboutUsBlock>
       <Footer />

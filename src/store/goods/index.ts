@@ -2,6 +2,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { ProductPresentationPageProps } from "components/UI/ProductPresentationPage";
 
+export type Recipe = {
+  id: string;
+  name: string;
+  ingridients: string;
+  instructions: string;
+  image: string;
+};
+
+export type Slide = {
+  id: string;
+  image: string;
+};
+
 export type GoodsState = {
   isLoading: boolean;
   goodsList: ProductPresentationPageProps[];
@@ -9,12 +22,16 @@ export type GoodsState = {
     label: string;
     items: ProductPresentationPageProps[];
   }[];
+  recipesList: Recipe[];
+  slidesList: Slide[];
 };
 
 export const initialState: GoodsState = {
   isLoading: false,
   goodsList: [],
   categorizedProducts: [],
+  recipesList: [],
+  slidesList: [],
 };
 
 export const goodsSlice = createSlice({
@@ -37,6 +54,18 @@ export const goodsSlice = createSlice({
         goodsList: action.payload,
       };
     },
+    setRecipes: (state, action: PayloadAction<Recipe[]>) => {
+      return {
+        ...state,
+        recipesList: action.payload,
+      };
+    },
+    setSlides: (state, action: PayloadAction<Recipe[]>) => {
+      return {
+        ...state,
+        slidesList: action.payload,
+      };
+    },
     setCategorizedData: (
       state,
       action: PayloadAction<
@@ -57,4 +86,6 @@ export const GoodsSelectors = {
   isLoading: (state: RootState) => state.goods.isLoading,
   goodsList: (state: RootState) => state.goods.goodsList,
   categorizedProducts: (state: RootState) => state.goods.categorizedProducts,
+  recipesList: (state: RootState) => state.goods.recipesList,
+  slidesList: (state: RootState) => state.goods.slidesList,
 };

@@ -39,7 +39,7 @@ export const Mushrooms = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/goods");
+      const res = await axios.get("http://localhost:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));

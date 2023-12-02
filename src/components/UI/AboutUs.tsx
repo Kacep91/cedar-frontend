@@ -10,11 +10,13 @@ import {
 } from "components/atoms";
 import map from "../../assets/images/map.png";
 import { Footer } from "./Footer";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 export const AboutUs = () => {
   return (
     <>
       <MainHeader isCart={true} />
+      <ScrollToTopOnMount />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <AboutUsBlock>
         <h1>О нас</h1>
