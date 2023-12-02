@@ -145,42 +145,41 @@ export const GoodsBlock = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts.map(
-                (
-                  item: {
-                    label: string;
-                    items: ProductPresentationPageProps[];
-                  },
-                  index: number,
-                ) => {
-                  const allItems = item.items
-                    .slice(0, listLength)
-                    .map((item2) => (
-                      <ItemListUnit
-                        key={item2.name}
-                        {...item2}
-                        image={
-                          item2.image
-                            ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                            : ""
-                        }
-                      />
-                    ));
-
-                  return (
-                    <>
-                      <ItemListLabel id={`product_id_${index}`}>
-                        {item.label}
-                      </ItemListLabel>
-                      <ItemListContainer>{allItems}</ItemListContainer>
-                    </>
-                  );
+              (
+                item: {
+                  label: string;
+                  items: ProductPresentationPageProps[];
                 },
-              )
+                index: number,
+              ) => {
+                const allItems = item.items
+                  .map((item2) => (
+                    <ItemListUnit
+                      key={item2.name}
+                      {...item2}
+                      image={
+                        item2.image
+                          ? arrayBufferToBase64(
+                            item2.image as unknown as {
+                              type: string;
+                              data: any[];
+                            },
+                          )
+                          : ""
+                      }
+                    />
+                  ));
+
+                return (
+                  <>
+                    <ItemListLabel id={`product_id_${index}`}>
+                      {item.label}
+                    </ItemListLabel>
+                    <ItemListContainer>{allItems}</ItemListContainer>
+                  </>
+                );
+              },
+            )
             : null}
           <Paginator
             first={pageData.first}
