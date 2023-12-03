@@ -108,6 +108,7 @@ const buttons = [
   { text: "Загрузить фото для слайдера", content: "loadSlider" },
 
   { text: "Удалить фото для слайдера", content: "removeSlider" },
+  { text: "Инструкция", content: "instruction" },
 ];
 
 export const AdminPanel = () => {
@@ -645,24 +646,45 @@ export const AdminPanel = () => {
 
         console.log("object", object);
 
-        axios
-          .post("http://185.70.185.67:3000/goods", object)
-          .then((response) => {
-            console.log(response.data);
-            toast.current?.show({
-              severity: "info",
-              summary: "Успех",
-              detail: "Данные успешно загружены",
+        if (formData.id && alreadyLoadedData) {
+          axios
+            .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
+            .then((response) => {
+              console.log(response.data);
+              toast.current?.show({
+                severity: "info",
+                summary: "Успех",
+                detail: "Данные успешно загружены",
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              toast.current?.show({
+                severity: "error",
+                summary: "Неудача",
+                detail: "Во время загрузки произошла ошибка",
+              });
             });
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.current?.show({
-              severity: "error",
-              summary: "Неудача",
-              detail: "Во время загрузки произошла ошибка",
+        } else {
+          axios
+            .post("http://185.70.185.67:3000/goods", object)
+            .then((response) => {
+              console.log(response.data);
+              toast.current?.show({
+                severity: "info",
+                summary: "Успех",
+                detail: "Данные успешно загружены",
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              toast.current?.show({
+                severity: "error",
+                summary: "Неудача",
+                detail: "Во время загрузки произошла ошибка",
+              });
             });
-          });
+        }
       });
 
     // const bublik = mockCatalogue.map(item => {
@@ -719,158 +741,118 @@ export const AdminPanel = () => {
     loadGoods: (
       <>
         <Form>
-          <Checkbox
-            value={onlyImages}
-            checked={onlyImages}
-            onChange={() => {
-              setOnlyImages(!onlyImages);
-              setFormData({
-                id: "",
-                name: "",
-                weight: "",
-                price: "",
-                oldPrice: "",
-                volume: "",
-                dueDate: "",
-                package: "",
-                minRequest: "",
-                description: "",
-                ingridients: "",
-              });
-            }}
-            label="Нажмите, если нужно просто обновить фото у существующего товара"
-          ></Checkbox>
-
-          {onlyImages ? (
-            <>
-              <p style={{ margin: " 20px 0", fontFamily: "arial" }}>
-                Каждая картинка должна иметь название равное id товара, картинку
-                которого вы хотите обновить
-                <br />
-                Например: <b>9c5cf625-387b-43be-b278-1386086cf7e5.jpg</b>
-                <br />
-                ID товара можно узнать на странице{" "}
-                <b>&quot;Удалить продукты&quot;</b> (кнопка вверху)
-              </p>
-            </>
-          ) : (
-            <>
-              <Row style={{ display: "flex", justifyContent: "center" }}>
-                <Heading.H1>Добавление нового товара</Heading.H1>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="id"
-                    id="id"
-                    value={formData.id}
-                    onChange={(e) => handleChange("id", e.target.value)}
-                  />
-                  <label htmlFor="id">ID товара (при наличии)</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                  />
-                  <label htmlFor="name">Название товара</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="volume"
-                    id="volume"
-                    value={formData?.volume}
-                    onChange={(e) => handleChange("volume", e.target.value)}
-                  />
-                  <label htmlFor="volume">Вес или объем</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="dueDate"
-                    id="dueDate"
-                    value={formData?.dueDate}
-                    onChange={(e) => handleChange("dueDate", e.target.value)}
-                  />
-                  <label htmlFor="dueDate">Срок годности</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="package"
-                    id="package"
-                    value={formData?.package}
-                    onChange={(e) => handleChange("package", e.target.value)}
-                  />
-                  <label htmlFor="package">Упаковка</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputTextarea
-                    name="description"
-                    id="description"
-                    style={{ width: "100%" }}
-                    rows={3}
-                    value={formData?.description}
-                    onChange={(e) =>
-                      handleChange("description", e.target.value)
-                    }
-                  />
-                  <label htmlFor="description">
-                    Свободное описание (под картинкой)
-                  </label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputTextarea
-                    name="ingridients"
-                    id="ingridients"
-                    style={{ width: "100%" }}
-                    rows={3}
-                    value={formData?.ingridients}
-                    onChange={(e) =>
-                      handleChange("ingridients", e.target.value)
-                    }
-                  />
-                  <label htmlFor="ingridients">Ингридиенты</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    keyfilter="money"
-                    name="price"
-                    id="price"
-                    value={formData.price}
-                    onChange={(e) => handleChange("price", e.target.value)}
-                  />
-                  <label htmlFor="price">Цена (руб)</label>
-                </span>
-              </Row>
-              <Row>
-                <span className="p-float-label">
-                  <InputText
-                    name="oldPrice"
-                    keyfilter="money"
-                    id="oldPrice"
-                    value={formData.oldPrice}
-                    onChange={(e) => handleChange("oldPrice", e.target.value)}
-                  />
-                  <label htmlFor="oldPrice">Старая цена (необязательно)</label>
-                </span>
-              </Row>
-            </>
-          )}
+          <>
+            <Row style={{ display: "flex", justifyContent: "center" }}>
+              <Heading.H1>Добавление нового товара</Heading.H1>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="id"
+                  id="id"
+                  value={formData.id}
+                  onChange={(e) => handleChange("id", e.target.value)}
+                />
+                <label htmlFor="id">ID товара (при наличии)</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleChange("name", e.target.value)}
+                />
+                <label htmlFor="name">Название товара</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="volume"
+                  id="volume"
+                  value={formData?.volume}
+                  onChange={(e) => handleChange("volume", e.target.value)}
+                />
+                <label htmlFor="volume">Вес или объем</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="dueDate"
+                  id="dueDate"
+                  value={formData?.dueDate}
+                  onChange={(e) => handleChange("dueDate", e.target.value)}
+                />
+                <label htmlFor="dueDate">Срок годности</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="package"
+                  id="package"
+                  value={formData?.package}
+                  onChange={(e) => handleChange("package", e.target.value)}
+                />
+                <label htmlFor="package">Упаковка</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputTextarea
+                  name="description"
+                  id="description"
+                  style={{ width: "100%" }}
+                  rows={3}
+                  value={formData?.description}
+                  onChange={(e) => handleChange("description", e.target.value)}
+                />
+                <label htmlFor="description">
+                  Свободное описание (под картинкой)
+                </label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputTextarea
+                  name="ingridients"
+                  id="ingridients"
+                  style={{ width: "100%" }}
+                  rows={3}
+                  value={formData?.ingridients}
+                  onChange={(e) => handleChange("ingridients", e.target.value)}
+                />
+                <label htmlFor="ingridients">Ингридиенты</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  keyfilter="money"
+                  name="price"
+                  id="price"
+                  value={formData.price}
+                  onChange={(e) => handleChange("price", e.target.value)}
+                />
+                <label htmlFor="price">Цена (руб)</label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputText
+                  name="oldPrice"
+                  keyfilter="money"
+                  id="oldPrice"
+                  value={formData.oldPrice}
+                  onChange={(e) => handleChange("oldPrice", e.target.value)}
+                />
+                <label htmlFor="oldPrice">Старая цена (необязательно)</label>
+              </span>
+            </Row>
+          </>
         </Form>
 
         <FileUploadWrapper>
@@ -1211,6 +1193,36 @@ export const AdminPanel = () => {
             header="Удалить"
           ></Column>
         </DataTable>
+      </>
+    ),
+    instruction: (
+      <>
+        <h2>Для обновления существующих данных у товара:</h2>
+        <ol className="gradient-list">
+          <li>Вписать ID товара в поле ID</li>
+          <li>Заполнить поля</li>
+          <li>
+            Если поля заполнены не все - автоматически подставляются значения из
+            базы
+          </li>
+          <li>Загрузить картинку</li>
+          <li>
+            Нажать кнопку <b>Загрузить</b>
+          </li>
+        </ol>
+        <h2>Для добавления нового товара:</h2>
+        <ol className="gradient-list">
+          <li>Оставить поле ID товара пустым</li>
+          <li>Заполнить все поля, кроме необязательных</li>
+          <li>
+            Если поля заполнены не все - автоматически подставляются пустые
+            значения (можно изменить, вписав ID)
+          </li>
+          <li>Загрузить картинку</li>
+          <li>
+            Нажать кнопку <b>Загрузить</b>
+          </li>
+        </ol>
       </>
     ),
   };

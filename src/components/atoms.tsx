@@ -1010,6 +1010,11 @@ export const DecriptionBlock = styled.div`
   margin-top: 16px;
   width: 600px;
   padding: 20px;
+
+  @media screen and (max-width: 1024px) {
+    max-width: 420px;
+    width: 420px;
+  }
 `;
 
 export const RecipeHeaderImage = styled.img`
@@ -1202,4 +1207,5 @@ export const AdminControlWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   background: #cccccc7b;
+  height: -webkit-fill-available;
 `;
