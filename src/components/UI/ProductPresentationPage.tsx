@@ -102,11 +102,11 @@ export const ProductPresentationPage = () => {
           image={
             item2.image
               ? arrayBufferToBase64(
-                item2.image as unknown as {
-                  type: string;
-                  data: any[];
-                },
-              )
+                  item2.image as unknown as {
+                    type: string;
+                    data: any[];
+                  },
+                )
               : ""
           }
         />
@@ -146,11 +146,11 @@ export const ProductPresentationPage = () => {
                 src={
                   data?.image
                     ? arrayBufferToBase64(
-                      data.image as unknown as {
-                        type: string;
-                        data: any[];
-                      },
-                    )
+                        data.image as unknown as {
+                          type: string;
+                          data: any[];
+                        },
+                      )
                     : placeHolder
                 }
               />

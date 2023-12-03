@@ -135,14 +135,16 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://185.70.185.67:3000/goods/${item.id}`).then(() => {
-      setDeleteModalOpen(false);
-      toast.current?.show({
-        severity: "info",
-        summary: "Успех",
-        detail: "Данные успешно удалены",
+    return axios
+      .delete(`http://185.70.185.67:3000/goods/${item.id}`)
+      .then(() => {
+        setDeleteModalOpen(false);
+        toast.current?.show({
+          severity: "info",
+          summary: "Успех",
+          detail: "Данные успешно удалены",
+        });
       });
-    });
   };
 
   const deleteItemRecipe = (item: { id: string | null; name: string }) => {
@@ -150,14 +152,16 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://185.70.185.67:3000/recipes/${item.id}`).then(() => {
-      setDeleteModalRecipeOpen(false);
-      toast.current?.show({
-        severity: "info",
-        summary: "Успех",
-        detail: "Данные успешно удалены",
+    return axios
+      .delete(`http://185.70.185.67:3000/recipes/${item.id}`)
+      .then(() => {
+        setDeleteModalRecipeOpen(false);
+        toast.current?.show({
+          severity: "info",
+          summary: "Успех",
+          detail: "Данные успешно удалены",
+        });
       });
-    });
   };
 
   const deleteItemSlide = (item: { id: string | null; name: string }) => {
@@ -165,14 +169,16 @@ export const AdminPanel = () => {
       return;
     }
 
-    return axios.delete(`http://185.70.185.67:3000/slides/${item.id}`).then(() => {
-      setDeleteModalSlideOpen(false);
-      toast.current?.show({
-        severity: "info",
-        summary: "Успех",
-        detail: "Данные успешно удалены",
+    return axios
+      .delete(`http://185.70.185.67:3000/slides/${item.id}`)
+      .then(() => {
+        setDeleteModalSlideOpen(false);
+        toast.current?.show({
+          severity: "info",
+          summary: "Успех",
+          detail: "Данные успешно удалены",
+        });
       });
-    });
   };
 
   const [filters, setFilters] = useState({
@@ -565,13 +571,72 @@ export const AdminPanel = () => {
       .then(async (res) => {
         const result = new FormData();
         const textedBlob = await blobToBase64(res.data);
+        const alreadyLoadedData = goods.find((item) => item.id === formData.id);
 
-        result.append("id", uuidv4());
-        result.append("name", formData.name);
-        result.append("weight", formData.weight);
-        result.append("price", formData.price);
-        result.append("oldPrice", formData.oldPrice);
-        result.append("image", textedBlob);
+        if (formData.id && alreadyLoadedData) {
+          result.append("id", formData.id ? formData.id : uuidv4());
+          result.append("name", formData.name || alreadyLoadedData?.name || "");
+          result.append(
+            "weight",
+            formData.weight || alreadyLoadedData?.weight || "",
+          );
+          result.append(
+            "price",
+            formData.price || alreadyLoadedData?.price
+              ? String(alreadyLoadedData?.price)
+              : "",
+          );
+          result.append(
+            "description",
+            formData.description ||
+              alreadyLoadedData?.description?.description ||
+              "",
+          );
+          result.append(
+            "volume",
+            formData.volume || alreadyLoadedData?.volume || "",
+          );
+          result.append(
+            "dueDate",
+            formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
+          );
+          result.append(
+            "minRequest",
+            formData.minRequest ||
+              alreadyLoadedData?.description?.minRequest ||
+              "",
+          );
+          result.append(
+            "ingridients",
+            formData.ingridients ||
+              alreadyLoadedData?.description?.ingridients ||
+              "",
+          );
+          result.append(
+            "package",
+            formData.package || alreadyLoadedData?.description?.package || "",
+          );
+          result.append(
+            "oldPrice",
+            formData.oldPrice || alreadyLoadedData?.oldPrice
+              ? String(alreadyLoadedData?.oldPrice)
+              : "",
+          );
+          result.append("image", textedBlob);
+        } else {
+          result.append("id", uuidv4());
+          result.append("name", formData.name);
+          result.append("weight", formData.weight);
+          result.append("price", formData.price);
+          result.append("description", formData.description);
+          result.append("volume", formData.volume);
+          result.append("dueDate", formData.dueDate);
+          result.append("minRequest", formData.minRequest);
+          result.append("ingridients", formData.ingridients);
+          result.append("package", formData.package);
+          result.append("oldPrice", formData.oldPrice);
+          result.append("image", textedBlob);
+        }
 
         let object = {};
         result.forEach((value, key) => {
@@ -692,6 +757,17 @@ export const AdminPanel = () => {
             <>
               <Row style={{ display: "flex", justifyContent: "center" }}>
                 <Heading.H1>Добавление нового товара</Heading.H1>
+              </Row>
+              <Row>
+                <span className="p-float-label">
+                  <InputText
+                    name="id"
+                    id="id"
+                    value={formData.id}
+                    onChange={(e) => handleChange("id", e.target.value)}
+                  />
+                  <label htmlFor="id">ID товара (при наличии)</label>
+                </span>
               </Row>
               <Row>
                 <span className="p-float-label">
