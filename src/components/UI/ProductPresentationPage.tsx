@@ -100,14 +100,16 @@ export const ProductPresentationPage = () => {
           key={item2.name}
           {...item2}
           image={
-            item2.image
-              ? arrayBufferToBase64(
-                  item2.image as unknown as {
-                    type: string;
-                    data: any[];
-                  },
-                )
-              : ""
+            item2?.image && typeof item2?.image === "string"
+              ? item2?.image
+              : item2?.image
+                ? arrayBufferToBase64(
+                    item2.image as unknown as {
+                      type: string;
+                      data: any[];
+                    },
+                  )
+                : ""
           }
         />
       ));
@@ -121,7 +123,7 @@ export const ProductPresentationPage = () => {
     }
     return null;
   };
-
+  data && console.log(data.image);
   return (
     <>
       <MainHeader isCart={true} />
@@ -144,14 +146,16 @@ export const ProductPresentationPage = () => {
             <ProductPresentationHeader>
               <ProductPresentationHeaderImage
                 src={
-                  data?.image
-                    ? arrayBufferToBase64(
-                        data.image as unknown as {
-                          type: string;
-                          data: any[];
-                        },
-                      )
-                    : placeHolder
+                  data?.image && typeof data?.image === "string"
+                    ? data?.image
+                    : data?.image
+                      ? arrayBufferToBase64(
+                          data.image as unknown as {
+                            type: string;
+                            data: any[];
+                          },
+                        )
+                      : placeHolder
                 }
               />
               <RecipeText>{data?.name}</RecipeText>

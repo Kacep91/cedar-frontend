@@ -1187,17 +1187,17 @@ export const ButtonFacade = styled.div`
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  width: 100%;
   gap: 20px;
   flex-wrap: wrap;
   width: 20%;
 
   @media screen and (max-width: 1024px) {
-    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin: 10px 0;
+    width: 100%;
   }
 `;
 
@@ -1208,4 +1208,9 @@ export const AdminControlWrapper = styled.div`
   width: 100%;
   background: #cccccc7b;
   height: -webkit-fill-available;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;

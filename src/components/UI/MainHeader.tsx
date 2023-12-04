@@ -14,6 +14,7 @@ import { GoodsActions, GoodsSelectors, Slide } from "store/goods";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ProgressSpinner } from "primereact/progressspinner";
+import { useNavigate } from "react-router";
 
 const nodeTemplate = (node: any, options: any) => {
   let label = <b>{node.label}</b>;
@@ -183,6 +184,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         setMobileMenuOpened(false);
       },
     },
+    {
+      key: "4",
+      label: "Админка",
+      icon: "pi pi-fw pi-inbox",
+      url: "/adminPanel",
+    },
   ];
 
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
@@ -192,6 +199,8 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const [isSticky, setSticky] = useState(false);
   const [isLongPopupVisible, setLongPopupVisible] = useState(false);
   const [isProductsPopupVisible, setProductsPopupVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isMobileMenuOpened) {
@@ -226,9 +235,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
                 selectionMode="single"
                 onSelect={(
                   e: TreeEventNodeEvent & {
-                    node: TreeNode & { onClick: () => void };
+                    node: TreeNode & { onClick: () => void; url: "" };
                   },
-                ) => e.node?.onClick && e.node.onClick()}
+                ) => {
+                  e.node?.onClick && e.node.onClick();
+                  e.node?.url ? navigate(e.node?.url) : null;
+                }}
                 style={{
                   width: "100vw",
                   height: "103vh",

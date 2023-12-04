@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "index.tsx",
   "repository": "https://github.com/Kacep91/cedar.git",
   "description": "Cedar",
