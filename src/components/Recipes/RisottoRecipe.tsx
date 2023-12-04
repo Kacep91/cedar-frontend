@@ -63,7 +63,8 @@ export const RisottoRecipe = (recipe: any) => {
     };
 
     categorizedProducts.length === 0 && fetch();
-  }, [categorizedProducts]);
+  }, []);
+
   return (
     <>
       <MainHeader isCart={true} />

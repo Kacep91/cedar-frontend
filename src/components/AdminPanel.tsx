@@ -128,7 +128,6 @@ export const AdminPanel = () => {
   }>({ id: null, name: "" });
 
   const [globalFilterValue, setGlobalFilterValue] = useState("");
-  const [onlyImages, setOnlyImages] = useState(false);
   const isMobile = useScreenSize("mobile");
 
   const deleteItem = (item: { id: string | null; name: string }) => {
@@ -296,11 +295,21 @@ export const AdminPanel = () => {
 
   const [files, setFiles] = useState<File[]>([]);
   const [content, setContent] = useState("loadGoods");
+
+  const [slidesForm, setSlidesFormData] = useState({
+    id: "",
+    image: "",
+    video: "",
+  });
+
   const [recipiesFormData, setRecipiesFormData] = useState({
     id: "",
     name: "",
     ingridients: "",
     instructions: "",
+    image: "",
+    video: "",
+    tags: "",
   });
 
   const [formData, setFormData] = useState({
@@ -315,6 +324,7 @@ export const AdminPanel = () => {
     minRequest: "",
     description: "",
     ingridients: "",
+    tags: "",
   });
 
   const handleChange = (name: string, value: any) => {
@@ -323,6 +333,9 @@ export const AdminPanel = () => {
 
   const handleChangeRecipe = (name: string, value: any) => {
     setRecipiesFormData((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleChangeSlides = (name: string, value: any) => {
+    setSlidesFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const toast = useRef<Toast>(null);
@@ -491,12 +504,42 @@ export const AdminPanel = () => {
         const result = new FormData();
         const textedBlob = await blobToBase64(res.data);
 
-        result.append("id", uuidv4());
-        result.append("name", recipiesFormData.name);
-        result.append("ingridients", recipiesFormData.ingridients);
-        result.append("instructions", recipiesFormData.instructions);
-        result.append("name", recipiesFormData.name);
-        result.append("image", textedBlob);
+        const alreadyLoadedData = recipes.find(
+          (item) => item.id === recipiesFormData.id,
+        );
+
+        if (recipiesFormData.id && alreadyLoadedData) {
+          result.append("id", uuidv4());
+          result.append(
+            "name",
+            recipiesFormData.name || alreadyLoadedData?.name,
+          );
+          result.append(
+            "ingridients",
+            recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
+          );
+          result.append(
+            "instructions",
+            recipiesFormData.instructions || alreadyLoadedData?.instructions,
+          );
+          result.append(
+            "video",
+            recipiesFormData.video || alreadyLoadedData?.video,
+          );
+          result.append(
+            "tags",
+            recipiesFormData.tags || alreadyLoadedData?.tags,
+          );
+          result.append("image", textedBlob);
+        } else {
+          result.append("id", uuidv4());
+          result.append("name", recipiesFormData.name);
+          result.append("ingridients", recipiesFormData.ingridients);
+          result.append("instructions", recipiesFormData.instructions);
+          result.append("video", recipiesFormData.video);
+          result.append("tags", recipiesFormData.tags);
+          result.append("image", textedBlob);
+        }
 
         let object = {};
         result.forEach((value, key) => {
@@ -504,39 +547,97 @@ export const AdminPanel = () => {
         });
 
         console.log("object", object);
-
-        axios
-          .post("http://185.70.185.67:3000/recipes", object)
-          .then((response) => {
-            console.log(response.data);
-            toast.current?.show({
-              severity: "info",
-              summary: "Успех",
-              detail: "Данные успешно загружены",
+        if (recipiesFormData.id && alreadyLoadedData) {
+          axios
+            .patch(
+              `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
+              object,
+            )
+            .then((response) => {
+              console.log(response.data);
+              toast.current?.show({
+                severity: "info",
+                summary: "Успех",
+                detail: "Данные успешно загружены",
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              toast.current?.show({
+                severity: "error",
+                summary: "Неудача",
+                detail: "Во время загрузки произошла ошибка",
+              });
             });
-          })
-          .catch((error) => {
-            console.error(error);
-            toast.current?.show({
-              severity: "error",
-              summary: "Неудача",
-              detail: "Во время загрузки произошла ошибка",
+        } else {
+          axios
+            .post("http://185.70.185.67:3000/recipes", object)
+            .then((response) => {
+              console.log(response.data);
+              toast.current?.show({
+                severity: "info",
+                summary: "Успех",
+                detail: "Данные успешно загружены",
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              toast.current?.show({
+                severity: "error",
+                summary: "Неудача",
+                detail: "Во время загрузки произошла ошибка",
+              });
             });
-          });
+        }
       });
   };
 
   const handleSlidesSubmit = async () => {
-    for (const item of files) {
+    if (files && files.length) {
+      for (const item of files) {
+        try {
+          const res = await axios.get<File>(item?.objectURL, {
+            responseType: "blob",
+          });
+          const result = new FormData();
+          const textedBlob = await blobToBase64(res.data);
+
+          result.append("id", uuidv4());
+          result.append("video", slidesForm.video);
+          result.append("image", textedBlob);
+
+          let object = {};
+          result.forEach((value, key) => {
+            object[key] = value;
+          });
+
+          console.log("object", object);
+
+          const response = await axios.post(
+            "http://185.70.185.67:3000/slides",
+            object,
+          );
+          console.log(response.data);
+          toast.current?.show({
+            severity: "info",
+            summary: "Успех",
+            detail: "Данные успешно загружены",
+          });
+        } catch (error) {
+          console.error(error);
+          toast.current?.show({
+            severity: "error",
+            summary: "Неудача",
+            detail: "Во время загрузки произошла ошибка",
+          });
+        }
+      }
+    } else {
       try {
-        const res = await axios.get<File>(item?.objectURL, {
-          responseType: "blob",
-        });
         const result = new FormData();
-        const textedBlob = await blobToBase64(res.data);
 
         result.append("id", uuidv4());
-        result.append("image", textedBlob);
+        result.append("video", slidesForm.video);
 
         let object = {};
         result.forEach((value, key) => {
@@ -549,7 +650,7 @@ export const AdminPanel = () => {
           "http://185.70.185.67:3000/slides",
           object,
         );
-        console.log(response.data);
+
         toast.current?.show({
           severity: "info",
           summary: "Успех",
@@ -613,6 +714,7 @@ export const AdminPanel = () => {
               alreadyLoadedData?.description?.ingridients ||
               "",
           );
+          result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
           result.append(
             "package",
             formData.package || alreadyLoadedData?.description?.package || "",
@@ -626,14 +728,15 @@ export const AdminPanel = () => {
           result.append("image", textedBlob);
         } else {
           result.append("id", uuidv4());
-          result.append("name", formData.name);
-          result.append("weight", formData.weight);
-          result.append("price", formData.price);
-          result.append("description", formData.description);
-          result.append("volume", formData.volume);
-          result.append("dueDate", formData.dueDate);
-          result.append("minRequest", formData.minRequest);
-          result.append("ingridients", formData.ingridients);
+          result.append("name", formData.name || "");
+          result.append("weight", formData.weight || "");
+          result.append("price", formData.price || "");
+          result.append("description", formData.description || "");
+          result.append("volume", formData.volume || "");
+          result.append("dueDate", formData.dueDate || "");
+          result.append("minRequest", formData.minRequest || "");
+          result.append("ingridients", formData.ingridients || "");
+          result.append("tags", formData.tags || "");
           result.append("package", formData.package);
           result.append("oldPrice", formData.oldPrice);
           result.append("image", textedBlob);
@@ -818,6 +921,21 @@ export const AdminPanel = () => {
             <Row>
               <span className="p-float-label">
                 <InputTextarea
+                  name="tags"
+                  id="tags"
+                  style={{ width: "100%" }}
+                  rows={3}
+                  value={formData?.tags}
+                  onChange={(e) => handleChange("tags", e.target.value)}
+                />
+                <label htmlFor="tags">
+                  Тэги для поиска и предложений (через запятую)
+                </label>
+              </span>
+            </Row>
+            <Row>
+              <span className="p-float-label">
+                <InputTextarea
                   name="ingridients"
                   id="ingridients"
                   style={{ width: "100%" }}
@@ -957,7 +1075,17 @@ export const AdminPanel = () => {
           <Row style={{ display: "flex", justifyContent: "center" }}>
             <Heading.H1>Добавление нового рецепта</Heading.H1>
           </Row>
-
+          <Row>
+            <span className="p-float-label">
+              <InputText
+                name="id"
+                id="id"
+                value={recipiesFormData.id}
+                onChange={(e) => handleChangeRecipe("id", e.target.value)}
+              />
+              <label htmlFor="id">ID товара (при наличии)</label>
+            </span>
+          </Row>
           <Row>
             <span className="p-float-label">
               <InputText
@@ -997,6 +1125,34 @@ export const AdminPanel = () => {
                 }
               />
               <label htmlFor="instructions">Инструкции</label>
+            </span>
+          </Row>
+          <Row>
+            <span className="p-float-label">
+              <InputTextarea
+                name="tags"
+                id="tags"
+                style={{ width: "100%" }}
+                rows={3}
+                value={recipiesFormData?.tags}
+                onChange={(e) => handleChangeRecipe("tags", e.target.value)}
+              />
+              <label htmlFor="tags">
+                Тэги для поиска и предложений (через запятую)
+              </label>
+            </span>
+          </Row>
+          <Row>
+            <span className="p-float-label">
+              <InputTextarea
+                name="video"
+                id="video"
+                style={{ width: "100%" }}
+                rows={3}
+                value={recipiesFormData?.video}
+                onChange={(e) => handleChangeRecipe("video", e.target.value)}
+              />
+              <label htmlFor="video">Видео (через запятую)</label>
             </span>
           </Row>
         </Form>
@@ -1099,6 +1255,22 @@ export const AdminPanel = () => {
     ),
     loadSlider: (
       <>
+        <Form>
+          <Row style={{ display: "flex", justifyContent: "center" }}>
+            <Heading.H1>Добавление нового слайда</Heading.H1>
+          </Row>
+          <Row>
+            <span className="p-float-label">
+              <InputText
+                name="video"
+                id="video"
+                value={slidesForm.video}
+                onChange={(e) => handleChangeSlides("video", e.target.value)}
+              />
+              <label htmlFor="video">Ссылки на видео (через запятую)</label>
+            </span>
+          </Row>
+        </Form>
         <FileUploadWrapper>
           <Toast ref={toast}></Toast>
           <Tooltip
@@ -1166,9 +1338,9 @@ export const AdminPanel = () => {
           <Column style={{ width: "45%" }} field="id" header="ID"></Column>
           <Column
             style={{ width: "35%" }}
-            field="name"
+            field="video"
             sortable
-            header="Название"
+            header="Ссылка"
           ></Column>
           <Column
             style={{ width: "20%" }}

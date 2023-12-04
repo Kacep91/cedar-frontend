@@ -8,11 +8,14 @@ export type Recipe = {
   ingridients: string;
   instructions: string;
   image: string;
+  video: string;
+  tags: string;
 };
 
 export type Slide = {
   id: string;
   image: string;
+  video: string;
 };
 
 export type GoodsState = {

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useNavigate } from "react-router";
+import { transformArray } from "utils/utils";
 
 const nodeTemplate = (node: any, options: any) => {
   let label = <b>{node.label}</b>;
@@ -59,9 +60,24 @@ const togglerTemplate = (node: any, options: any) => {
 };
 
 const itemTemplate = (item: Slide) => {
+  if (item.video) {
+    return (
+      <div style={{ width: "100%" }}>
+        <iframe
+          width="100%"
+          height="500"
+          src={`${item.video}?autoplay=1&mute=1`}
+          title="Siberia Organic Video"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        ></iframe>
+      </div>
+    );
+  }
   return (
     <img
-      src={item.image}
+      src={item.image || ""}
       alt={""}
       style={{
         height: "500px",
@@ -82,6 +98,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const dispatch = useDispatch();
 
   const slides = useSelector(GoodsSelectors.slidesList);
+  const slidesResult = transformArray(slides);
 
   useEffect(() => {
     const fetch = async () => {
@@ -239,7 +256,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
                   },
                 ) => {
                   e.node?.onClick && e.node.onClick();
-                  e.node?.url ? navigate(e.node?.url) : null;
+                  e.node?.url && navigate(e.node?.url);
                 }}
                 style={{
                   width: "100vw",
@@ -298,7 +315,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
             </SmallBackground>
           ) : (
             <Galleria
-              value={slides}
+              value={slidesResult}
               numVisible={1}
               circular
               style={{ height: "500px", width: "100%" }}

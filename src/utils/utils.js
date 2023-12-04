@@ -374,6 +374,13 @@ export function categorizeProducts(products, labels) {
   return result;
 }
 
+export function categorizeRecipeByName(inputArray) {
+  const result = selectedLabels.find((item) => {
+    return inputArray.some((element) => item.match.includes(element));
+  });
+  return result ? result.label : null;
+}
+
 export const selectedLabels = [
   {
     label: "Соки, сиропы, сбитни, пр. напитки",
@@ -381,7 +388,7 @@ export const selectedLabels = [
   },
   {
     label: "Мёд натуральный и продукты пчеловодства",
-    match: ["десерт"],
+    match: ["десерт", "медовой", "медово-"],
   },
   {
     label: "Сибирское варенье из шишек и ягод",
@@ -389,11 +396,11 @@ export const selectedLabels = [
   },
   {
     label: "Сушеная ягода, вяленая ягода",
-    match: ["вяленая", "сушеная"],
+    match: ["вяленая", "сушеная", "сушеными", "ягодами", "жимолость"],
   },
   {
     label: "Грибы (в т.ч. продукция из грибов)",
-    match: ["гриб", "лисичка", "приправа", "суп"],
+    match: ["гриб", "грибами", "грибов", "лисичка", "приправа", "суп"],
   },
   {
     label:
@@ -417,3 +424,32 @@ export const selectedLabels = [
     match: ["спрей", "комплекс"],
   },
 ];
+
+export function transformArray(array) {
+  let result = [];
+
+  if (!array) {
+    return [];
+  }
+
+  array.map((item) => {
+    if (item.video) {
+      let videos = item?.video?.split(", ");
+      videos?.map((video) => {
+        result.push({ id: item?.id, video: video });
+      });
+    }
+    if (item?.image) {
+      result.push({ id: item?.id, image: item?.image });
+    }
+  });
+  return result;
+}
+
+export const transformRecipesToSlidesArray = (data) => {
+  if (data && data.video) {
+    return transformArray(data?.video?.split(","));
+  } else {
+    return [{ ...data }];
+  }
+};

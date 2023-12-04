@@ -1159,7 +1159,7 @@ export const ProductPresentationHeaderImage = styled.img`
 
 export const ProductPresentationDescriptionWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 50px;
   flex-direction: column;
@@ -1213,4 +1213,11 @@ export const AdminControlWrapper = styled.div`
     flex-direction: column;
     align-items: center;
   }
+`;
+
+export const ProductPresentationRecipes = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
