@@ -86,7 +86,7 @@ export const GeneralRecipe = () => {
 
   const categorizedLabel =
     data && categorizeRecipeByName(data?.name?.split(" "));
-
+  console.log("categorizedLabel", categorizedLabel);
   const totalLength = useMemo(
     () =>
       [...categorizedProducts].filter((item) =>

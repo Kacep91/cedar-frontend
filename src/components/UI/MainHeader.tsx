@@ -132,54 +132,38 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       children: [
         {
           key: "1-0",
-          label: "Соки, сиропы, сбитни, пр. напитки",
-          url: "/goods",
+          label: "Сибирские напитки",
+          url: "/goods/#product_id_0",
         },
         {
           key: "1-1",
-          label: "Мёд натуральный и продукты пчеловодства",
-          url: "/goods",
+          label: "Сибирские сладости",
+          url: "/goods/#product_id_1",
         },
         {
           key: "1-2",
-          label: "Сибирское варенье из шишек и ягод",
-          url: "/goods",
+          label: "Сибирская ягода",
+          url: "/goods/#product_id_2",
         },
         {
           key: "1-3",
-          label: "Сушеная ягода, вяленая ягода",
-          url: "/goods",
+          label: "Сибирские грибы",
+          url: "/goods/#product_id_3",
         },
         {
           key: "1-4",
-          label: "Грибы (в т.ч. продукция из грибов)",
-          url: "/goods",
+          label: "Сибирское масло",
+          url: "/goods/#product_id_4",
         },
         {
           key: "1-5",
-          label:
-            "Десерты таежные (пралине, сгущеное молоко, урбеч, цукаты и т.д.), десерты из яблок (печенье и пр.)",
-          url: "/goods",
+          label: "Сибирская косметика",
+          url: "/goods/#product_id_5",
         },
         {
           key: "1-6",
-          label: "Иван-чай, травяные чаи/сборы",
-          url: "/goods",
-        },
-        {
-          key: "1-7",
-          label: "Масла",
-          url: "/goods",
-        },
-        {
-          key: "1-8",
-          label: "Косметическая продукция, эфирные масла",
-          url: "/goods",
-        },
-        {
-          key: "1-9",
-          label: "Бады",
-          url: "/goods",
+          label: "Сибирские бады",
+          url: "/goods/#product_id_6",
         },
       ],
     },
