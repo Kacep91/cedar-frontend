@@ -33,9 +33,8 @@ export const Honey = () => {
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
   const [listLength, setListLength] = useState(4);
   const totalLength =
-    [...categorizedProducts].filter((item) =>
-      item.label.includes("десерт"),
-    )?.[0]?.items.length || 1;
+    [...categorizedProducts].filter((item) => item.label.includes("мёд"))?.[0]
+      ?.items.length || 1;
 
   useEffect(() => {
     const fetch = async () => {
@@ -145,7 +144,7 @@ export const Honey = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-                .filter((item) => item.label.includes("десерт"))
+                .filter((item) => item.label.includes("мёд"))
                 .map(
                   (
                     item: {

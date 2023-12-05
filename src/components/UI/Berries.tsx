@@ -33,10 +33,10 @@ export const Berries = () => {
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
 
   const [listLength, setListLength] = useState(4);
+  console.log("categorizedProducts", categorizedProducts);
   const totalLength =
-    [...categorizedProducts].filter((item) =>
-      item.label.includes("Сушеная ягода"),
-    )?.[0]?.items.length || 1;
+    [...categorizedProducts].filter((item) => item.label.includes("ягода"))?.[0]
+      ?.items.length || 1;
 
   useEffect(() => {
     const fetch = async () => {
@@ -131,7 +131,7 @@ export const Berries = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-                .filter((item) => item.label.includes("Сушеная ягода"))
+                .filter((item) => item.label.includes("ягода"))
                 .map(
                   (
                     item: {

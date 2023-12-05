@@ -33,8 +33,9 @@ export const Willow = () => {
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
   const [listLength, setListLength] = useState(4);
   const totalLength =
-    [...categorizedProducts].filter((item) => item.label.includes("чай"))?.[0]
-      ?.items.length || 1;
+    [...categorizedProducts].filter((item) =>
+      item.label.includes("напитки"),
+    )?.[0]?.items.length || 1;
 
   useEffect(() => {
     const fetch = async () => {
@@ -140,7 +141,7 @@ export const Willow = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-                .filter((item) => item.label.includes("чай"))
+                .filter((item) => item.label.includes("напитки"))
                 .map(
                   (
                     item: {
