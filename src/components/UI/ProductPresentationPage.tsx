@@ -30,6 +30,7 @@ import { ItemListUnit } from "components/ItemListUnit";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 export type ProductPresentationPageProps = {
+  minRequest: any;
   id?: string;
   name?: string;
   amount?: number;

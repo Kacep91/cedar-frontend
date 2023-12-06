@@ -117,6 +117,7 @@ export const AdminPanel = () => {
   const goods = useSelector(GoodsSelectors.goodsList);
   const recipes = useSelector(GoodsSelectors.recipesList);
   const slides = useSelector(GoodsSelectors.slidesList);
+  const [isReload, setIsReload] = useState(false);
 
   const [isDeleteModalOpened, setDeleteModalOpen] = useState(false);
   const [isDeleteModalRecipeOpened, setDeleteModalRecipeOpen] = useState(false);
@@ -259,11 +260,12 @@ export const AdminPanel = () => {
         }[];
         dispatch(GoodsActions.setCategorizedData(categorizedProducts));
         setIsLoading(false);
+        setIsReload(false);
       }
     };
 
-    goods.length === 0 && fetch();
-  }, []);
+    (isReload || goods.length === 0) && fetch();
+  }, [isReload]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -273,11 +275,12 @@ export const AdminPanel = () => {
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
         setIsLoading(false);
+        setIsReload(false);
       }
     };
 
-    recipes.length === 0 && fetch();
-  }, []);
+    (isReload || recipes.length === 0) && fetch();
+  }, [isReload]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -287,11 +290,12 @@ export const AdminPanel = () => {
       if (res.data) {
         dispatch(GoodsActions.setSlides(res.data));
         setIsLoading(false);
+        setIsReload(false);
       }
     };
 
-    slides.length === 0 && fetch();
-  }, []);
+    (isReload || slides.length === 0) && fetch();
+  }, [isReload]);
 
   const [files, setFiles] = useState<File[]>([]);
   const [content, setContent] = useState("loadGoods");
@@ -510,35 +514,58 @@ export const AdminPanel = () => {
           const textedBlob = await blobToBase64(res.data);
 
           if (recipiesFormData.id && alreadyLoadedData) {
-            result.append("id", uuidv4());
+            result.append(
+              "id",
+              recipiesFormData.id ? recipiesFormData.id : uuidv4(),
+            );
             result.append(
               "name",
-              recipiesFormData.name || alreadyLoadedData?.name,
+              recipiesFormData.name
+                ? recipiesFormData.name
+                : alreadyLoadedData?.name
+                  ? alreadyLoadedData?.name
+                  : "",
             );
             result.append(
               "ingridients",
-              recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
+              recipiesFormData.ingridients
+                ? recipiesFormData.ingridients
+                : alreadyLoadedData?.ingridients
+                  ? alreadyLoadedData?.ingridients
+                  : "",
             );
             result.append(
               "instructions",
-              recipiesFormData.instructions || alreadyLoadedData?.instructions,
+              recipiesFormData.instructions
+                ? recipiesFormData.instructions
+                : alreadyLoadedData?.instructions
+                  ? alreadyLoadedData?.instructions
+                  : "",
             );
             result.append(
               "video",
-              recipiesFormData.video || alreadyLoadedData?.video,
+              recipiesFormData.video
+                ? recipiesFormData.video
+                : alreadyLoadedData?.video
+                  ? alreadyLoadedData?.video
+                  : "",
             );
             result.append(
               "tags",
-              recipiesFormData.tags || alreadyLoadedData?.tags,
+              recipiesFormData.tags
+                ? recipiesFormData.tags
+                : alreadyLoadedData?.tags
+                  ? alreadyLoadedData?.tags
+                  : "",
             );
             result.append("image", textedBlob);
           } else {
             result.append("id", uuidv4());
-            result.append("name", recipiesFormData.name);
-            result.append("ingridients", recipiesFormData.ingridients);
-            result.append("instructions", recipiesFormData.instructions);
-            result.append("video", recipiesFormData.video);
-            result.append("tags", recipiesFormData.tags);
+            result.append("name", recipiesFormData.name || "");
+            result.append("ingridients", recipiesFormData.ingridients || "");
+            result.append("instructions", recipiesFormData.instructions || "");
+            result.append("video", recipiesFormData.video || "");
+            result.append("tags", recipiesFormData.tags || "");
             result.append("image", textedBlob);
           }
 
@@ -561,6 +588,7 @@ export const AdminPanel = () => {
                   summary: "Успех",
                   detail: "Данные успешно загружены",
                 });
+                setIsReload(true);
               })
               .catch((error) => {
                 console.error(error);
@@ -580,6 +608,7 @@ export const AdminPanel = () => {
                   summary: "Успех",
                   detail: "Данные успешно загружены",
                 });
+                setIsReload(true);
               })
               .catch((error) => {
                 console.error(error);
@@ -595,21 +624,50 @@ export const AdminPanel = () => {
       const result = new FormData();
 
       if (recipiesFormData.id && alreadyLoadedData) {
-        result.append("id", recipiesFormData.id);
-        result.append("name", recipiesFormData.name || alreadyLoadedData?.name);
+        result.append(
+          "id",
+          recipiesFormData.id ? recipiesFormData.id : uuidv4(),
+        );
+        result.append(
+          "name",
+          recipiesFormData.name
+            ? recipiesFormData.name
+            : alreadyLoadedData?.name
+              ? alreadyLoadedData?.name
+              : "",
+        );
         result.append(
           "ingridients",
-          recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
+          recipiesFormData.ingridients
+            ? recipiesFormData.ingridients
+            : alreadyLoadedData?.ingridients
+              ? alreadyLoadedData?.ingridients
+              : "",
         );
         result.append(
           "instructions",
-          recipiesFormData.instructions || alreadyLoadedData?.instructions,
+          recipiesFormData.instructions
+            ? recipiesFormData.instructions
+            : alreadyLoadedData?.instructions
+              ? alreadyLoadedData?.instructions
+              : "",
         );
         result.append(
           "video",
-          recipiesFormData.video || alreadyLoadedData?.video,
+          recipiesFormData.video
+            ? recipiesFormData.video
+            : alreadyLoadedData?.video
+              ? alreadyLoadedData?.video
+              : "",
         );
-        result.append("tags", recipiesFormData.tags || alreadyLoadedData?.tags);
+        result.append(
+          "tags",
+          recipiesFormData.tags
+            ? recipiesFormData.tags
+            : alreadyLoadedData?.tags
+              ? alreadyLoadedData?.tags
+              : "",
+        );
       } else {
         result.append("id", uuidv4());
         result.append("name", recipiesFormData.name);
@@ -638,6 +696,7 @@ export const AdminPanel = () => {
               summary: "Успех",
               detail: "Данные успешно загружены",
             });
+            setIsReload(true);
           })
           .catch((error) => {
             console.error(error);
@@ -657,6 +716,7 @@ export const AdminPanel = () => {
               summary: "Успех",
               detail: "Данные успешно загружены",
             });
+            setIsReload(true);
           })
           .catch((error) => {
             console.error(error);
@@ -701,6 +761,7 @@ export const AdminPanel = () => {
             summary: "Успех",
             detail: "Данные успешно загружены",
           });
+          setIsReload(true);
         } catch (error) {
           console.error(error);
           toast.current?.show({
@@ -734,6 +795,7 @@ export const AdminPanel = () => {
           summary: "Успех",
           detail: "Данные успешно загружены",
         });
+        setIsReload(true);
       } catch (error) {
         console.error(error);
         toast.current?.show({
@@ -762,57 +824,99 @@ export const AdminPanel = () => {
             result.append("id", formData.id ? formData.id : uuidv4());
             result.append(
               "name",
-              formData.name || alreadyLoadedData?.name || "",
+              formData.name
+                ? formData.name
+                : alreadyLoadedData?.name
+                  ? alreadyLoadedData?.name
+                  : "",
             );
             result.append(
               "weight",
-              formData.weight || alreadyLoadedData?.weight || "",
+              formData.weight
+                ? formData.weight
+                : alreadyLoadedData?.weight
+                  ? alreadyLoadedData?.weight
+                  : "",
             );
             result.append(
               "price",
-              formData.price || alreadyLoadedData?.price
-                ? String(alreadyLoadedData?.price)
-                : "",
+              formData.price
+                ? String(formData.price)
+                : alreadyLoadedData?.price
+                  ? String(alreadyLoadedData?.price)
+                  : "",
             );
             result.append(
               "description",
-              formData.description ||
-                alreadyLoadedData?.description?.description ||
-                "",
+              formData.description
+                ? formData.description
+                : alreadyLoadedData?.description?.description
+                  ? alreadyLoadedData?.description?.description
+                  : typeof alreadyLoadedData?.description === "string"
+                    ? alreadyLoadedData?.description
+                    : "",
             );
             result.append(
               "volume",
-              formData.volume || alreadyLoadedData?.volume || "",
+              formData.volume
+                ? formData.volume
+                : alreadyLoadedData?.volume
+                  ? alreadyLoadedData?.volume
+                  : "",
             );
             result.append(
               "dueDate",
-              formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
+              formData.dueDate
+                ? formData.dueDate
+                : alreadyLoadedData?.dueDate
+                  ? alreadyLoadedData?.dueDate
+                  : "",
             );
             result.append(
               "minRequest",
-              formData.minRequest ||
-                alreadyLoadedData?.description?.minRequest ||
-                "",
+              formData.minRequest
+                ? formData.minRequest
+                : alreadyLoadedData?.description?.minRequest
+                  ? alreadyLoadedData?.description?.minRequest
+                  : typeof alreadyLoadedData?.minRequest === "string"
+                    ? alreadyLoadedData?.minRequest
+                    : "",
             );
             result.append(
               "ingridients",
-              formData.ingridients ||
-                alreadyLoadedData?.description?.ingridients ||
-                "",
+              formData.ingridients
+                ? formData.ingridients
+                : alreadyLoadedData?.description?.ingridients
+                  ? alreadyLoadedData?.description?.ingridients
+                  : typeof alreadyLoadedData?.ingridients === "string"
+                    ? alreadyLoadedData?.ingridients
+                    : "",
             );
             result.append(
               "tags",
-              formData.tags || alreadyLoadedData?.tags || "",
+              formData.tags
+                ? formData.tags
+                : alreadyLoadedData?.tags
+                  ? alreadyLoadedData?.tags
+                  : "",
             );
             result.append(
               "package",
-              formData.package || alreadyLoadedData?.description?.package || "",
+              formData.package
+                ? formData.package
+                : alreadyLoadedData?.description?.package
+                  ? alreadyLoadedData?.description?.package
+                  : typeof alreadyLoadedData?.package === "string"
+                    ? alreadyLoadedData?.package
+                    : "",
             );
             result.append(
               "oldPrice",
-              formData.oldPrice || alreadyLoadedData?.oldPrice
-                ? String(alreadyLoadedData?.oldPrice)
-                : "",
+              formData.oldPrice
+                ? String(formData.oldPrice)
+                : alreadyLoadedData?.oldPrice
+                  ? String(alreadyLoadedData?.oldPrice)
+                  : "",
             );
             result.append("image", textedBlob);
           } else {
@@ -848,6 +952,7 @@ export const AdminPanel = () => {
                   summary: "Успех",
                   detail: "Данные успешно загружены",
                 });
+                setIsReload(true);
               })
               .catch((error) => {
                 console.error(error);
@@ -867,6 +972,7 @@ export const AdminPanel = () => {
                   summary: "Успех",
                   detail: "Данные успешно загружены",
                 });
+                setIsReload(true);
               })
               .catch((error) => {
                 console.error(error);
@@ -881,58 +987,103 @@ export const AdminPanel = () => {
     } else {
       const result = new FormData();
 
-      console.log("goods", goods);
-      console.log("alreadyLoadedData", alreadyLoadedData);
-
       if (formData.id && alreadyLoadedData) {
         result.append("id", formData.id ? formData.id : uuidv4());
-        result.append("name", formData.name || alreadyLoadedData?.name || "");
+        result.append(
+          "name",
+          formData.name
+            ? formData.name
+            : alreadyLoadedData?.name
+              ? alreadyLoadedData?.name
+              : "",
+        );
         result.append(
           "weight",
-          formData?.weight || alreadyLoadedData?.weight || "",
+          formData.weight
+            ? formData.weight
+            : alreadyLoadedData?.weight
+              ? alreadyLoadedData?.weight
+              : "",
         );
         result.append(
           "price",
-          formData.price || alreadyLoadedData?.price
-            ? String(alreadyLoadedData?.price)
-            : "",
+          formData.price
+            ? String(formData.price)
+            : alreadyLoadedData?.price
+              ? String(alreadyLoadedData?.price)
+              : "",
         );
         result.append(
           "description",
-          formData.description ||
-            alreadyLoadedData?.description?.description ||
-            "",
+          formData.description
+            ? formData.description
+            : alreadyLoadedData?.description?.description
+              ? alreadyLoadedData?.description?.description
+              : typeof alreadyLoadedData?.description === "string"
+                ? alreadyLoadedData?.description
+                : "",
         );
         result.append(
           "volume",
-          formData.volume || alreadyLoadedData?.volume || "",
+          formData.volume
+            ? formData.volume
+            : alreadyLoadedData?.volume
+              ? alreadyLoadedData?.volume
+              : "",
         );
         result.append(
           "dueDate",
-          formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
+          formData.dueDate
+            ? formData.dueDate
+            : alreadyLoadedData?.dueDate
+              ? alreadyLoadedData?.dueDate
+              : "",
         );
         result.append(
           "minRequest",
-          formData.minRequest ||
-            alreadyLoadedData?.description?.minRequest ||
-            "",
+          formData.minRequest
+            ? formData.minRequest
+            : alreadyLoadedData?.description?.minRequest
+              ? alreadyLoadedData?.description?.minRequest
+              : typeof alreadyLoadedData?.minRequest === "string"
+                ? alreadyLoadedData?.minRequest
+                : "",
         );
         result.append(
           "ingridients",
-          formData.ingridients ||
-            alreadyLoadedData?.description?.ingridients ||
-            "",
+          formData.ingridients
+            ? formData.ingridients
+            : alreadyLoadedData?.description?.ingridients
+              ? alreadyLoadedData?.description?.ingridients
+              : typeof alreadyLoadedData?.ingridients === "string"
+                ? alreadyLoadedData?.ingridients
+                : "",
         );
-        result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
+        result.append(
+          "tags",
+          formData.tags
+            ? formData.tags
+            : alreadyLoadedData?.tags
+              ? alreadyLoadedData?.tags
+              : "",
+        );
         result.append(
           "package",
-          formData.package || alreadyLoadedData?.description?.package || "",
+          formData.package
+            ? formData.package
+            : alreadyLoadedData?.description?.package
+              ? alreadyLoadedData?.description?.package
+              : typeof alreadyLoadedData?.package === "string"
+                ? alreadyLoadedData?.package
+                : "",
         );
         result.append(
           "oldPrice",
-          formData.oldPrice || alreadyLoadedData?.oldPrice
-            ? String(alreadyLoadedData?.oldPrice)
-            : "",
+          formData.oldPrice
+            ? String(formData.oldPrice)
+            : alreadyLoadedData?.oldPrice
+              ? String(alreadyLoadedData?.oldPrice)
+              : "",
         );
       } else {
         result.append("id", uuidv4());
@@ -966,6 +1117,7 @@ export const AdminPanel = () => {
               summary: "Успех",
               detail: "Данные успешно загружены",
             });
+            setIsReload(true);
           })
           .catch((error) => {
             console.error(error);
@@ -985,6 +1137,7 @@ export const AdminPanel = () => {
               summary: "Успех",
               detail: "Данные успешно загружены",
             });
+            setIsReload(true);
           })
           .catch((error) => {
             console.error(error);
