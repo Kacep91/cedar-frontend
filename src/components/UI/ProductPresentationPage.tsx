@@ -42,6 +42,9 @@ export type ProductPresentationPageProps = {
   weight?: string;
   reviews?: number;
   oldPrice?: number;
+  dueDate?: string;
+  ingridients?: string;
+  package?: string;
   description?: PresentationPropDescription;
   creationDate?: string;
   tags?: string;
@@ -109,6 +112,7 @@ export const ProductPresentationPage = () => {
   const navigate = useNavigate();
 
   const data = goods.find((item: any) => item.id === id);
+  data && console.log("data", data);
   const coProducts = categorizedProducts.find((item) =>
     item.items.some((item) => item.id === id),
   );
@@ -188,10 +192,11 @@ export const ProductPresentationPage = () => {
               />
               <RecipeText>{data?.name}</RecipeText>
               <DecriptionBlock>
-                {data?.description?.description}
+                {data?.description?.description ||
+                  (data?.description as string)}
               </DecriptionBlock>
             </ProductPresentationHeader>
-            {data?.description ? (
+            {data?.description || data?.image || data?.name ? (
               <ProductPresentationDescriptionWrapper>
                 <div>
                   <h1 style={{ textAlign: "center" }}>
@@ -199,14 +204,15 @@ export const ProductPresentationPage = () => {
                   </h1>
                 </div>
                 <ol className={"gradient-list"}>
-                  {data?.description?.volume ? (
+                  {data?.description?.volume || data?.volume ? (
                     <li>
-                      <b>ОБЪЕМ</b>: {data?.description?.volume}
+                      <b>ОБЪЕМ</b>: {data?.description?.volume || data?.volume}
                     </li>
                   ) : null}
-                  {data?.description?.dueDate ? (
+                  {data?.description?.dueDate || data?.dueDate ? (
                     <li>
-                      <b>Срок годности</b>: {data?.description?.dueDate}
+                      <b>Срок годности</b>:{" "}
+                      {data?.description?.dueDate || data?.dueDate}
                     </li>
                   ) : null}
                   {data?.description ? (
@@ -215,14 +221,18 @@ export const ProductPresentationPage = () => {
                       месте. Избегать прямого попадания солнечных лучей.
                     </li>
                   ) : null}
-                  {data?.description?.package ? (
+                  {data?.description?.package || (data?.package as string) ? (
                     <li>
-                      <b>Упаковка</b>: {data?.description?.package}
+                      <b>Упаковка</b>:{" "}
+                      {data?.description?.package || (data?.package as string)}
                     </li>
                   ) : null}
-                  {data?.description?.ingridients ? (
+                  {data?.description?.ingridients ||
+                  (data?.ingridients as string) ? (
                     <li>
-                      <b>Состав</b>: {data?.description?.ingridients}
+                      <b>Состав</b>:{" "}
+                      {data?.description?.ingridients ||
+                        (data?.ingridients as string)}
                     </li>
                   ) : null}
                   {data?.description ? (
@@ -230,9 +240,10 @@ export const ProductPresentationPage = () => {
                       <b>Место происхождения</b>: Красноярский край
                     </li>
                   ) : null}
-                  {data?.description?.priceForUnitWithVAT ? (
+                  {data?.description?.priceForUnitWithVAT || data?.price ? (
                     <li>
-                      <b>Цена</b>: {data?.description?.priceForUnitWithVAT}
+                      <b>Цена</b>:{" "}
+                      {data?.description?.priceForUnitWithVAT || data?.price}
                     </li>
                   ) : null}
                 </ol>

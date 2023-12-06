@@ -549,7 +549,7 @@ export const AdminPanel = () => {
         console.log("object", object);
         if (recipiesFormData.id && alreadyLoadedData) {
           axios
-            .patch(
+            .put(
               `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
               object,
             )
