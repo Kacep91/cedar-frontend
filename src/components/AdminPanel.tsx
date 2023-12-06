@@ -498,16 +498,16 @@ export const AdminPanel = () => {
   // }
 
   const handleSubmitRecipe = () => {
+    const alreadyLoadedData = recipes.find(
+      (item) => item.id === recipiesFormData.id,
+    );
+
     if (files[0]?.objectURL) {
       axios
         .get<File>(files[0]?.objectURL, { responseType: "blob" })
         .then(async (res) => {
           const result = new FormData();
           const textedBlob = await blobToBase64(res.data);
-
-          const alreadyLoadedData = recipes.find(
-            (item) => item.id === recipiesFormData.id,
-          );
 
           if (recipiesFormData.id && alreadyLoadedData) {
             result.append("id", uuidv4());
@@ -594,16 +594,9 @@ export const AdminPanel = () => {
     } else {
       const result = new FormData();
 
-      const alreadyLoadedData = recipes.find(
-        (item) => item.id === recipiesFormData.id,
-      );
-
       if (recipiesFormData.id && alreadyLoadedData) {
         result.append("id", recipiesFormData.id);
-        result.append(
-          "name",
-          recipiesFormData.name || alreadyLoadedData?.name,
-        );
+        result.append("name", recipiesFormData.name || alreadyLoadedData?.name);
         result.append(
           "ingridients",
           recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
@@ -616,10 +609,7 @@ export const AdminPanel = () => {
           "video",
           recipiesFormData.video || alreadyLoadedData?.video,
         );
-        result.append(
-          "tags",
-          recipiesFormData.tags || alreadyLoadedData?.tags,
-        );
+        result.append("tags", recipiesFormData.tags || alreadyLoadedData?.tags);
       } else {
         result.append("id", uuidv4());
         result.append("name", recipiesFormData.name);
@@ -678,7 +668,6 @@ export const AdminPanel = () => {
           });
       }
     }
-
   };
 
   const handleSlidesSubmit = async () => {
@@ -757,17 +746,24 @@ export const AdminPanel = () => {
   };
 
   const handleSubmit = () => {
+    const alreadyLoadedData = goods.find((item) => item.id === formData.id);
+
     if (files[0]?.objectURL) {
       axios
         .get<File>(files[0]?.objectURL, { responseType: "blob" })
         .then(async (res) => {
           const result = new FormData();
           const textedBlob = await blobToBase64(res.data);
-          const alreadyLoadedData = goods.find((item) => item.id === formData.id);
+          const alreadyLoadedData = goods.find(
+            (item) => item.id === formData.id,
+          );
 
           if (formData.id && alreadyLoadedData) {
             result.append("id", formData.id ? formData.id : uuidv4());
-            result.append("name", formData.name || alreadyLoadedData?.name || "");
+            result.append(
+              "name",
+              formData.name || alreadyLoadedData?.name || "",
+            );
             result.append(
               "weight",
               formData.weight || alreadyLoadedData?.weight || "",
@@ -781,8 +777,8 @@ export const AdminPanel = () => {
             result.append(
               "description",
               formData.description ||
-              alreadyLoadedData?.description?.description ||
-              "",
+                alreadyLoadedData?.description?.description ||
+                "",
             );
             result.append(
               "volume",
@@ -795,16 +791,19 @@ export const AdminPanel = () => {
             result.append(
               "minRequest",
               formData.minRequest ||
-              alreadyLoadedData?.description?.minRequest ||
-              "",
+                alreadyLoadedData?.description?.minRequest ||
+                "",
             );
             result.append(
               "ingridients",
               formData.ingridients ||
-              alreadyLoadedData?.description?.ingridients ||
-              "",
+                alreadyLoadedData?.description?.ingridients ||
+                "",
             );
-            result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
+            result.append(
+              "tags",
+              formData.tags || alreadyLoadedData?.tags || "",
+            );
             result.append(
               "package",
               formData.package || alreadyLoadedData?.description?.package || "",
@@ -881,7 +880,9 @@ export const AdminPanel = () => {
         });
     } else {
       const result = new FormData();
-      const alreadyLoadedData = goods.find((item) => item.id === formData.id);
+
+      console.log("goods", goods);
+      console.log("alreadyLoadedData", alreadyLoadedData);
 
       if (formData.id && alreadyLoadedData) {
         result.append("id", formData.id ? formData.id : uuidv4());
@@ -899,8 +900,8 @@ export const AdminPanel = () => {
         result.append(
           "description",
           formData.description ||
-          alreadyLoadedData?.description?.description ||
-          "",
+            alreadyLoadedData?.description?.description ||
+            "",
         );
         result.append(
           "volume",
@@ -913,14 +914,14 @@ export const AdminPanel = () => {
         result.append(
           "minRequest",
           formData.minRequest ||
-          alreadyLoadedData?.description?.minRequest ||
-          "",
+            alreadyLoadedData?.description?.minRequest ||
+            "",
         );
         result.append(
           "ingridients",
           formData.ingridients ||
-          alreadyLoadedData?.description?.ingridients ||
-          "",
+            alreadyLoadedData?.description?.ingridients ||
+            "",
         );
         result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
         result.append(
@@ -995,7 +996,6 @@ export const AdminPanel = () => {
           });
       }
     }
-
 
     // const bublik = mockCatalogue.map(item => {
     //   return {
