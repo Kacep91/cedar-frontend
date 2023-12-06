@@ -498,98 +498,187 @@ export const AdminPanel = () => {
   // }
 
   const handleSubmitRecipe = () => {
-    axios
-      .get<File>(files[0]?.objectURL, { responseType: "blob" })
-      .then(async (res) => {
-        const result = new FormData();
-        const textedBlob = await blobToBase64(res.data);
+    if (files[0]?.objectURL) {
+      axios
+        .get<File>(files[0]?.objectURL, { responseType: "blob" })
+        .then(async (res) => {
+          const result = new FormData();
+          const textedBlob = await blobToBase64(res.data);
 
-        const alreadyLoadedData = recipes.find(
-          (item) => item.id === recipiesFormData.id,
-        );
+          const alreadyLoadedData = recipes.find(
+            (item) => item.id === recipiesFormData.id,
+          );
 
-        if (recipiesFormData.id && alreadyLoadedData) {
-          result.append("id", uuidv4());
-          result.append(
-            "name",
-            recipiesFormData.name || alreadyLoadedData?.name,
-          );
-          result.append(
-            "ingridients",
-            recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
-          );
-          result.append(
-            "instructions",
-            recipiesFormData.instructions || alreadyLoadedData?.instructions,
-          );
-          result.append(
-            "video",
-            recipiesFormData.video || alreadyLoadedData?.video,
-          );
-          result.append(
-            "tags",
-            recipiesFormData.tags || alreadyLoadedData?.tags,
-          );
-          result.append("image", textedBlob);
-        } else {
-          result.append("id", uuidv4());
-          result.append("name", recipiesFormData.name);
-          result.append("ingridients", recipiesFormData.ingridients);
-          result.append("instructions", recipiesFormData.instructions);
-          result.append("video", recipiesFormData.video);
-          result.append("tags", recipiesFormData.tags);
-          result.append("image", textedBlob);
-        }
+          if (recipiesFormData.id && alreadyLoadedData) {
+            result.append("id", uuidv4());
+            result.append(
+              "name",
+              recipiesFormData.name || alreadyLoadedData?.name,
+            );
+            result.append(
+              "ingridients",
+              recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
+            );
+            result.append(
+              "instructions",
+              recipiesFormData.instructions || alreadyLoadedData?.instructions,
+            );
+            result.append(
+              "video",
+              recipiesFormData.video || alreadyLoadedData?.video,
+            );
+            result.append(
+              "tags",
+              recipiesFormData.tags || alreadyLoadedData?.tags,
+            );
+            result.append("image", textedBlob);
+          } else {
+            result.append("id", uuidv4());
+            result.append("name", recipiesFormData.name);
+            result.append("ingridients", recipiesFormData.ingridients);
+            result.append("instructions", recipiesFormData.instructions);
+            result.append("video", recipiesFormData.video);
+            result.append("tags", recipiesFormData.tags);
+            result.append("image", textedBlob);
+          }
 
-        let object = {};
-        result.forEach((value, key) => {
-          object[key] = value;
+          let object = {};
+          result.forEach((value, key) => {
+            object[key] = value;
+          });
+
+          console.log("object", object);
+          if (recipiesFormData.id && alreadyLoadedData) {
+            axios
+              .put(
+                `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
+                object,
+              )
+              .then((response) => {
+                console.log(response.data);
+                toast.current?.show({
+                  severity: "info",
+                  summary: "Успех",
+                  detail: "Данные успешно загружены",
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                toast.current?.show({
+                  severity: "error",
+                  summary: "Неудача",
+                  detail: "Во время загрузки произошла ошибка",
+                });
+              });
+          } else {
+            axios
+              .post("http://185.70.185.67:3000/recipes", object)
+              .then((response) => {
+                console.log(response.data);
+                toast.current?.show({
+                  severity: "info",
+                  summary: "Успех",
+                  detail: "Данные успешно загружены",
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                toast.current?.show({
+                  severity: "error",
+                  summary: "Неудача",
+                  detail: "Во время загрузки произошла ошибка",
+                });
+              });
+          }
         });
+    } else {
+      const result = new FormData();
 
-        console.log("object", object);
-        if (recipiesFormData.id && alreadyLoadedData) {
-          axios
-            .put(
-              `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
-              object,
-            )
-            .then((response) => {
-              console.log(response.data);
-              toast.current?.show({
-                severity: "info",
-                summary: "Успех",
-                detail: "Данные успешно загружены",
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-              toast.current?.show({
-                severity: "error",
-                summary: "Неудача",
-                detail: "Во время загрузки произошла ошибка",
-              });
-            });
-        } else {
-          axios
-            .post("http://185.70.185.67:3000/recipes", object)
-            .then((response) => {
-              console.log(response.data);
-              toast.current?.show({
-                severity: "info",
-                summary: "Успех",
-                detail: "Данные успешно загружены",
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-              toast.current?.show({
-                severity: "error",
-                summary: "Неудача",
-                detail: "Во время загрузки произошла ошибка",
-              });
-            });
-        }
+      const alreadyLoadedData = recipes.find(
+        (item) => item.id === recipiesFormData.id,
+      );
+
+      if (recipiesFormData.id && alreadyLoadedData) {
+        result.append("id", recipiesFormData.id);
+        result.append(
+          "name",
+          recipiesFormData.name || alreadyLoadedData?.name,
+        );
+        result.append(
+          "ingridients",
+          recipiesFormData.ingridients || alreadyLoadedData?.ingridients,
+        );
+        result.append(
+          "instructions",
+          recipiesFormData.instructions || alreadyLoadedData?.instructions,
+        );
+        result.append(
+          "video",
+          recipiesFormData.video || alreadyLoadedData?.video,
+        );
+        result.append(
+          "tags",
+          recipiesFormData.tags || alreadyLoadedData?.tags,
+        );
+      } else {
+        result.append("id", uuidv4());
+        result.append("name", recipiesFormData.name);
+        result.append("ingridients", recipiesFormData.ingridients);
+        result.append("instructions", recipiesFormData.instructions);
+        result.append("video", recipiesFormData.video);
+        result.append("tags", recipiesFormData.tags);
+      }
+
+      let object = {};
+      result.forEach((value, key) => {
+        object[key] = value;
       });
+
+      console.log("object", object);
+      if (recipiesFormData.id && alreadyLoadedData) {
+        axios
+          .put(
+            `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
+            object,
+          )
+          .then((response) => {
+            console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
+          });
+      } else {
+        axios
+          .post("http://185.70.185.67:3000/recipes", object)
+          .then((response) => {
+            console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
+          });
+      }
+    }
+
   };
 
   const handleSlidesSubmit = async () => {
@@ -668,127 +757,245 @@ export const AdminPanel = () => {
   };
 
   const handleSubmit = () => {
-    axios
-      .get<File>(files[0]?.objectURL, { responseType: "blob" })
-      .then(async (res) => {
-        const result = new FormData();
-        const textedBlob = await blobToBase64(res.data);
-        const alreadyLoadedData = goods.find((item) => item.id === formData.id);
+    if (files[0]?.objectURL) {
+      axios
+        .get<File>(files[0]?.objectURL, { responseType: "blob" })
+        .then(async (res) => {
+          const result = new FormData();
+          const textedBlob = await blobToBase64(res.data);
+          const alreadyLoadedData = goods.find((item) => item.id === formData.id);
 
-        if (formData.id && alreadyLoadedData) {
-          result.append("id", formData.id ? formData.id : uuidv4());
-          result.append("name", formData.name || alreadyLoadedData?.name || "");
-          result.append(
-            "weight",
-            formData.weight || alreadyLoadedData?.weight || "",
-          );
-          result.append(
-            "price",
-            formData.price || alreadyLoadedData?.price
-              ? String(alreadyLoadedData?.price)
-              : "",
-          );
-          result.append(
-            "description",
-            formData.description ||
+          if (formData.id && alreadyLoadedData) {
+            result.append("id", formData.id ? formData.id : uuidv4());
+            result.append("name", formData.name || alreadyLoadedData?.name || "");
+            result.append(
+              "weight",
+              formData.weight || alreadyLoadedData?.weight || "",
+            );
+            result.append(
+              "price",
+              formData.price || alreadyLoadedData?.price
+                ? String(alreadyLoadedData?.price)
+                : "",
+            );
+            result.append(
+              "description",
+              formData.description ||
               alreadyLoadedData?.description?.description ||
               "",
-          );
-          result.append(
-            "volume",
-            formData.volume || alreadyLoadedData?.volume || "",
-          );
-          result.append(
-            "dueDate",
-            formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
-          );
-          result.append(
-            "minRequest",
-            formData.minRequest ||
+            );
+            result.append(
+              "volume",
+              formData.volume || alreadyLoadedData?.volume || "",
+            );
+            result.append(
+              "dueDate",
+              formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
+            );
+            result.append(
+              "minRequest",
+              formData.minRequest ||
               alreadyLoadedData?.description?.minRequest ||
               "",
-          );
-          result.append(
-            "ingridients",
-            formData.ingridients ||
+            );
+            result.append(
+              "ingridients",
+              formData.ingridients ||
               alreadyLoadedData?.description?.ingridients ||
               "",
-          );
-          result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
-          result.append(
-            "package",
-            formData.package || alreadyLoadedData?.description?.package || "",
-          );
-          result.append(
-            "oldPrice",
-            formData.oldPrice || alreadyLoadedData?.oldPrice
-              ? String(alreadyLoadedData?.oldPrice)
-              : "",
-          );
-          result.append("image", textedBlob);
-        } else {
-          result.append("id", uuidv4());
-          result.append("name", formData.name || "");
-          result.append("weight", formData.weight || "");
-          result.append("price", formData.price || "");
-          result.append("description", formData.description || "");
-          result.append("volume", formData.volume || "");
-          result.append("dueDate", formData.dueDate || "");
-          result.append("minRequest", formData.minRequest || "");
-          result.append("ingridients", formData.ingridients || "");
-          result.append("tags", formData.tags || "");
-          result.append("package", formData.package);
-          result.append("oldPrice", formData.oldPrice);
-          result.append("image", textedBlob);
-        }
+            );
+            result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
+            result.append(
+              "package",
+              formData.package || alreadyLoadedData?.description?.package || "",
+            );
+            result.append(
+              "oldPrice",
+              formData.oldPrice || alreadyLoadedData?.oldPrice
+                ? String(alreadyLoadedData?.oldPrice)
+                : "",
+            );
+            result.append("image", textedBlob);
+          } else {
+            result.append("id", uuidv4());
+            result.append("name", formData.name || "");
+            result.append("weight", formData.weight || "");
+            result.append("price", formData.price || "");
+            result.append("description", formData.description || "");
+            result.append("volume", formData.volume || "");
+            result.append("dueDate", formData.dueDate || "");
+            result.append("minRequest", formData.minRequest || "");
+            result.append("ingridients", formData.ingridients || "");
+            result.append("tags", formData.tags || "");
+            result.append("package", formData.package);
+            result.append("oldPrice", formData.oldPrice);
+            result.append("image", textedBlob);
+          }
 
-        let object = {};
-        result.forEach((value, key) => {
-          object[key] = value;
+          let object = {};
+          result.forEach((value, key) => {
+            object[key] = value;
+          });
+
+          console.log("object", object);
+
+          if (formData.id && alreadyLoadedData) {
+            axios
+              .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
+              .then((response) => {
+                console.log(response.data);
+                toast.current?.show({
+                  severity: "info",
+                  summary: "Успех",
+                  detail: "Данные успешно загружены",
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                toast.current?.show({
+                  severity: "error",
+                  summary: "Неудача",
+                  detail: "Во время загрузки произошла ошибка",
+                });
+              });
+          } else {
+            axios
+              .post("http://185.70.185.67:3000/goods", object)
+              .then((response) => {
+                console.log(response.data);
+                toast.current?.show({
+                  severity: "info",
+                  summary: "Успех",
+                  detail: "Данные успешно загружены",
+                });
+              })
+              .catch((error) => {
+                console.error(error);
+                toast.current?.show({
+                  severity: "error",
+                  summary: "Неудача",
+                  detail: "Во время загрузки произошла ошибка",
+                });
+              });
+          }
         });
+    } else {
+      const result = new FormData();
+      const alreadyLoadedData = goods.find((item) => item.id === formData.id);
 
-        console.log("object", object);
+      if (formData.id && alreadyLoadedData) {
+        result.append("id", formData.id ? formData.id : uuidv4());
+        result.append("name", formData.name || alreadyLoadedData?.name || "");
+        result.append(
+          "weight",
+          formData?.weight || alreadyLoadedData?.weight || "",
+        );
+        result.append(
+          "price",
+          formData.price || alreadyLoadedData?.price
+            ? String(alreadyLoadedData?.price)
+            : "",
+        );
+        result.append(
+          "description",
+          formData.description ||
+          alreadyLoadedData?.description?.description ||
+          "",
+        );
+        result.append(
+          "volume",
+          formData.volume || alreadyLoadedData?.volume || "",
+        );
+        result.append(
+          "dueDate",
+          formData.dueDate || alreadyLoadedData?.description?.dueDate || "",
+        );
+        result.append(
+          "minRequest",
+          formData.minRequest ||
+          alreadyLoadedData?.description?.minRequest ||
+          "",
+        );
+        result.append(
+          "ingridients",
+          formData.ingridients ||
+          alreadyLoadedData?.description?.ingridients ||
+          "",
+        );
+        result.append("tags", formData.tags || alreadyLoadedData?.tags || "");
+        result.append(
+          "package",
+          formData.package || alreadyLoadedData?.description?.package || "",
+        );
+        result.append(
+          "oldPrice",
+          formData.oldPrice || alreadyLoadedData?.oldPrice
+            ? String(alreadyLoadedData?.oldPrice)
+            : "",
+        );
+      } else {
+        result.append("id", uuidv4());
+        result.append("name", formData.name || "");
+        result.append("weight", formData.weight || "");
+        result.append("price", formData.price || "");
+        result.append("description", formData.description || "");
+        result.append("volume", formData.volume || "");
+        result.append("dueDate", formData.dueDate || "");
+        result.append("minRequest", formData.minRequest || "");
+        result.append("ingridients", formData.ingridients || "");
+        result.append("tags", formData.tags || "");
+        result.append("package", formData.package);
+        result.append("oldPrice", formData.oldPrice);
+      }
 
-        if (formData.id && alreadyLoadedData) {
-          axios
-            .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
-            .then((response) => {
-              console.log(response.data);
-              toast.current?.show({
-                severity: "info",
-                summary: "Успех",
-                detail: "Данные успешно загружены",
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-              toast.current?.show({
-                severity: "error",
-                summary: "Неудача",
-                detail: "Во время загрузки произошла ошибка",
-              });
-            });
-        } else {
-          axios
-            .post("http://185.70.185.67:3000/goods", object)
-            .then((response) => {
-              console.log(response.data);
-              toast.current?.show({
-                severity: "info",
-                summary: "Успех",
-                detail: "Данные успешно загружены",
-              });
-            })
-            .catch((error) => {
-              console.error(error);
-              toast.current?.show({
-                severity: "error",
-                summary: "Неудача",
-                detail: "Во время загрузки произошла ошибка",
-              });
-            });
-        }
+      let object = {};
+      result.forEach((value, key) => {
+        object[key] = value;
       });
+
+      console.log("object", object);
+
+      if (formData.id && alreadyLoadedData) {
+        axios
+          .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
+          .then((response) => {
+            console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
+          });
+      } else {
+        axios
+          .post("http://185.70.185.67:3000/goods", object)
+          .then((response) => {
+            console.log(response.data);
+            toast.current?.show({
+              severity: "info",
+              summary: "Успех",
+              detail: "Данные успешно загружены",
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            toast.current?.show({
+              severity: "error",
+              summary: "Неудача",
+              detail: "Во время загрузки произошла ошибка",
+            });
+          });
+      }
+    }
+
 
     // const bublik = mockCatalogue.map(item => {
     //   return {
