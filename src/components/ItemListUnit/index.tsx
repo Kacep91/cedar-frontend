@@ -69,13 +69,13 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
           </ProductReviewsText>
         </ProductReviews>
         <ProductBuySection>
-          {props.oldPrice && (
+          {props.oldPrice && Number(props.oldPrice) !== 0 && (
             <ProductOldPrice>
               <span className="price">{formatPrice(props.oldPrice)} ₽</span>
             </ProductOldPrice>
           )}
-          <ProductNewPrice isOldPrice={Boolean(props.oldPrice)}>
-            {props.price ? `${formatPrice(props.price)} ₽` : "Скоро"}
+          <ProductNewPrice isOldPrice={Boolean(props.oldPrice && Number(props.oldPrice) !== 0)}>
+            {props.price ? `${formatPrice(String(props.price)?.trim())} ₽` : "Скоро"}
           </ProductNewPrice>
           {isUnitInList ? (
             <ProductBuyButton
