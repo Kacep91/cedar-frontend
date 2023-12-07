@@ -92,24 +92,28 @@ export function Navbar({
           url: "/goods/#product_id_1",
         },
         {
-          text: "Сибирская ягода",
+          text: "Сибирский мёд",
           url: "/goods/#product_id_2",
         },
         {
-          text: "Сибирские грибы",
+          text: "Сибирская ягода",
           url: "/goods/#product_id_3",
         },
         {
-          text: "Сибирское масло",
+          text: "Сибирские грибы",
           url: "/goods/#product_id_4",
         },
         {
-          text: "Сибирская косметика",
+          text: "Сибирское масло",
           url: "/goods/#product_id_5",
         },
         {
-          text: "Сибирские бады",
+          text: "Сибирская косметика",
           url: "/goods/#product_id_6",
+        },
+        {
+          text: "Сибирские бады",
+          url: "/goods/#product_id_7",
         },
       ],
       onClick: () => {
@@ -397,24 +401,28 @@ export function Navbar({
                     url: "/goods/#product_id_1",
                   },
                   {
-                    text: "Сибирская ягода",
+                    text: "Сибирский мёд",
                     url: "/goods/#product_id_2",
                   },
                   {
-                    text: "Сибирские грибы",
+                    text: "Сибирская ягода",
                     url: "/goods/#product_id_3",
                   },
                   {
-                    text: "Сибирское масло",
+                    text: "Сибирские грибы",
                     url: "/goods/#product_id_4",
                   },
                   {
-                    text: "Сибирская косметика",
+                    text: "Сибирское масло",
                     url: "/goods/#product_id_5",
                   },
                   {
-                    text: "Сибирские бады",
+                    text: "Сибирская косметика",
                     url: "/goods/#product_id_6",
+                  },
+                  {
+                    text: "Сибирские бады",
+                    url: "/goods/#product_id_7",
                   },
                 ].map((item) => {
                   return (

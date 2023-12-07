@@ -64,8 +64,10 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
             ></i>
           )}
           <ProductReviewsText>
-            {`${props.reviews} ${getWord(String(props.reviews), "отзыв")}` ||
-              "Нет отзывов"}
+            {`${props.reviews || "0"} ${getWord(
+              String(props.reviews),
+              "отзыв",
+            )}` || "Нет отзывов"}
           </ProductReviewsText>
         </ProductReviews>
         <ProductBuySection>
@@ -74,8 +76,12 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
               <span className="price">{formatPrice(props.oldPrice)} ₽</span>
             </ProductOldPrice>
           )}
-          <ProductNewPrice isOldPrice={Boolean(props.oldPrice && Number(props.oldPrice) !== 0)}>
-            {props.price ? `${formatPrice(String(props.price)?.trim())} ₽` : "Скоро"}
+          <ProductNewPrice
+            isOldPrice={Boolean(props.oldPrice && Number(props.oldPrice) !== 0)}
+          >
+            {props.price
+              ? `${formatPrice(String(props.price)?.trim())} ₽`
+              : "Скоро"}
           </ProductNewPrice>
           {isUnitInList ? (
             <ProductBuyButton

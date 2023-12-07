@@ -142,28 +142,33 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         },
         {
           key: "1-2",
-          label: "Сибирская ягода",
+          label: "Сибирский мёд",
           url: "/goods/#product_id_2",
         },
         {
           key: "1-3",
-          label: "Сибирские грибы",
+          label: "Сибирская ягода",
           url: "/goods/#product_id_3",
         },
         {
           key: "1-4",
-          label: "Сибирское масло",
+          label: "Сибирские грибы",
           url: "/goods/#product_id_4",
         },
         {
           key: "1-5",
-          label: "Сибирская косметика",
+          label: "Сибирское масло",
           url: "/goods/#product_id_5",
         },
         {
           key: "1-6",
-          label: "Сибирские бады",
+          label: "Сибирская косметика",
           url: "/goods/#product_id_6",
+        },
+        {
+          key: "1-7",
+          label: "Сибирские бады",
+          url: "/goods/#product_id_7",
         },
       ],
     },
