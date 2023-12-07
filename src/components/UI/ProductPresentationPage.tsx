@@ -129,11 +129,11 @@ export const ProductPresentationPage = () => {
               ? item2?.image
               : item2?.image
                 ? arrayBufferToBase64(
-                    item2.image as unknown as {
-                      type: string;
-                      data: any[];
-                    },
-                  )
+                  item2.image as unknown as {
+                    type: string;
+                    data: any[];
+                  },
+                )
                 : ""
           }
         />
@@ -151,9 +151,9 @@ export const ProductPresentationPage = () => {
 
   const recipesResult = coProducts
     ? recipes?.filter(
-        (item) =>
-          categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
-      )
+      (item) =>
+        categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
+    )
     : [];
 
   return (
@@ -183,18 +183,18 @@ export const ProductPresentationPage = () => {
                     ? data?.image
                     : data?.image
                       ? arrayBufferToBase64(
-                          data.image as unknown as {
-                            type: string;
-                            data: any[];
-                          },
-                        )
+                        data.image as unknown as {
+                          type: string;
+                          data: any[];
+                        },
+                      )
                       : placeHolder
                 }
               />
               <RecipeText>{data?.name}</RecipeText>
               <DecriptionBlock>
-                {data?.description?.description ||
-                  (data?.description as string)}
+                {data?.description?.description ? data?.description?.description :
+                  typeof data?.description === 'string' && data?.description}
               </DecriptionBlock>
             </ProductPresentationHeader>
             {data?.description || data?.image || data?.name ? (
@@ -229,7 +229,7 @@ export const ProductPresentationPage = () => {
                     </li>
                   ) : null}
                   {data?.description?.ingridients ||
-                  (data?.ingridients as string) ? (
+                    (data?.ingridients as string) ? (
                     <li>
                       <b>Состав</b>:{" "}
                       {data?.description?.ingridients ||
