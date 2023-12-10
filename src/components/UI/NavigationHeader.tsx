@@ -22,7 +22,7 @@ import offer from "../../assets/images/offer.jpg";
 import lees from "../../assets/images/lees.jpg";
 import snowFlake from "../../assets/images/snowFlake.png";
 import chips1 from "../../assets/images/chips1.png";
-import granola2 from "../../assets/images/granola2.jpg";
+import risotto from "../../assets/images/risotto.jpg";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useScreenSize } from "utils/hooks";
@@ -442,7 +442,7 @@ export function Navbar({
               <GridSectionFeatured>
                 <h4>В тренде</h4>
                 <FeaturedProductsImage src={chips1} />
-                <FeaturedProductsImage src={granola2} />
+                <FeaturedProductsImage src={risotto} />
               </GridSectionFeatured>
             </AdditionalInfoGrid>
           </AdditionalInfoWrapper>

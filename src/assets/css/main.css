@@ -330,15 +330,15 @@ button {
 }
 
 .bigQuote blockquote {
-  font-size: 1.8em;
+  font-size: 1em;
   width: 80%;
-  margin: 50px auto;
   font-style: italic;
   color: #555555;
-  padding: 1.2em 30px 1.2em 75px;
+  padding: 1.2em 30px 1.2em 30px;
   border-left: 8px solid #78c0a8;
   line-height: 1.6;
   position: relative;
+  margin: 0 auto;
 }
 
 .bigQuote p {
@@ -351,8 +351,8 @@ blockquote::before {
   color: #78c0a8;
   font-size: 4em;
   position: absolute;
-  left: 10px;
-  top: -10px;
+  left: 2px;
+  top: -24px;
 }
 
 blockquote::after {

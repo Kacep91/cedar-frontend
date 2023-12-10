@@ -12,7 +12,7 @@ import {
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
-import honey1 from "../../assets/images/honey1.jpg";
+import honeyIcon from "../../assets/images/honeyIcon.png";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
 import axios from "axios";
 import { ItemListUnit } from "components/ItemListUnit";
@@ -70,7 +70,7 @@ export const Honey = () => {
       </div>
       <ProductPresentationWrapper>
         <ProductPresentationHeader>
-          <ProductPresentationHeaderImage src={honey1} />
+          <ProductPresentationHeaderImage src={honeyIcon} />
           <DecriptionBlock>
             Сибирский мед - это уникальный продукт, который отличается своими
             вкусовыми качествами, питательной ценностью и полезными свойствами.

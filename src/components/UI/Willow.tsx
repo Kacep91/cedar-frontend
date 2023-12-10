@@ -12,7 +12,7 @@ import {
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
-import willow from "../../assets/images/willow.jpg";
+import willowIcon from "../../assets/images/willowIcon.png";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
 import axios from "axios";
 import { ItemListUnit } from "components/ItemListUnit";
@@ -71,7 +71,7 @@ export const Willow = () => {
       </div>
       <ProductPresentationWrapper>
         <ProductPresentationHeader>
-          <ProductPresentationHeaderImage src={willow} />
+          <ProductPresentationHeaderImage src={willowIcon} />
           <DecriptionBlock>
             Напитки из ивы обладают уникальными свойствами, которые делают их не
             только вкусными, но и полезными для здоровья. Они могут быть

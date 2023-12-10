@@ -12,7 +12,7 @@ import {
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
-import soup from "../../assets/images/soup.jpg";
+import mushroomIcon from "../../assets/images/mushroomIcon.png";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
 import axios from "axios";
 import { ItemListUnit } from "components/ItemListUnit";
@@ -69,7 +69,7 @@ export const Mushrooms = () => {
       </div>
       <ProductPresentationWrapper>
         <ProductPresentationHeader>
-          <ProductPresentationHeaderImage src={soup} />
+          <ProductPresentationHeaderImage src={mushroomIcon} />
           <DecriptionBlock>
             Грибы из таежного леса, такие как лисички и белые грибы, обладают
             уникальными свойствами, делающими их не только вкусным, но и

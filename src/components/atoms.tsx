@@ -575,15 +575,26 @@ export const MainPageImageContainer = styled.div`
   height: 970px;
   transition: height 1s;
   position: relative;
+
+  @media screen and (max-width: 460px) {
+    height: 820px;
+  }
 `;
 export const MainPageImage = styled.img`
-  object-fit: cover;
-  object-position: center;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  @media screen and (max-width: 460px) {
+  object-fit: fill;
+  object-position: center;
+  }
 `;
 
-export const SiberiaLogo = styled.div`
+export const SiberiaLogo = styled.img`
+display: none;
+@media screen and (max-width: 460px) {
   font-size: 4rem;
   font-weight: 500;
   left: 50%;
@@ -593,18 +604,41 @@ export const SiberiaLogo = styled.div`
   -webkit-transform: translate3d(-50%, -50%, 0);
   transform: translate3d(-50%, -50%, 0);
   z-index: 1;
-  height: 6.81em;
-  width: 6.81em;
+  height: 3.5em;
+  width: 3.5em;
   display: flex;
   align-items: center;
   justify-content: center;
-  img {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 50%;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  }
-`;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  border-radius: 50%;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+`
+
+// export const SiberiaLogo = styled.div`
+//   font-size: 4rem;
+//   font-weight: 500;
+//   left: 50%;
+//   position: absolute;
+//   text-align: center;
+//   top: 50%;
+//   -webkit-transform: translate3d(-50%, -50%, 0);
+//   transform: translate3d(-50%, -50%, 0);
+//   z-index: 1;
+//   height: 6.81em;
+//   width: 6.81em;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   img {
+//     background-color: rgba(255, 255, 255, 0.8);
+//     padding: 20px;
+//     border-radius: 50%;
+//     box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+//   }
+// `;
 
 export const SiberiaText = styled.p`
   display: flex;
@@ -894,7 +928,7 @@ export const Map = styled.img`
 export const ProductsText = styled.div`
   font-size: 24px;
   font-weight: bold;
-  max-width: 630px;
+  max-width: 820px;
 
   @media screen and (max-width: 1024px) {
     font-size: 1.5rem;
@@ -1220,4 +1254,56 @@ export const ProductPresentationRecipes = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+export const CEOImage = styled.img`
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 450px;
+    height: 450px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 450px;
+    height: 450px;
+  }
+
+  @media screen and (max-width: 460px) {
+    width: 350px;
+    height: 350px;
+  }
+`;
+
+export const CeoFigure = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const CeoName = styled.div`
+  display: block;
+  color: #333333;
+  font-style: normal;
+  font-weight: bold;
+  margin-top: 1em;
+  font-size: 20px;
+  max-width: 800px;
+`;
+
+export const CeoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 40px;
+
+  @media screen and (max-width: 1280px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;

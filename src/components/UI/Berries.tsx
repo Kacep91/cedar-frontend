@@ -12,7 +12,7 @@ import {
 import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
-import granola from "../../assets/images/granola.jpg";
+import cranberryIcon from "../../assets/images/cranberryIcon.png";
 import { ItemListUnit } from "components/ItemListUnit";
 import { useDispatch, useSelector } from "react-redux";
 import { GoodsActions, GoodsSelectors } from "store/goods";
@@ -73,7 +73,7 @@ export const Berries = () => {
       </div>
       <ProductPresentationWrapper>
         <ProductPresentationHeader>
-          <ProductPresentationHeaderImage src={granola} />
+          <ProductPresentationHeaderImage src={cranberryIcon} />
           <DecriptionBlock>
             Таежные ягоды - это не только вкусное лакомство, но и настоящий
             кладезь полезных веществ. Они обладают уникальными свойствами,

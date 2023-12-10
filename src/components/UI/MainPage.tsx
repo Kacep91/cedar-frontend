@@ -18,10 +18,10 @@ import risotto from "../../assets/images/risotto.jpg";
 import toast from "../../assets/images/toast.jpg";
 import aboutUs from "../../assets/images/aboutUs.jpg";
 import branch from "../../assets/images/branch.png";
-import granola from "../../assets/images/granola.jpg";
-import soup from "../../assets/images/soup.jpg";
-import honey1 from "../../assets/images/honey1.jpg";
-import willow from "../../assets/images/willow.jpg";
+import cranberryIcon from "../../assets/images/cranberryIcon.png";
+import mushroomIcon from "../../assets/images/mushroomIcon.png";
+import honeyIcon from "../../assets/images/honeyIcon.png";
+import willowIcon from "../../assets/images/willowIcon.png";
 import { Bublik } from "./Bublik";
 import { useNavigate } from "react-router";
 import { Footer } from "./Footer";
@@ -97,10 +97,10 @@ export const MainPage = () => {
   }, []);
 
   const products2 = [
-    { src: granola, text: "Ягоды", url: "/berries" },
-    { src: soup, text: "Грибы", url: "/mushrooms" },
-    { src: honey1, text: "Мёд", url: "/honey" },
-    { src: willow, text: "Чай", url: "/willow" },
+    { src: cranberryIcon, text: "Ягоды", url: "/berries" },
+    { src: mushroomIcon, text: "Грибы", url: "/mushrooms" },
+    { src: honeyIcon, text: "Мёд", url: "/honey" },
+    { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
   return (
