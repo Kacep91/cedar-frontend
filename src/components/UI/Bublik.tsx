@@ -10,8 +10,8 @@ export const Bublik = () => {
   const isMobile = useScreenSize('smallTablet')
   return (
     <>
-      <MainPageImageContainer>
-        <MainPageImage src={isMobile ? nologo3 : alcenero} />
+      <MainPageImageContainer height={window?.innerHeight}>
+        <MainPageImage src={isMobile ? nologo3 : alcenero} height={window?.innerHeight} />
         <SiberiaLogo src={siberiaLogo} />
       </MainPageImageContainer>
     </>

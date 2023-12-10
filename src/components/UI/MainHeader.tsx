@@ -66,7 +66,7 @@ const itemTemplate = (item: Slide) => {
         <iframe
           width="100%"
           height="500"
-          src={`${item.video}?autoplay=1&mute=1`}
+          src={`${item.video}?autoplay=1&mute=1&rel=0`}
           title="Siberia Organic Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

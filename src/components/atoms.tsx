@@ -570,17 +570,17 @@ export const RadioButtonText = styled.div`
   font-weight: 600;
 `;
 
-export const MainPageImageContainer = styled.div`
+export const MainPageImageContainer = styled.div<{ height?: number; }>`
   max-width: 100%;
   height: 970px;
   transition: height 1s;
   position: relative;
 
   @media screen and (max-width: 460px) {
-    height: 820px;
+    height: ${props => `${props.height}px;`}
   }
 `;
-export const MainPageImage = styled.img`
+export const MainPageImage = styled.img<{ height?: number; }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1046,8 +1046,8 @@ export const DecriptionBlock = styled.div`
   padding: 20px;
 
   @media screen and (max-width: 1024px) {
-    max-width: 420px;
-    width: 420px;
+    max-width: 400px;
+    width: 360px;
   }
 `;
 
