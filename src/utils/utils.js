@@ -55,7 +55,7 @@ export const formatPrice = (price) => {
   return value;
 };
 
-export function useHoldPress(callback = () => {}, ms = 300) {
+export function useHoldPress(callback = () => { }, ms = 300) {
   // хук для удобной горизонтальной прокрутки графиков на экранах мобильных устройств
   const [startHoldPress, setStartHoldPress] = useState(false);
 
@@ -89,16 +89,16 @@ export const roundPercent = (value, digitsAfterDot = 2, retainDot = false) => {
   // округление чисел до 2 цифр после запятой
   return value
     ? String(
-        Number(
-          Math.round(
-            value.toString().trim().replace(",", ".").slice(0, 18) +
-              "e" +
-              digitsAfterDot,
-          ) +
-            "e-" +
-            digitsAfterDot,
-        ),
-      )
+      Number(
+        Math.round(
+          value.toString().trim().replace(",", ".").slice(0, 18) +
+          "e" +
+          digitsAfterDot,
+        ) +
+        "e-" +
+        digitsAfterDot,
+      ),
+    )
     : retainDot
       ? "0.0"
       : "0";
@@ -261,8 +261,8 @@ export function sumOfTime(timeOne, timeTwo) {
 
 export function secondsToTime(e, isMobile = false) {
   const m = Math.floor((e % 3600) / 60)
-      .toString()
-      .padStart(2, "0"),
+    .toString()
+    .padStart(2, "0"),
     s = Math.floor(e % 60)
       .toString()
       .padStart(2, "0");
@@ -412,7 +412,7 @@ export const selectedLabels = [
   },
   {
     label: "Сибирские бады",
-    match: ["спрей", "комплекс"],
+    match: ["спре", "комплекс"],
   },
   {
     label: "Сибирская гранола",
