@@ -1036,6 +1036,7 @@ export const RecipeText = styled.div`
 
   @media screen and (max-width: 1024px) {
     font-size: 1.5rem;
+    max-width: 320px;
   }
 `;
 
@@ -1193,10 +1194,17 @@ export const ProductPresentationHeaderImage = styled.img`
 
 export const ProductPresentationDescriptionWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   gap: 50px;
   flex-direction: column;
+
+  @media screen and (max-width: 460px) {
+  gap: 20px;
+    h1 {
+      font-size: 32px;
+    }
+  }
 `;
 
 export const PersonalAgreementWrapper = styled.div`
