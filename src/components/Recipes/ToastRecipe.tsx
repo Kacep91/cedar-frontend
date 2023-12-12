@@ -28,6 +28,7 @@ import {
   selectedLabels,
   arrayBufferToBase64,
 } from "utils/utils";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 export const ToastRecipe = (recipe: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +67,7 @@ export const ToastRecipe = (recipe: any) => {
     <>
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
+      <ScrollToTopOnMount />
       <RecipeWrapper>
         <RecipeHeader>
           <RecipeHeaderImage src={toast} />

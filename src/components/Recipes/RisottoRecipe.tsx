@@ -28,6 +28,7 @@ import {
   selectedLabels,
   arrayBufferToBase64,
 } from "utils/utils";
+import ScrollToTopOnMount from "utils/scrollRestorationFix";
 
 export const RisottoRecipe = (recipe: any) => {
   const isTablet = useScreenSize("mobile");
@@ -69,6 +70,7 @@ export const RisottoRecipe = (recipe: any) => {
     <>
       <MainHeader isCart={true} />
       <BackLinkAtom to={"/"} children={"Назад"} />
+      <ScrollToTopOnMount />
       <RecipeWrapper>
         <RecipeHeader>
           <RecipeHeaderImage src={risotto} />

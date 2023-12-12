@@ -1,4 +1,5 @@
 import vkLogo from "../../assets/images/vkLogo.svg";
+import telegram from "../../assets/images/telegram.svg";
 export const Footer = () => {
   return (
     <div className="footer-basic">
@@ -17,6 +18,18 @@ export const Footer = () => {
                 filter: "grayscale(100%)",
               }}
               src={vkLogo}
+            />
+          </a>
+          <a href="https://t.me/siberiaorganic">
+            <img
+              width="24"
+              height="24"
+              style={{
+                marginLeft: "-2px",
+                marginTop: "-4px",
+                filter: "grayscale(100%)",
+              }}
+              src={telegram}
             />
           </a>
         </div>
