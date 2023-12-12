@@ -61,6 +61,24 @@ body::-webkit-scrollbar-thumb:horizontal {
   border-radius: 100px;
 }
 
+.p-treenode-label {
+  color: #008054 !important;
+  font-weight: 900;
+  text-decoration: none;
+}
+.p-treenode-label a {
+  color: #008054 !important;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.ytp-videowall-still-image {
+  display: none;
+}
+.ytp-videowall-still[data-is-mix="true"] .ytp-videowall-still-listlabel-mix {
+  display: none;
+}
+
 a,
 a:hover,
 a:visited {

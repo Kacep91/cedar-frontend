@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { IframeHTMLAttributes, useEffect, useState } from "react";
 import { Header, SmallBackground } from "../atoms";
 import cross from "../../assets/images/cross.svg";
 import menu from "../../assets/images/menu.svg";
@@ -64,9 +64,11 @@ const itemTemplate = (item: Slide) => {
     return (
       <div style={{ width: "100%" }}>
         <iframe
+          id={"iframeYouTube"}
+          onClick={() => console.log("dsd")}
           width="100%"
           height="500"
-          src={`${item.video}?autoplay=1&mute=1&rel=0`}
+          src={`${item.video}?autoplay=1&mute=1&rel=0&loop=1&modestbranding=1`}
           title="Siberia Organic Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -129,6 +131,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       key: "1",
       label: "Наша продукция",
       icon: "pi pi-fw pi-inbox",
+      url: "/goods",
       children: [
         {
           key: "1-0",

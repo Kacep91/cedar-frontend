@@ -570,52 +570,59 @@ export const RadioButtonText = styled.div`
   font-weight: 600;
 `;
 
-export const MainPageImageContainer = styled.div<{ height?: number; }>`
+export const MainPageImageContainer = styled.div<{ height?: number }>`
   max-width: 100%;
-  height: 970px;
+  height: ${(props) => `${props.height ? props.height - 117 : props.height}px;`}
   transition: height 1s;
   position: relative;
 
   @media screen and (max-width: 460px) {
-    height: ${props => `${props.height}px;`}
+    height: ${(props) => `${props.height}px;`}
   }
 `;
-export const MainPageImage = styled.img<{ height?: number; }>`
+export const MainPageImage = styled.img<{ height?: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 
   @media screen and (max-width: 460px) {
-  object-fit: fill;
-  object-position: center;
+    object-fit: fill;
+    object-position: center;
+  }
+`;
+
+export const SiberiaLogoWrapper = styled.div`
+  display: none;
+  @media screen and (max-width: 460px) {
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 50%;
+    left: 50%;
+    position: absolute;
+    text-align: center;
+    top: 49%;
+    width: 262px;
+    -webkit-transform: translate3d(-50%, -50%, 0);
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   }
 `;
 
 export const SiberiaLogo = styled.img`
-display: none;
-@media screen and (max-width: 460px) {
-  font-size: 4rem;
-  font-weight: 500;
-  left: 50%;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  transform: translate3d(-50%, -50%, 0);
-  z-index: 1;
-  height: 3.5em;
-  width: 3.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 1);
-  padding: 20px;
-  border-radius: 50%;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-}
-
-`
+  display: none;
+  @media screen and (max-width: 460px) {
+    display: flex;
+    width: 241px;
+    height: 260px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 40px;
+  }
+`;
 
 // export const SiberiaLogo = styled.div`
 //   font-size: 4rem;
@@ -727,7 +734,7 @@ export const AdditionalInfoWrapper = styled.div<{ isOpened?: boolean }>`
   box-shadow: 0 31px 39px rgba(0, 0, 0, 0.15);
 
   @media screen and (max-width: 1370px) {
-    top: 92px;
+    top: 108px;
     padding: 0 120px;
   }
 `;
@@ -1200,7 +1207,7 @@ export const ProductPresentationDescriptionWrapper = styled.div`
   flex-direction: column;
 
   @media screen and (max-width: 460px) {
-  gap: 20px;
+    gap: 20px;
     h1 {
       font-size: 32px;
     }
