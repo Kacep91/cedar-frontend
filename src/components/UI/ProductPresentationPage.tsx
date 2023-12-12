@@ -268,7 +268,7 @@ export const ProductPresentationPage = () => {
                       }}
                       onClick={() => navigate(`/recipe/${item?.id}`)}
                     >
-                      <img src={item?.image} width="80" />
+                      <img src={item?.image} width="80" alt="" />
                       {item?.name}
                     </li>
                   );

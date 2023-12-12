@@ -1,7 +1,6 @@
 import { Button } from "primereact/button";
 import styled from "styled-components";
 import smallBg from "../assets/images/smallBg.jpg";
-import clipart from "../assets/images/clipart.png";
 import { Image } from "primereact/image";
 import { BackLink } from "./UI/BackLink";
 

@@ -1,4 +1,4 @@
-import React, { IframeHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header, SmallBackground } from "../atoms";
 import cross from "../../assets/images/cross.svg";
 import menu from "../../assets/images/menu.svg";

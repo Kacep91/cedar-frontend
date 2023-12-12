@@ -15,7 +15,6 @@ import { InputText } from "primereact/inputtext";
 
 import styled from "styled-components";
 import { Heading } from "ui/Typography";
-import { Checkbox } from "ui/Checkbox";
 import axios from "axios";
 import MainHeader from "./UI/MainHeader";
 import { BackLinkAtom } from "./UI/BackLink";

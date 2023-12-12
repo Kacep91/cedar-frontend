@@ -5,9 +5,6 @@ export const randElements = <T>(arr: T[], count: number) => {
 export const getById = <T extends { id: number }>(id: number, arr: T[]) =>
   arr.find((item) => item.id === id) || arr[0];
 
-const limitTo70 = (current: number): number =>
-  current < 70 ? current : limitTo70(current - 70);
-
 export const shuffle = (array: any[]) => array.sort(() => Math.random() - 0.5);
 
 export const categories = [

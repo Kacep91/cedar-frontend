@@ -427,10 +427,10 @@ export function transformArray(array) {
     return [];
   }
 
-  array.map((item) => {
+  array.forEach((item) => {
     if (item.video) {
       let videos = item?.video?.split(", ");
-      videos?.map((video) => {
+      videos?.forEach((video) => {
         result.push({ id: item?.id, video: video });
       });
     }

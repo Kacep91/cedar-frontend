@@ -17,6 +17,7 @@ export const Footer = () => {
                 marginTop: "-4px",
                 filter: "grayscale(100%)",
               }}
+              alt=""
               src={vkLogo}
             />
           </a>
@@ -29,6 +30,7 @@ export const Footer = () => {
                 marginTop: "-4px",
                 filter: "grayscale(100%)",
               }}
+              alt=""
               src={telegram}
             />
           </a>
