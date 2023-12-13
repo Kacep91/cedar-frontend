@@ -46,7 +46,7 @@ export const GoodsBlock = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/goods");
+      const res = await axios.get("http://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -159,46 +159,46 @@ export const GoodsBlock = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts.map(
-                (
-                  item: {
-                    label: string;
-                    items: ProductPresentationPageProps[];
-                  },
-                  index: number,
-                ) => {
-                  const allItems = item.items.map((item2) => (
-                    <ItemListUnit
-                      key={item2.name}
-                      {...item2}
-                      image={
-                        item2?.image && typeof item2?.image === "string"
-                          ? item2?.image
-                          : item2?.image
-                            ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                            : ""
-                      }
-                    />
-                  ));
-
-                  return (
-                    <>
-                      <div
-                        id={`product_id_${index}`}
-                        style={{ marginBottom: "120px", visibility: "hidden" }}
-                      >
-                        O_o
-                      </div>
-                      <ItemListLabel>{item.label}</ItemListLabel>
-                      <ItemListContainer>{allItems}</ItemListContainer>
-                    </>
-                  );
+              (
+                item: {
+                  label: string;
+                  items: ProductPresentationPageProps[];
                 },
-              )
+                index: number,
+              ) => {
+                const allItems = item.items.map((item2) => (
+                  <ItemListUnit
+                    key={item2.name}
+                    {...item2}
+                    image={
+                      item2?.image && typeof item2?.image === "string"
+                        ? item2?.image
+                        : item2?.image
+                          ? arrayBufferToBase64(
+                            item2.image as unknown as {
+                              type: string;
+                              data: any[];
+                            },
+                          )
+                          : ""
+                    }
+                  />
+                ));
+
+                return (
+                  <>
+                    <div
+                      id={`product_id_${index}`}
+                      style={{ marginBottom: "120px", visibility: "hidden" }}
+                    >
+                      O_o
+                    </div>
+                    <ItemListLabel>{item.label}</ItemListLabel>
+                    <ItemListContainer>{allItems}</ItemListContainer>
+                  </>
+                );
+              },
+            )
             : null}
           <Paginator
             first={pageData.first}

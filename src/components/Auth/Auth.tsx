@@ -19,7 +19,8 @@ const Auth = () => {
   const googleRedirect = getEnv("GOOGLE_REDIRECT");
   const token = useSelector(AuthSelectors.token);
 
-  const isLoggedWithId = token === "116421311113955607113";
+  const decodedToken = `${token}`?.replace(/%22/g, '')
+  const isLoggedWithId = decodedToken === "kacep91@gmail.com";
   const isLoading = useSelector(AuthSelectors.isLoading);
   const error = useSelector(AuthSelectors.error);
   const toast = useRef<Toast>(null);
@@ -67,7 +68,7 @@ const Auth = () => {
     <AuthWrapper>
       <AuthModal>
         <Toast ref={toast} />
-        <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
+        <BackLinkAtom to={"/"} children={"Назад"} />
         <AuthHeader>Вход в админку</AuthHeader>
         <GoogleButton clientId={googleId} redirectUrl={googleRedirect} />
         {isLoading && <ProgressSpinner />}

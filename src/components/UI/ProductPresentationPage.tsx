@@ -74,7 +74,7 @@ export const ProductPresentationPage = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/goods");
+      const res = await axios.get("http://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -98,7 +98,7 @@ export const ProductPresentationPage = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/recipes");
+      const res = await axios.get("http://79.174.95.133:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
@@ -129,11 +129,11 @@ export const ProductPresentationPage = () => {
               ? item2?.image
               : item2?.image
                 ? arrayBufferToBase64(
-                    item2.image as unknown as {
-                      type: string;
-                      data: any[];
-                    },
-                  )
+                  item2.image as unknown as {
+                    type: string;
+                    data: any[];
+                  },
+                )
                 : ""
           }
         />
@@ -151,9 +151,9 @@ export const ProductPresentationPage = () => {
 
   const recipesResult = coProducts
     ? recipes?.filter(
-        (item) =>
-          categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
-      )
+      (item) =>
+        categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
+    )
     : [];
 
   return (
@@ -183,11 +183,11 @@ export const ProductPresentationPage = () => {
                     ? data?.image
                     : data?.image
                       ? arrayBufferToBase64(
-                          data.image as unknown as {
-                            type: string;
-                            data: any[];
-                          },
-                        )
+                        data.image as unknown as {
+                          type: string;
+                          data: any[];
+                        },
+                      )
                       : placeHolder
                 }
               />
@@ -228,7 +228,7 @@ export const ProductPresentationPage = () => {
                     </li>
                   ) : null}
                   {data?.description?.ingridients ||
-                  (data?.ingridients as string) ? (
+                    (data?.ingridients as string) ? (
                     <li>
                       <b>Состав</b>:{" "}
                       {data?.description?.ingridients ||

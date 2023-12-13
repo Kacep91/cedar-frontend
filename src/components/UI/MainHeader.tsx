@@ -105,7 +105,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/slides");
+      const res = await axios.get("http://79.174.95.133:3000/slides");
 
       if (res.data) {
         dispatch(GoodsActions.setSlides(res.data));

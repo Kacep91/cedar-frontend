@@ -15,7 +15,7 @@ const {
 module.exports = async (env = {}, args) => {
   const mode = args.mode;
   const isProd = mode === "production";
-  const settings = env.settings || "localhost";
+  const settings = env.settings || "79.174.95.133";
   require("dotenv").config({ path: "./.env" });
   require("dotenv").config({ path: `.env.${settings}` });
 
@@ -43,7 +43,7 @@ module.exports = async (env = {}, args) => {
       },
       proxy: {
         "/api": {
-          target: "http://185.70.185.67:3000",
+          target: "http://79.174.95.133:3000",
           logLevel: "debug",
           pathRewrite: { "^/api": "" },
           changeOrigin: true,

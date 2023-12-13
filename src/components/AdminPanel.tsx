@@ -136,7 +136,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://185.70.185.67:3000/goods/${item.id}`)
+      .delete(`http://79.174.95.133:3000/goods/${item.id}`)
       .then(() => {
         setDeleteModalOpen(false);
         toast.current?.show({
@@ -153,7 +153,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://185.70.185.67:3000/recipes/${item.id}`)
+      .delete(`http://79.174.95.133:3000/recipes/${item.id}`)
       .then(() => {
         setDeleteModalRecipeOpen(false);
         toast.current?.show({
@@ -170,7 +170,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://185.70.185.67:3000/slides/${item.id}`)
+      .delete(`http://79.174.95.133:3000/slides/${item.id}`)
       .then(() => {
         setDeleteModalSlideOpen(false);
         toast.current?.show({
@@ -244,7 +244,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/goods");
+      const res = await axios.get("http://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -269,7 +269,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/recipes");
+      const res = await axios.get("http://79.174.95.133:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
@@ -284,7 +284,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://185.70.185.67:3000/slides");
+      const res = await axios.get("http://79.174.95.133:3000/slides");
 
       if (res.data) {
         dispatch(GoodsActions.setSlides(res.data));
@@ -323,7 +323,7 @@ export const AdminPanel = () => {
     oldPrice: "",
     volume: "",
     dueDate: "",
-    package: "",
+    pack: "",
     minRequest: "",
     description: "",
     ingridients: "",
@@ -577,7 +577,7 @@ export const AdminPanel = () => {
           if (recipiesFormData.id && alreadyLoadedData) {
             axios
               .put(
-                `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
+                `http://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
                 object,
               )
               .then((response) => {
@@ -599,7 +599,7 @@ export const AdminPanel = () => {
               });
           } else {
             axios
-              .post("http://185.70.185.67:3000/recipes", object)
+              .post("http://79.174.95.133:3000/recipes", object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -685,7 +685,7 @@ export const AdminPanel = () => {
       if (recipiesFormData.id && alreadyLoadedData) {
         axios
           .put(
-            `http://185.70.185.67:3000/recipes/${recipiesFormData.id}`,
+            `http://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
             object,
           )
           .then((response) => {
@@ -707,7 +707,7 @@ export const AdminPanel = () => {
           });
       } else {
         axios
-          .post("http://185.70.185.67:3000/recipes", object)
+          .post("http://79.174.95.133:3000/recipes", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -751,7 +751,7 @@ export const AdminPanel = () => {
           console.log("object", object);
 
           const response = await axios.post(
-            "http://185.70.185.67:3000/slides",
+            "http://79.174.95.133:3000/slides",
             object,
           );
           console.log(response.data);
@@ -785,7 +785,7 @@ export const AdminPanel = () => {
         console.log("object", object);
 
         const response = await axios.post(
-          "http://185.70.185.67:3000/slides",
+          "http://79.174.95.133:3000/slides",
           object,
         );
 
@@ -872,16 +872,6 @@ export const AdminPanel = () => {
                   : "",
             );
             result.append(
-              "minRequest",
-              formData.minRequest
-                ? formData.minRequest
-                : alreadyLoadedData?.description?.minRequest
-                  ? alreadyLoadedData?.description?.minRequest
-                  : typeof alreadyLoadedData?.minRequest === "string"
-                    ? alreadyLoadedData?.minRequest
-                    : "",
-            );
-            result.append(
               "ingridients",
               formData.ingridients
                 ? formData.ingridients
@@ -900,13 +890,13 @@ export const AdminPanel = () => {
                   : "",
             );
             result.append(
-              "package",
-              formData.package
-                ? formData.package
-                : alreadyLoadedData?.description?.package
-                  ? alreadyLoadedData?.description?.package
-                  : typeof alreadyLoadedData?.package === "string"
-                    ? alreadyLoadedData?.package
+              "pack",
+              formData.pack
+                ? formData.pack
+                : alreadyLoadedData?.description?.pack
+                  ? alreadyLoadedData?.description?.pack
+                  : typeof alreadyLoadedData?.pack === "string"
+                    ? alreadyLoadedData?.pack
                     : "",
             );
             result.append(
@@ -921,17 +911,15 @@ export const AdminPanel = () => {
           } else {
             result.append("id", uuidv4());
             result.append("name", formData.name || "");
-            result.append("weight", formData.weight || "");
-            result.append("price", formData.price || "");
-            result.append("description", formData.description || "");
             result.append("volume", formData.volume || "");
-            result.append("dueDate", formData.dueDate || "");
-            result.append("minRequest", formData.minRequest || "");
-            result.append("ingridients", formData.ingridients || "");
-            result.append("tags", formData.tags || "");
-            result.append("package", formData.package);
+            result.append("price", formData.price || "");
             result.append("oldPrice", formData.oldPrice);
             result.append("image", textedBlob);
+            result.append("description", formData.description || "");
+            result.append("pack", formData.pack);
+            result.append("ingridients", formData.ingridients || "");
+            result.append("dueDate", formData.dueDate || "");
+            result.append("tags", formData.tags || "");
           }
 
           let object = {};
@@ -943,7 +931,7 @@ export const AdminPanel = () => {
 
           if (formData.id && alreadyLoadedData) {
             axios
-              .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
+              .patch(`http://79.174.95.133:3000/goods/${formData.id}`, object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -963,7 +951,7 @@ export const AdminPanel = () => {
               });
           } else {
             axios
-              .post("http://185.70.185.67:3000/goods", object)
+              .post("http://79.174.95.133:3000/admin/goods", object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -1067,13 +1055,13 @@ export const AdminPanel = () => {
               : "",
         );
         result.append(
-          "package",
-          formData.package
-            ? formData.package
-            : alreadyLoadedData?.description?.package
-              ? alreadyLoadedData?.description?.package
-              : typeof alreadyLoadedData?.package === "string"
-                ? alreadyLoadedData?.package
+          "pack",
+          formData.pack
+            ? formData.pack
+            : alreadyLoadedData?.description?.pack
+              ? alreadyLoadedData?.description?.pack
+              : typeof alreadyLoadedData?.pack === "string"
+                ? alreadyLoadedData?.pack
                 : "",
         );
         result.append(
@@ -1095,7 +1083,7 @@ export const AdminPanel = () => {
         result.append("minRequest", formData.minRequest || "");
         result.append("ingridients", formData.ingridients || "");
         result.append("tags", formData.tags || "");
-        result.append("package", formData.package);
+        result.append("pack", formData.pack);
         result.append("oldPrice", formData.oldPrice);
       }
 
@@ -1108,7 +1096,7 @@ export const AdminPanel = () => {
 
       if (formData.id && alreadyLoadedData) {
         axios
-          .patch(`http://185.70.185.67:3000/goods/${formData.id}`, object)
+          .patch(`http://79.174.95.133:3000/goods/${formData.id}`, object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -1128,7 +1116,7 @@ export const AdminPanel = () => {
           });
       } else {
         axios
-          .post("http://185.70.185.67:3000/goods", object)
+          .post("http://79.174.95.133:3000/goods", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -1189,7 +1177,7 @@ export const AdminPanel = () => {
     //   });
 
     //   axios
-    //     .post("http://185.70.185.67:3000/goods", object)
+    //     .post("http://79.174.95.133:3000/goods", object)
     //     .then((response) => {
     //       console.log(response.data);
     //     })
@@ -1254,12 +1242,12 @@ export const AdminPanel = () => {
             <Row>
               <span className="p-float-label">
                 <InputText
-                  name="package"
-                  id="package"
-                  value={formData?.package}
-                  onChange={(e) => handleChange("package", e.target.value)}
+                  name="pack"
+                  id="pack"
+                  value={formData?.pack}
+                  onChange={(e) => handleChange("pack", e.target.value)}
                 />
-                <label htmlFor="package">Упаковка</label>
+                <label htmlFor="pack">Упаковка</label>
               </span>
             </Row>
             <Row>
@@ -1796,7 +1784,7 @@ export const AdminPanel = () => {
                       oldPrice: "",
                       volume: "",
                       dueDate: "",
-                      package: "",
+                      pack: "",
                       minRequest: "",
                       description: "",
                       ingridients: "",

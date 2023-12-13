@@ -13,7 +13,9 @@ type AuthRouteProps = {
 const AuthRoute = ({ children, ...props }: AuthRouteProps) => {
   const location = useLocation();
   const token = useSelector(AuthSelectors.token);
-  const isLoggedWithId = token === "116421311113955607113";
+  const decodedToken = `${token}`?.replace(/%22/g, '')
+  const isLoggedWithId = decodedToken === "kacep91@gmail.com";
+
   if (isAuthEnabled)
     return !isLoggedWithId ? (
       <Navigate to={"/auth"} state={location} replace={true} {...props} />
