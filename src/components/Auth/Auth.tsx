@@ -19,8 +19,11 @@ const Auth = () => {
   const googleRedirect = getEnv("GOOGLE_REDIRECT");
   const token = useSelector(AuthSelectors.token);
 
-  const decodedToken = `${token}`?.replace(/%22/g, '')
-  const isLoggedWithId = decodedToken === "kacep91@gmail.com";
+  const decodedToken = `${token}`?.replace(/%22/g, "");
+  const isLoggedWithId =
+    decodedToken === "kacep91@gmail.com" ||
+    decodedToken === "annadaluk6963@gmail.com" ||
+    decodedToken === "Tokmakov.ruslan@gmail.com";
   const isLoading = useSelector(AuthSelectors.isLoading);
   const error = useSelector(AuthSelectors.error);
   const toast = useRef<Toast>(null);

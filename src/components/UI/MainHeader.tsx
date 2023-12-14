@@ -14,7 +14,7 @@ import { GoodsActions, GoodsSelectors, Slide } from "store/goods";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { transformArray } from "utils/utils";
 
 const nodeTemplate = (node: any, options: any) => {
@@ -98,6 +98,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
     useState(false);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const slides = useSelector(GoodsSelectors.slidesList);
   const slidesResult = transformArray(slides);
@@ -218,6 +219,46 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       document.body.classList.remove("noScroll");
     }
   }, [isMobileMenuOpened]);
+
+  useEffect(() => {
+    // Функция для проверки видимости элемента на экране
+    function isElementInViewport(el: any) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      );
+    }
+
+    // Функция для запуска анимации
+    function runAnimation() {
+      const elements = document.querySelectorAll(".t-animate");
+
+      elements?.forEach((element) => {
+        if (isElementInViewport(element)) {
+          element.classList.add("t-animate_started");
+        } else {
+          element.classList.remove("t-animate_started");
+        }
+      });
+    }
+
+    // Запуск анимации при прокрутке страницы
+    window.addEventListener("scroll", runAnimation);
+
+    // Запуск проверки каждые 3 секунды
+    const intervalId = setInterval(runAnimation, 3000);
+
+    // Очистка интервала при размонтировании компонента
+    return () => {
+      window.removeEventListener("scroll", runAnimation);
+      clearInterval(intervalId);
+    };
+  }, [location.pathname]);
 
   return (
     <>

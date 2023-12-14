@@ -1,13 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { ProductCardType } from "./types";
-import { Paginator, PaginatorPageChangeEvent } from "primereact/paginator";
+import React, { useEffect, useState } from "react";
 import { Dropdown } from "primereact/dropdown";
 import axios from "axios";
 import {
   ItemListContainer,
   ItemListLabel,
   ItemListWrapper,
-  SortingHeader,
 } from "components/atoms";
 import { ItemListUnit } from "components/ItemListUnit";
 import { ProgressSpinner } from "primereact/progressspinner";
@@ -36,12 +33,12 @@ export const GoodsBlock = () => {
     }
   }, [isMobileMenuOpened]);
 
-  const [pageData, setPageData] = useState({
-    first: 1,
-    rows: 1,
-    page: 1,
-    pageCount: goods.length,
-  });
+  // const [pageData, setPageData] = useState({
+  //   first: 1,
+  //   rows: 1,
+  //   page: 1,
+  //   pageCount: goods.length,
+  // });
 
   useEffect(() => {
     const fetch = async () => {
@@ -75,12 +72,12 @@ export const GoodsBlock = () => {
     }
   }, [isMobileMenuOpened]);
 
-  const onPageChange = (e: PaginatorPageChangeEvent) => {
-    setPageData({
-      ...pageData,
-      page: pageData.page + 1,
-    });
-  };
+  // const onPageChange = (e: PaginatorPageChangeEvent) => {
+  //   setPageData({
+  //     ...pageData,
+  //     page: pageData.page + 1,
+  //   });
+  // };
 
   const sortingOptions = [
     {
@@ -159,53 +156,47 @@ export const GoodsBlock = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts.map(
-              (
-                item: {
-                  label: string;
-                  items: ProductPresentationPageProps[];
-                },
-                index: number,
-              ) => {
-                const allItems = item.items.map((item2) => (
-                  <ItemListUnit
-                    key={item2.name}
-                    {...item2}
-                    image={
-                      item2?.image && typeof item2?.image === "string"
-                        ? item2?.image
-                        : item2?.image
-                          ? arrayBufferToBase64(
-                            item2.image as unknown as {
-                              type: string;
-                              data: any[];
-                            },
-                          )
-                          : ""
-                    }
-                  />
-                ));
+                (
+                  item: {
+                    label: string;
+                    items: ProductPresentationPageProps[];
+                  },
+                  index: number,
+                ) => {
+                  const allItems = item.items.map((item2) => (
+                    <ItemListUnit
+                      key={item2.name}
+                      {...item2}
+                      image={
+                        item2?.image && typeof item2?.image === "string"
+                          ? item2?.image
+                          : item2?.image
+                            ? arrayBufferToBase64(
+                                item2.image as unknown as {
+                                  type: string;
+                                  data: any[];
+                                },
+                              )
+                            : ""
+                      }
+                    />
+                  ));
 
-                return (
-                  <>
-                    <div
-                      id={`product_id_${index}`}
-                      style={{ marginBottom: "120px", visibility: "hidden" }}
-                    >
-                      O_o
-                    </div>
-                    <ItemListLabel>{item.label}</ItemListLabel>
-                    <ItemListContainer>{allItems}</ItemListContainer>
-                  </>
-                );
-              },
-            )
+                  return (
+                    <>
+                      <div
+                        id={`product_id_${index}`}
+                        style={{ marginBottom: "120px", visibility: "hidden" }}
+                      >
+                        O_o
+                      </div>
+                      <ItemListLabel>{item.label}</ItemListLabel>
+                      <ItemListContainer>{allItems}</ItemListContainer>
+                    </>
+                  );
+                },
+              )
             : null}
-          <Paginator
-            first={pageData.first}
-            rows={pageData.rows}
-            totalRecords={goods.length}
-            onPageChange={onPageChange}
-          />
         </ItemListWrapper>
       )}
     </>

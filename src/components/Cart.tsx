@@ -27,13 +27,7 @@ import MainHeader from "./UI/MainHeader";
 import { amountOptions, categories } from "mocks/helpers";
 import { Dropdown } from "primereact/dropdown";
 import placeHolder from "./../assets/images/placeHolder.png";
-import {
-  cardNotion,
-  emailRegex,
-  formatPrice,
-  phoneRegex,
-  stableSort,
-} from "utils/utils";
+import { emailRegex, formatPrice, phoneRegex, stableSort } from "utils/utils";
 import { LoaderComponent } from "react-fullscreen-loader";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -163,7 +157,12 @@ export const Cart = () => {
             </span>
           )}
 
-          <span>{item.price ? `${formatPrice(item.price)} ₽` : "Скоро"}</span>
+          <span>
+            {
+              // item.price ? `${formatPrice(item.price)} ₽` :
+              "Скоро"
+            }
+          </span>
         </OrderListPrice>
         <OrderListTotal>
           {!isMobile && (
@@ -182,9 +181,12 @@ export const Cart = () => {
             </span>
           )}
           <span>
-            {item.price
-              ? `${formatPrice(item.price * (item.amount || 1))} ₽`
-              : "Скоро"}
+            {
+              // item.price
+              //   ? `${formatPrice(item.price * (item.amount || 1))} ₽`
+              // :
+              "Скоро"
+            }
           </span>
         </OrderListTotal>
         {isMobile && <div>Количество</div>}

@@ -131,46 +131,46 @@ export const Berries = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-              .filter((item) => item.label.includes("ягода"))
-              .map(
-                (
-                  item: {
-                    label: string;
-                    items: ProductPresentationPageProps[];
-                  },
-                  index: number,
-                ) => {
-                  const allItems = item.items
-                    .slice(0, listLength)
-                    .map((item2) => (
-                      <ItemListUnit
-                        key={item2.name}
-                        {...item2}
-                        image={
-                          item2?.image && typeof item2?.image === "string"
-                            ? item2?.image
-                            : item2?.image
-                              ? arrayBufferToBase64(
-                                item2.image as unknown as {
-                                  type: string;
-                                  data: any[];
-                                },
-                              )
-                              : ""
-                        }
-                      />
-                    ));
+                .filter((item) => item.label.includes("ягода"))
+                .map(
+                  (
+                    item: {
+                      label: string;
+                      items: ProductPresentationPageProps[];
+                    },
+                    index: number,
+                  ) => {
+                    const allItems = item.items
+                      .slice(0, listLength)
+                      .map((item2) => (
+                        <ItemListUnit
+                          key={item2.name}
+                          {...item2}
+                          image={
+                            item2?.image && typeof item2?.image === "string"
+                              ? item2?.image
+                              : item2?.image
+                                ? arrayBufferToBase64(
+                                    item2.image as unknown as {
+                                      type: string;
+                                      data: any[];
+                                    },
+                                  )
+                                : ""
+                          }
+                        />
+                      ));
 
-                  return (
-                    <>
-                      <ItemListLabel id={`product_id_${index}`}>
-                        {item.label}
-                      </ItemListLabel>
-                      <ItemListContainer>{allItems}</ItemListContainer>
-                    </>
-                  );
-                },
-              )
+                    return (
+                      <>
+                        <ItemListLabel id={`product_id_${index}`}>
+                          {item.label}
+                        </ItemListLabel>
+                        <ItemListContainer>{allItems}</ItemListContainer>
+                      </>
+                    );
+                  },
+                )
             : null}
         </ItemListWrapper>
       )}

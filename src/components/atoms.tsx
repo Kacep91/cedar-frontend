@@ -592,24 +592,23 @@ export const MainPageImage = styled.img<{ height?: number }>`
 `;
 
 export const SiberiaLogoWrapper = styled.div`
-  display: none;
-  @media screen and (max-width: 460px) {
-    background-color: rgba(255, 255, 255, 1);
-    border-radius: 50%;
-    left: 50%;
-    position: absolute;
-    text-align: center;
-    top: 49%;
-    width: 262px;
-    -webkit-transform: translate3d(-50%, -50%, 0);
-    transform: translate3d(-50%, -50%, 0);
-    z-index: 1;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  }
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 50%;
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  top: 49%;
+  width: 280px;
+  height: 280px;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  z-index: 1;
 `;
 
 export const SiberiaLogo = styled.img`

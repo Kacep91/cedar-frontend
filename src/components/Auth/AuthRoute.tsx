@@ -13,8 +13,11 @@ type AuthRouteProps = {
 const AuthRoute = ({ children, ...props }: AuthRouteProps) => {
   const location = useLocation();
   const token = useSelector(AuthSelectors.token);
-  const decodedToken = `${token}`?.replace(/%22/g, '')
-  const isLoggedWithId = decodedToken === "kacep91@gmail.com";
+  const decodedToken = `${token}`?.replace(/%22/g, "");
+  const isLoggedWithId =
+    decodedToken === "kacep91@gmail.com" ||
+    decodedToken === "annadaluk6963@gmail.com" ||
+    decodedToken === "Tokmakov.ruslan@gmail.com";
 
   if (isAuthEnabled)
     return !isLoggedWithId ? (
