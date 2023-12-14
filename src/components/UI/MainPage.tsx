@@ -64,7 +64,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://79.174.95.133:3000/recipes");
+      const res = await axios.get("https://79.174.95.133:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
@@ -76,7 +76,7 @@ export const MainPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get("http://79.174.95.133:3000/goods");
+      const res = await axios.get("https://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));

@@ -136,7 +136,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://79.174.95.133:3000/goods/${item.id}`)
+      .delete(`https://79.174.95.133:3000/goods/${item.id}`)
       .then(() => {
         setDeleteModalOpen(false);
         toast.current?.show({
@@ -153,7 +153,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://79.174.95.133:3000/recipes/${item.id}`)
+      .delete(`https://79.174.95.133:3000/recipes/${item.id}`)
       .then(() => {
         setDeleteModalRecipeOpen(false);
         toast.current?.show({
@@ -170,7 +170,7 @@ export const AdminPanel = () => {
     }
 
     return axios
-      .delete(`http://79.174.95.133:3000/slides/${item.id}`)
+      .delete(`https://79.174.95.133:3000/slides/${item.id}`)
       .then(() => {
         setDeleteModalSlideOpen(false);
         toast.current?.show({
@@ -244,7 +244,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://79.174.95.133:3000/goods");
+      const res = await axios.get("https://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -269,7 +269,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://79.174.95.133:3000/recipes");
+      const res = await axios.get("https://79.174.95.133:3000/recipes");
 
       if (res.data) {
         dispatch(GoodsActions.setRecipes(res.data));
@@ -284,7 +284,7 @@ export const AdminPanel = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://79.174.95.133:3000/slides");
+      const res = await axios.get("https://79.174.95.133:3000/slides");
 
       if (res.data) {
         dispatch(GoodsActions.setSlides(res.data));
@@ -577,7 +577,7 @@ export const AdminPanel = () => {
           if (recipiesFormData.id && alreadyLoadedData) {
             axios
               .put(
-                `http://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
+                `https://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
                 object,
               )
               .then((response) => {
@@ -599,7 +599,7 @@ export const AdminPanel = () => {
               });
           } else {
             axios
-              .post("http://79.174.95.133:3000/recipes", object)
+              .post("https://79.174.95.133:3000/recipes", object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -685,7 +685,7 @@ export const AdminPanel = () => {
       if (recipiesFormData.id && alreadyLoadedData) {
         axios
           .put(
-            `http://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
+            `https://79.174.95.133:3000/recipes/${recipiesFormData.id}`,
             object,
           )
           .then((response) => {
@@ -707,7 +707,7 @@ export const AdminPanel = () => {
           });
       } else {
         axios
-          .post("http://79.174.95.133:3000/recipes", object)
+          .post("https://79.174.95.133:3000/recipes", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -751,7 +751,7 @@ export const AdminPanel = () => {
           console.log("object", object);
 
           const response = await axios.post(
-            "http://79.174.95.133:3000/slides",
+            "https://79.174.95.133:3000/slides",
             object,
           );
           console.log(response.data);
@@ -785,7 +785,7 @@ export const AdminPanel = () => {
         console.log("object", object);
 
         const response = await axios.post(
-          "http://79.174.95.133:3000/slides",
+          "https://79.174.95.133:3000/slides",
           object,
         );
 
@@ -931,7 +931,7 @@ export const AdminPanel = () => {
 
           if (formData.id && alreadyLoadedData) {
             axios
-              .patch(`http://79.174.95.133:3000/goods/${formData.id}`, object)
+              .patch(`https://79.174.95.133:3000/goods/${formData.id}`, object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -951,7 +951,7 @@ export const AdminPanel = () => {
               });
           } else {
             axios
-              .post("http://79.174.95.133:3000/admin/goods", object)
+              .post("https://79.174.95.133:3000/admin/goods", object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -1096,7 +1096,7 @@ export const AdminPanel = () => {
 
       if (formData.id && alreadyLoadedData) {
         axios
-          .patch(`http://79.174.95.133:3000/goods/${formData.id}`, object)
+          .patch(`https://79.174.95.133:3000/goods/${formData.id}`, object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -1116,7 +1116,7 @@ export const AdminPanel = () => {
           });
       } else {
         axios
-          .post("http://79.174.95.133:3000/goods", object)
+          .post("https://79.174.95.133:3000/goods", object)
           .then((response) => {
             console.log(response.data);
             toast.current?.show({
@@ -1177,7 +1177,7 @@ export const AdminPanel = () => {
     //   });
 
     //   axios
-    //     .post("http://79.174.95.133:3000/goods", object)
+    //     .post("https://79.174.95.133:3000/goods", object)
     //     .then((response) => {
     //       console.log(response.data);
     //     })

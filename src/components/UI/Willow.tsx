@@ -40,7 +40,7 @@ export const Willow = () => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("http://79.174.95.133:3000/goods");
+      const res = await axios.get("https://79.174.95.133:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
@@ -141,46 +141,46 @@ export const Willow = () => {
         <ItemListWrapper>
           {categorizedProducts && categorizedProducts.length > 0
             ? categorizedProducts
-                .filter((item) => item.label.includes("напитки"))
-                .map(
-                  (
-                    item: {
-                      label: string;
-                      items: ProductPresentationPageProps[];
-                    },
-                    index: number,
-                  ) => {
-                    const allItems = item.items
-                      .slice(0, listLength)
-                      .map((item2) => (
-                        <ItemListUnit
-                          key={item2.name}
-                          {...item2}
-                          image={
-                            item2?.image && typeof item2?.image === "string"
-                              ? item2?.image
-                              : item2?.image
-                                ? arrayBufferToBase64(
-                                    item2.image as unknown as {
-                                      type: string;
-                                      data: any[];
-                                    },
-                                  )
-                                : ""
-                          }
-                        />
-                      ));
-
-                    return (
-                      <>
-                        <ItemListLabel id={`product_id_${index}`}>
-                          {item.label}
-                        </ItemListLabel>
-                        <ItemListContainer>{allItems}</ItemListContainer>
-                      </>
-                    );
+              .filter((item) => item.label.includes("напитки"))
+              .map(
+                (
+                  item: {
+                    label: string;
+                    items: ProductPresentationPageProps[];
                   },
-                )
+                  index: number,
+                ) => {
+                  const allItems = item.items
+                    .slice(0, listLength)
+                    .map((item2) => (
+                      <ItemListUnit
+                        key={item2.name}
+                        {...item2}
+                        image={
+                          item2?.image && typeof item2?.image === "string"
+                            ? item2?.image
+                            : item2?.image
+                              ? arrayBufferToBase64(
+                                item2.image as unknown as {
+                                  type: string;
+                                  data: any[];
+                                },
+                              )
+                              : ""
+                        }
+                      />
+                    ));
+
+                  return (
+                    <>
+                      <ItemListLabel id={`product_id_${index}`}>
+                        {item.label}
+                      </ItemListLabel>
+                      <ItemListContainer>{allItems}</ItemListContainer>
+                    </>
+                  );
+                },
+              )
             : null}
         </ItemListWrapper>
       )}
