@@ -6,9 +6,9 @@ import {
 } from "components/atoms";
 import alcenero from "../../assets/images/alceneroNoLogo.jpg";
 import nologo4 from "../../assets/images/nologo4.png";
-import siberiaText from '../../assets/images/siberiaText.svg'
-import siberiaBorder from '../../assets/images/siberiaBorder.svg'
-import siberiaRomb from '../../assets/images/siberiaRomb.svg'
+import siberiaText from "../../assets/images/siberiaText.svg";
+import siberiaBorder from "../../assets/images/siberiaBorder.svg";
+import siberiaRomb from "../../assets/images/siberiaRomb.svg";
 import React from "react";
 import { useScreenSize } from "utils/hooks";
 

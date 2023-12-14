@@ -931,7 +931,10 @@ export const AdminPanel = () => {
 
           if (formData.id && alreadyLoadedData) {
             axios
-              .patch(`https://siberia-organic.com:3000/goods/${formData.id}`, object)
+              .patch(
+                `https://siberia-organic.com:3000/goods/${formData.id}`,
+                object,
+              )
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -1096,7 +1099,10 @@ export const AdminPanel = () => {
 
       if (formData.id && alreadyLoadedData) {
         axios
-          .patch(`https://siberia-organic.com:3000/goods/${formData.id}`, object)
+          .patch(
+            `https://siberia-organic.com:3000/goods/${formData.id}`,
+            object,
+          )
           .then((response) => {
             console.log(response.data);
             toast.current?.show({

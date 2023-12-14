@@ -20,5 +20,11 @@ export function GoogleButton({
 
   const link = `https://accounts.google.com/o/oauth2/v2/auth?${qs.toString()}`;
 
-  return <a href={link}>Login with Google</a>;
+  return (
+    <a href={link}>
+      <button type="button" className="login-with-google-btn">
+        Войти с помощью Google
+      </button>
+    </a>
+  );
 }

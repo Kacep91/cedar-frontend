@@ -65,13 +65,15 @@ const Auth = () => {
       const nextLocation = location?.pathname !== "/auth" ? "/adminPanel" : "/";
       navigate(nextLocation);
     } else {
-      toast?.current?.show({
-        severity: "error",
-        summary: 'Доступ запрещен',
-        detail: "К сожалению, доступ к сервису для Вас запрещен. Для получения доступа обратить к администратору",
-        life: 5000,
-      });
-      navigate('/auth');
+      decodedToken !== "undefined" &&
+        toast?.current?.show({
+          severity: "error",
+          summary: "Доступ запрещен",
+          detail:
+            "К сожалению, доступ к сервису для Вас запрещен. Для получения доступа обратить к администратору",
+          life: 5000,
+        });
+      navigate("/auth");
     }
   }, [isLoggedWithId]);
 
@@ -80,7 +82,9 @@ const Auth = () => {
       <AuthModal>
         <Toast ref={toast} />
         <BackLinkAtom to={"/"} children={"Назад"} />
-        <AuthHeader>Вход в админку</AuthHeader>
+        <AuthHeader>
+          Вход в панель <br /> Администратора
+        </AuthHeader>
         <GoogleButton clientId={googleId} redirectUrl={googleRedirect} />
         {isLoading && <ProgressSpinner />}
       </AuthModal>
