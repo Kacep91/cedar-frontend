@@ -6,6 +6,9 @@ import {
 } from "components/atoms";
 import alcenero from "../../assets/images/alceneroNoLogo.jpg";
 import nologo4 from "../../assets/images/nologo4.png";
+import siberiaText from '../../assets/images/siberiaText.svg'
+import siberiaBorder from '../../assets/images/siberiaBorder.svg'
+import siberiaRomb from '../../assets/images/siberiaRomb.svg'
 import React from "react";
 import { useScreenSize } from "utils/hooks";
 
@@ -85,8 +88,8 @@ export const Bublik = () => {
                     <div className="tn-atom">
                       <img
                         className="tn-atom__img t-img"
-                        data-original="../../assets/images/tild3133-6663-4239-a161-613935646438___4.svg"
-                        src="../../assets/images/tild3133-6663-4239-a161-613935646438___4.svg"
+                        data-original={siberiaText}
+                        src={siberiaText}
                       />{" "}
                     </div>
                   </div>
@@ -126,8 +129,8 @@ export const Bublik = () => {
                       {" "}
                       <img
                         className="tn-atom__img t-img"
-                        data-original="../../assets/images/tild6335-3035-4261-b437-333335653531___5.svg"
-                        src="../../assets/images/tild6335-3035-4261-b437-333335653531___5.svg"
+                        data-original={siberiaRomb}
+                        src={siberiaRomb}
                       />{" "}
                     </div>
                   </div>
@@ -166,12 +169,11 @@ export const Bublik = () => {
                     data-field-fileheight-value="448"
                   >
                     <div className="tn-atom">
-                      {" "}
                       <img
                         className="tn-atom__img t-img"
-                        data-original="../../assets/images/tild6338-3635-4136-a661-336139353537___3.svg"
-                        src="../../assets/images/tild6338-3635-4136-a661-336139353537___3.svg"
-                      />{" "}
+                        data-original={siberiaBorder}
+                        src={siberiaBorder}
+                      />
                     </div>
                   </div>
                 </div>
