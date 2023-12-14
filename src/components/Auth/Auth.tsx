@@ -64,6 +64,14 @@ const Auth = () => {
     if (isLoggedWithId) {
       const nextLocation = location?.pathname !== "/auth" ? "/adminPanel" : "/";
       navigate(nextLocation);
+    } else {
+      toast?.current?.show({
+        severity: "error",
+        summary: 'Доступ запрещен',
+        detail: "К сожалению, доступ к сервису для Вас запрещен. Для получения доступа обратить к администратору",
+        life: 5000,
+      });
+      navigate('/auth');
     }
   }, [isLoggedWithId]);
 
