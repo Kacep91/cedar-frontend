@@ -43,7 +43,7 @@ export const PastaRecipe = (recipe: any) => {
   useEffect(() => {
     const fetch = async () => {
       setIsLoading(true);
-      const res = await axios.get("https://79.174.95.133:3000/goods");
+      const res = await axios.get("https://siberia-organic.com:3000/goods");
 
       if (res.data) {
         dispatch(GoodsActions.setGoods(res.data));
