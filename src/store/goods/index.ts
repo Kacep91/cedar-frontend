@@ -18,6 +18,24 @@ export type Slide = {
   video: string;
 };
 
+export type Partner = {
+  id: string;
+  name: string;
+  userRegionOrCity: string;
+  userPatronymic: string;
+  userSurname: string;
+  userTradeType: string;
+  userPhone: string;
+  userEmail: string;
+  userMessage: string;
+};
+
+export type Catalogue = {
+  id: string;
+  name: string;
+  userEmail: string;
+};
+
 export type GoodsState = {
   isLoading: boolean;
   goodsList: ProductPresentationPageProps[];
@@ -27,6 +45,8 @@ export type GoodsState = {
   }[];
   recipesList: Recipe[];
   slidesList: Slide[];
+  partnersList: Partner[];
+  catalogueList: Catalogue[];
 };
 
 export const initialState: GoodsState = {
@@ -35,6 +55,8 @@ export const initialState: GoodsState = {
   categorizedProducts: [],
   recipesList: [],
   slidesList: [],
+  partnersList: [],
+  catalogueList: [],
 };
 
 export const goodsSlice = createSlice({
@@ -69,6 +91,18 @@ export const goodsSlice = createSlice({
         slidesList: action.payload,
       };
     },
+    setPartners: (state, action: PayloadAction<Partner[]>) => {
+      return {
+        ...state,
+        partnersList: action.payload,
+      };
+    },
+    setCatalogue: (state, action: PayloadAction<Catalogue[]>) => {
+      return {
+        ...state,
+        catalogueList: action.payload,
+      };
+    },
     setCategorizedData: (
       state,
       action: PayloadAction<
@@ -91,4 +125,6 @@ export const GoodsSelectors = {
   categorizedProducts: (state: RootState) => state.goods.categorizedProducts,
   recipesList: (state: RootState) => state.goods.recipesList,
   slidesList: (state: RootState) => state.goods.slidesList,
+  partnersList: (state: RootState) => state.goods.partnersList,
+  catalogueList: (state: RootState) => state.goods.catalogueList,
 };

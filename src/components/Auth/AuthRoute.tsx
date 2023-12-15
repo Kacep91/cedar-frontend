@@ -17,7 +17,7 @@ const AuthRoute = ({ children, ...props }: AuthRouteProps) => {
   const isLoggedWithId =
     decodedToken === "kacep91@gmail.com" ||
     decodedToken === "annadaluk6963@gmail.com" ||
-    decodedToken === "Tokmakov.ruslan@gmail.com";
+    decodedToken === "tokmakov.ruslan@gmail.com";
 
   if (isAuthEnabled)
     return !isLoggedWithId ? (

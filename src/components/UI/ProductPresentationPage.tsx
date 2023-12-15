@@ -45,7 +45,7 @@ export type ProductPresentationPageProps = {
   oldPrice?: number;
   dueDate?: string;
   ingridients?: string;
-  package?: string;
+  pack?: string;
   description?: PresentationPropDescription;
   creationDate?: string;
   tags?: string;
@@ -55,7 +55,7 @@ export type PresentationPropDescription = {
   name?: string;
   volume?: string;
   dueDate?: string;
-  package?: string;
+  pack?: string;
   minRequest?: string;
   description?: string;
   ingridients?: string;
@@ -221,10 +221,10 @@ export const ProductPresentationPage = () => {
                       месте. Избегать прямого попадания солнечных лучей.
                     </li>
                   ) : null}
-                  {data?.description?.package || (data?.package as string) ? (
+                  {data?.description?.pack || (data?.pack as string) ? (
                     <li>
                       <b>Упаковка</b>:{" "}
-                      {data?.description?.package || (data?.package as string)}
+                      {data?.description?.pack || (data?.pack as string)}
                     </li>
                   ) : null}
                   {data?.description?.ingridients ||

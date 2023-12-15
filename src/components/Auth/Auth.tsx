@@ -23,7 +23,7 @@ const Auth = () => {
   const isLoggedWithId =
     decodedToken === "kacep91@gmail.com" ||
     decodedToken === "annadaluk6963@gmail.com" ||
-    decodedToken === "Tokmakov.ruslan@gmail.com";
+    decodedToken === "tokmakov.ruslan@gmail.com";
   const isLoading = useSelector(AuthSelectors.isLoading);
   const error = useSelector(AuthSelectors.error);
   const toast = useRef<Toast>(null);

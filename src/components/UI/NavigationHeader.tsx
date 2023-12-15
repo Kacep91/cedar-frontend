@@ -239,15 +239,6 @@ export function Navbar({
                       <></>
                     )}
                   </div>
-                  <Button
-                    icon="pi pi-shield"
-                    rounded
-                    text
-                    raised
-                    severity="success"
-                    aria-label="Shield"
-                    onClick={() => navigate("/adminPanel")}
-                  />
                 </div>
               </div>
             </>
@@ -331,15 +322,6 @@ export function Navbar({
                     <></>
                   )}
                 </div>
-                <Button
-                  icon="pi pi-shield"
-                  rounded
-                  text
-                  raised
-                  severity="success"
-                  aria-label="Shield"
-                  onClick={() => navigate("/adminPanel")}
-                />
               </div>
             </div>
           )}

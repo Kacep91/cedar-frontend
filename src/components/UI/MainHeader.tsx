@@ -194,12 +194,6 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         setMobileMenuOpened(false);
       },
     },
-    {
-      key: "4",
-      label: "Админка",
-      icon: "pi pi-fw pi-inbox",
-      url: "/adminPanel",
-    },
   ];
 
   const [isMobileMenuOpened, setMobileMenuOpened] = useState(false);
@@ -220,45 +214,45 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
     }
   }, [isMobileMenuOpened]);
 
-  useEffect(() => {
-    // Функция для проверки видимости элемента на экране
-    function isElementInViewport(el: any) {
-      const rect = el.getBoundingClientRect();
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <=
-          (window.innerWidth || document.documentElement.clientWidth)
-      );
-    }
+  // useEffect(() => {
+  //   // Функция для проверки видимости элемента на экране
+  //   function isElementInViewport(el: any) {
+  //     const rect = el.getBoundingClientRect();
+  //     return (
+  //       rect.top >= 0 &&
+  //       rect.left >= 0 &&
+  //       rect.bottom <=
+  //       (window.innerHeight || document.documentElement.clientHeight) &&
+  //       rect.right <=
+  //       (window.innerWidth || document.documentElement.clientWidth)
+  //     );
+  //   }
 
-    // Функция для запуска анимации
-    function runAnimation() {
-      const elements = document.querySelectorAll(".t-animate");
+  //   // Функция для запуска анимации
+  //   function runAnimation() {
+  //     const elements = document.querySelectorAll(".t-animate");
 
-      elements?.forEach((element) => {
-        if (isElementInViewport(element)) {
-          element.classList.add("t-animate_started");
-        } else {
-          element.classList.remove("t-animate_started");
-        }
-      });
-    }
+  //     elements?.forEach((element) => {
+  //       if (isElementInViewport(element)) {
+  //         element.classList.add("t-animate_started");
+  //       } else {
+  //         element.classList.remove("t-animate_started");
+  //       }
+  //     });
+  //   }
 
-    // Запуск анимации при прокрутке страницы
-    window.addEventListener("scroll", runAnimation);
+  //   // Запуск анимации при прокрутке страницы
+  //   window.addEventListener("scroll", runAnimation);
 
-    // Запуск проверки каждые 3 секунды
-    const intervalId = setInterval(runAnimation, 3000);
+  //   // Запуск проверки каждые 3 секунды
+  //   const intervalId = setInterval(runAnimation, 3000);
 
-    // Очистка интервала при размонтировании компонента
-    return () => {
-      window.removeEventListener("scroll", runAnimation);
-      clearInterval(intervalId);
-    };
-  }, [location.pathname]);
+  //   // Очистка интервала при размонтировании компонента
+  //   return () => {
+  //     window.removeEventListener("scroll", runAnimation);
+  //     clearInterval(intervalId);
+  //   };
+  // }, [location.pathname]);
 
   return (
     <>
@@ -342,7 +336,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
                 </div>
                 <div className="catalog-banner-text">
                   Уникальные напитки, сладости и снеки из натуральных сибирских
-                  продуктов!{" "}
+                  продуктов!
                 </div>
               </div>
             </SmallBackground>

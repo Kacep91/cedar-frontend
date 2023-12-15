@@ -107,6 +107,8 @@ const buttons = [
   { text: "Загрузить фото для слайдера", content: "loadSlider" },
 
   { text: "Удалить фото для слайдера", content: "removeSlider" },
+  { text: "Список партнеров", content: "partners" },
+  { text: "Список запросов на каталог", content: "catalogue" },
   { text: "Инструкция", content: "instruction" },
 ];
 
@@ -116,6 +118,8 @@ export const AdminPanel = () => {
   const goods = useSelector(GoodsSelectors.goodsList);
   const recipes = useSelector(GoodsSelectors.recipesList);
   const slides = useSelector(GoodsSelectors.slidesList);
+  const partners = useSelector(GoodsSelectors.partnersList);
+  const catalogue = useSelector(GoodsSelectors.catalogueList);
   const [isReload, setIsReload] = useState(false);
 
   const [isDeleteModalOpened, setDeleteModalOpen] = useState(false);
@@ -185,6 +189,11 @@ export const AdminPanel = () => {
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     id: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
     name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    userRegionOrCity: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    userPatronymic: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    userSurname: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    userPhone: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    userEmail: { value: null, matchMode: FilterMatchMode.CONTAINS },
   });
 
   const onGlobalFilterChange = (
@@ -294,6 +303,36 @@ export const AdminPanel = () => {
     };
 
     (isReload || slides.length === 0) && fetch();
+  }, [isReload]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("https://siberia-organic.com:3000/partners");
+
+      if (res.data) {
+        dispatch(GoodsActions.setPartners(res.data));
+        setIsLoading(false);
+        setIsReload(false);
+      }
+    };
+
+    (isReload || partners.length === 0) && fetch();
+  }, [isReload]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      setIsLoading(true);
+      const res = await axios.get("https://siberia-organic.com:3000/catalogue");
+
+      if (res.data) {
+        dispatch(GoodsActions.setCatalogue(res.data));
+        setIsLoading(false);
+        setIsReload(false);
+      }
+    };
+
+    (isReload || catalogue.length === 0) && fetch();
   }, [isReload]);
 
   const [files, setFiles] = useState<File[]>([]);
@@ -490,16 +529,6 @@ export const AdminPanel = () => {
     });
   }
 
-  // async function blobToBuffer(blob: Blob): Promise<{ type: string; data: number[]; }> {
-  //   const arrayBuffer = await blob.arrayBuffer();
-  //   const data = Array.from(new Uint8Array(arrayBuffer));
-  //   return { type: "Buffer", data: data };
-  // }
-
-  // function randomDate(start, end) {
-  //   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  // }
-
   const handleSubmitRecipe = () => {
     const alreadyLoadedData = recipes.find(
       (item) => item.id === recipiesFormData.id,
@@ -568,7 +597,7 @@ export const AdminPanel = () => {
             result.append("image", textedBlob);
           }
 
-          let object = {};
+          let object: any = {};
           result.forEach((value, key) => {
             object[key] = value;
           });
@@ -676,7 +705,7 @@ export const AdminPanel = () => {
         result.append("tags", recipiesFormData.tags);
       }
 
-      let object = {};
+      let object: any = {};
       result.forEach((value, key) => {
         object[key] = value;
       });
@@ -743,7 +772,7 @@ export const AdminPanel = () => {
           result.append("video", slidesForm.video);
           result.append("image", textedBlob);
 
-          let object = {};
+          let object: any = {};
           result.forEach((value, key) => {
             object[key] = value;
           });
@@ -777,7 +806,7 @@ export const AdminPanel = () => {
         result.append("id", uuidv4());
         result.append("video", slidesForm.video);
 
-        let object = {};
+        let object: any = {};
         result.forEach((value, key) => {
           object[key] = value;
         });
@@ -922,7 +951,7 @@ export const AdminPanel = () => {
             result.append("tags", formData.tags || "");
           }
 
-          let object = {};
+          let object: any = {};
           result.forEach((value, key) => {
             object[key] = value;
           });
@@ -954,7 +983,7 @@ export const AdminPanel = () => {
               });
           } else {
             axios
-              .post("https://siberia-organic.com:3000/admin/goods", object)
+              .post("https://siberia-organic.com:3000/goods", object)
               .then((response) => {
                 console.log(response.data);
                 toast.current?.show({
@@ -1090,7 +1119,7 @@ export const AdminPanel = () => {
         result.append("oldPrice", formData.oldPrice);
       }
 
-      let object = {};
+      let object: any = {};
       result.forEach((value, key) => {
         object[key] = value;
       });
@@ -1177,7 +1206,7 @@ export const AdminPanel = () => {
     //   result.append("creationDate", item.creationDate);
     //   result.append("image", textedBlob);
 
-    //   let object = {};
+    //   let object:any = {};
     //   result.forEach((value, key) => {
     //     object[key] = value;
     //   });
@@ -1750,6 +1779,78 @@ export const AdminPanel = () => {
         </ol>
       </>
     ),
+    partners: (
+      <>
+        <DataTable
+          dataKey="id"
+          size={"small"}
+          globalFilterFields={[
+            "id",
+            "name",
+            "userRegionOrCity",
+            "userPatronymic",
+            "userSurname",
+            "userTradeType",
+            "userPhone",
+            "userEmail",
+            "userMessage",
+          ]}
+          filters={filters}
+          removableSort
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 25, 50]}
+          header={renderHeader()}
+          showGridlines
+          value={partners}
+          tableStyle={
+            isMobile
+              ? { maxWidth: "50rem" }
+              : { minWidth: "50rem", maxWidth: "70rem", width: "100%" }
+          }
+        >
+          <Column field="userSurname" sortable header="Фамилия"></Column>
+          <Column field="name" sortable header="Имя"></Column>
+          <Column field="userPatronymic" sortable header="Отчество"></Column>
+          <Column field="userRegionOrCity" sortable header="Откуда"></Column>
+          <Column
+            field="userTradeType"
+            sortable
+            header="Тип сотрудничества"
+          ></Column>
+          <Column field="userPhone" sortable header="Телефон"></Column>
+          <Column field="userEmail" sortable header="Почта"></Column>
+          <Column field="userMessage" sortable header="Сообщение"></Column>
+        </DataTable>
+      </>
+    ),
+    catalogue: (
+      <>
+        <DataTable
+          dataKey="id"
+          size={"small"}
+          globalFilterFields={["name", "userEmail"]}
+          filters={filters}
+          removableSort
+          stripedRows
+          paginator
+          rows={10}
+          rowsPerPageOptions={[10, 25, 50]}
+          header={renderHeader()}
+          showGridlines
+          value={catalogue}
+          tableStyle={
+            isMobile
+              ? { maxWidth: "50rem" }
+              : { minWidth: "50rem", maxWidth: "70rem", width: "100%" }
+          }
+        >
+          <Column field="name" sortable header="Имя"></Column>
+          <Column field="userEmail" sortable header="Почта"></Column>
+        </DataTable>
+      </>
+    ),
   };
 
   return (
@@ -1794,6 +1895,7 @@ export const AdminPanel = () => {
                       minRequest: "",
                       description: "",
                       ingridients: "",
+                      tags: "",
                     });
                     setItemForDelete({ id: null, name: "" });
                   }}
