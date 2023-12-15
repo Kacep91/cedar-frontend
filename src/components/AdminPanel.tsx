@@ -30,6 +30,7 @@ import { Dialog } from "primereact/dialog";
 import { InputTextarea } from "primereact/inputtextarea";
 import { useScreenSize } from "utils/hooks";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import { tradeTypeEnum } from "./PartnerModal";
 
 const Row = styled.div`
   margin: 15px 0 10px 0;
@@ -1803,7 +1804,13 @@ export const AdminPanel = () => {
           rowsPerPageOptions={[10, 25, 50]}
           header={renderHeader()}
           showGridlines
-          value={partners}
+          value={[...partners]?.map((item) => ({
+            ...item,
+            userTradeType:
+              tradeTypeEnum[
+                item?.userTradeType as keyof typeof tradeTypeEnum
+              ] || "",
+          }))}
           tableStyle={
             isMobile
               ? { maxWidth: "50rem" }
@@ -1865,7 +1872,6 @@ export const AdminPanel = () => {
           paddingTop: "30px",
         }}
       >
-        {" "}
         <BackLinkAtom id={"backButton"} to={"/goods"} children={"Назад"} />
       </div>
       <AdminControlWrapper>

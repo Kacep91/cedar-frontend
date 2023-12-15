@@ -27,7 +27,7 @@ type ModalError = {
   tradeType: string;
 };
 
-const tradeTypes = [
+export const tradeTypes = [
   {
     label: "Собирать и сдавать дикоросы на заготовительный пункт",
     value: "wildGrowthGathering",
@@ -49,6 +49,14 @@ const tradeTypes = [
     value: "dontKnow",
   },
 ];
+
+export const tradeTypeEnum = {
+  wildGrowthGathering: "Собирать и сдавать дикоросы на заготовительный пункт",
+  wildGrowthPoint: "Организовать заготовительный пункт по сбору дикоросов",
+  participation: "Участвовать как производитель органической продукции",
+  sellGoods: "Продавать нашу продукцию",
+  dontKnow: "Не определился, но интересуюсь этой темой и прошу направлять",
+};
 
 export const PartnerModal = ({
   isOpen,
