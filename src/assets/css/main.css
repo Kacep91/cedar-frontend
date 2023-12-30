@@ -46,7 +46,7 @@ body::-webkit-scrollbar-track {
 
 div::-webkit-scrollbar-thumb:vertical,
 body::-webkit-scrollbar-thumb:vertical {
-  background-color: #6152ff;
+  background-color: #008054;
   border-radius: 100px;
 }
 
@@ -57,7 +57,7 @@ body::-webkit-scrollbar:horizontal {
 
 div::-webkit-scrollbar-thumb:horizontal,
 body::-webkit-scrollbar-thumb:horizontal {
-  background-color: #6152ff;
+  background-color: #008054;
   border-radius: 100px;
 }
 
@@ -190,7 +190,7 @@ button {
   display: flex;
   align-items: center;
   padding: 12px 0px;
-  background: linear-gradient(90deg, #6152ff 0%, #978dff 100%);
+  background: linear-gradient(90deg, #008054 0%, #978dff 100%);
   box-shadow: 0px 2px 12px rgba(115, 103, 240, 0.5);
   border-radius: 10px 0px 0px 10px;
   font-family: "IBM Plex Sans";

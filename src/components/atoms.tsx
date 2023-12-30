@@ -27,7 +27,7 @@ export const Header = styled.div<{ isMobileMenuOpened: boolean }>`
     height: 100vh;
     width: 100vw;
     background-color: white;
-    z-index: 12;
+    z-index: 999;
   }
 `;
 
@@ -76,6 +76,7 @@ export const NavigationWrapper = styled.div<{ isOnTop?: boolean }>`
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
+  background-color: #ffffff;
 `;
 
 export const NavigationHeader = styled.div`
@@ -97,6 +98,20 @@ export const NavigationHeader = styled.div`
   @media screen and (max-width: 1060px) {
     padding: 10px 20px;
   }
+`;
+
+export const NavigationHeaderMobile = styled.div`
+  display: flex;
+  width: 93%;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  z-index: 998;
+  transition: all 0.2s;
 `;
 
 export const MenuDropdownContent = styled.div`
@@ -750,7 +765,6 @@ export const InfoCardImage = styled.img`
   width: 308px;
   height: 175px;
   object-fit: cover;
-  border-radius: 15px;
 `;
 export const InfoCardText = styled.div`
   font-size: 20px;
@@ -796,34 +810,32 @@ export const AboutUsWrapper = styled.div`
 `;
 
 export const AboutUsImage = styled.img`
-  width: 655px;
+  width: 775px;
   height: 655px;
   object-fit: cover;
-  border-radius: 15px;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
 
   @media screen and (max-width: 1024px) {
-    width: 700px;
-    height: 700px;
+    width: 775px;
+    height: 655px;
   }
 
   @media screen and (max-width: 768px) {
     width: 450px;
-    height: 450px;
+    height: 350px;
   }
 
   @media screen and (max-width: 460px) {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 280px;
   }
 `;
 export const ProductPageImage = styled.img`
   width: 250px;
   height: 250px;
   object-fit: cover;
-  border-radius: 15px;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
@@ -918,7 +930,6 @@ export const Map = styled.img`
   width: 860px;
   height: 510px;
   object-fit: cover;
-  border-radius: 15px;
 
   @media screen and (max-width: 1024px) {
     width: 660px;
@@ -984,7 +995,6 @@ export const FeaturedProductsImage = styled.img`
   width: 200px;
   height: 200px;
   object-fit: cover;
-  border-radius: 15px;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
@@ -1000,15 +1010,9 @@ export const RecipesImage = styled.img`
   width: 400px;
   height: 400px;
   object-fit: cover;
-  border-radius: 15px;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
     0 10px 10px rgba(0, 0, 0, 0.22);
-
-  @media screen and (max-width: 1024px) {
-    width: 550px;
-    height: 550px;
-  }
 
   @media screen and (max-width: 768px) {
     width: 600px;
@@ -1061,7 +1065,6 @@ export const RecipeHeaderImage = styled.img`
   width: 600px;
   height: 600px;
   object-fit: cover;
-  border-radius: 15px;
 
   @media screen and (max-width: 1024px) {
     width: 800px;
@@ -1179,7 +1182,6 @@ export const ProductPresentationHeaderImage = styled.img`
   width: 600px;
   height: 600px;
   object-fit: cover;
-  border-radius: 15px;
 
   @media screen and (max-width: 1024px) {
     width: 600px;
@@ -1273,7 +1275,6 @@ export const CEOImage = styled.img`
   width: 600px;
   height: 600px;
   object-fit: cover;
-  border-radius: 15px;
 
   @media screen and (max-width: 1024px) {
     width: 450px;

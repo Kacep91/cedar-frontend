@@ -31,7 +31,6 @@ import { GeneralRecipe } from "./Recipes/Recipe";
 const AppWrapper = styled.div`
   margin: 0 auto;
   height: 100vh;
-  overflow-x: hidden;
 `;
 
 const NotFound = lazy(() => import("./NotFound"));

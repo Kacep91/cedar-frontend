@@ -2,9 +2,9 @@
   --body-font-family: "Raleway", Arial, Helvetica, sans-serif;
   --heading-font-family: "Raleway", Arial, Helvetica, sans-serif;
 
-  --primary: #7367f0;
-  --primary-light: #9389ff;
-  --primary-dark: #5a58c6;
+  --primary: #008054;
+  --primary-light: #008054;
+  --primary-dark: #008054;
   --primary-pink: #ff99b6;
   --primary-green: #00b3a1;
   --primary-red: #f06767;
@@ -25,13 +25,13 @@
 
   --secondary-bg: var(--grey-1);
   --secondary-text: var(--grey-7);
-  --link-color: #7367f0;
+  --link-color: #008054;
 
   --control-inactive-bg: var(--grey-3);
   --control-active-bg: #ffc773;
 
   --gradient-dark-blue: linear-gradient(180deg, #05040c 0%, #241d52 100%);
-  --gradient-primary: linear-gradient(90deg, #6152ff 0%, #978dff 100%);
+  --gradient-primary: linear-gradient(90deg, #6152ff 0%, #008054 100%);
   --gradient-green: linear-gradient(226.27deg, #00b3a1 8.37%, #2bb2ff 94.55%);
   --gradient-orange: linear-gradient(
     216.86deg,

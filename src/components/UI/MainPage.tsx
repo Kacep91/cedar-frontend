@@ -30,6 +30,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { GoodsSelectors, GoodsActions } from "store/goods";
 import { categorizeProducts, selectedLabels } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 export const products = [
   { src: aboutUs, text: "Наше производство", link: "/aboutUs" },
@@ -39,6 +41,34 @@ export const MainPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Вызываем функцию при первой загрузке страницы
+    console.log(getResponsiveValue(width));
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function getResponsiveValue(width: number) {
+    if (width > 1660) {
+      return 4;
+    } else if (width > 1220) {
+      return 3;
+    } else if (width > 800) {
+      return 2;
+    } else {
+      return 1;
+    }
+  }
 
   const recipes = [
     { src: pasta, text: "Кремовая паста с грибами", link: "/pastaRecipe" },
@@ -103,6 +133,12 @@ export const MainPage = () => {
     { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
+  const slidesPerWidth = {
+    1660: 3,
+    1220: 2,
+    800: 1,
+  };
+
   return (
     <>
       <Bublik />
@@ -138,10 +174,27 @@ export const MainPage = () => {
         </AboutUsContainer>
       </ProductsBlock>
 
-      <AboutUsBlock>
+      <RecipesContainer>
         <h1>Рецепты</h1>
-        <RecipesContainer>
-          {recipesResult.slice(0, listLength).map((product) => (
+        <Swiper
+          spaceBetween={40}
+          slidesPerView={
+            width > 1660 ? 4 : width > 1220 ? 3 : width > 800 ? 2 : 1
+          }
+        >
+          {recipesResult.map((product) => (
+            <SwiperSlide key={product.link}>
+              <AboutUsWrapper
+                key={product.text}
+                onClick={() => navigate(product.link)}
+              >
+                <RecipesImage src={product.src} />
+                <AboutUsText>{product.text}</AboutUsText>
+              </AboutUsWrapper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* {recipesResult.slice(0, listLength).map((product) => (
             <AboutUsWrapper
               key={product.text}
               onClick={() => navigate(product.link)}
@@ -170,9 +223,8 @@ export const MainPage = () => {
                 Загрузить еще...
               </LoadMoreButton>
             </div>
-          )}
-        </RecipesContainer>
-      </AboutUsBlock>
+          )} */}
+      </RecipesContainer>
       <Footer />
     </>
   );

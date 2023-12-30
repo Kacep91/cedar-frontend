@@ -12,6 +12,7 @@ import {
   MenuButton,
   MenuButtonWrapper,
   NavigationHeader,
+  NavigationHeaderMobile,
   NavigationWrapper,
   Sale,
 } from "../atoms";
@@ -41,6 +42,7 @@ type NavbarType = {
   isMobileMenuOpened: boolean;
   isProductsPopupVisible: boolean;
   setProductsPopupVisible: (value: boolean) => void;
+  menuButton: any;
 };
 
 export function Navbar({
@@ -53,6 +55,7 @@ export function Navbar({
   setPresentationModalVisible,
   setPartnerModalVisible,
   setLongPopupVisible,
+  menuButton,
 }: NavbarType) {
   const list = useSelector(CartSelectors.list);
 
@@ -136,9 +139,9 @@ export function Navbar({
   const navigate = useNavigate();
 
   const checkScrollTop = () => {
-    if (!isSticky && window.pageYOffset >= 970) {
+    if (!isSticky && window.pageYOffset >= 600) {
       setSticky(true);
-    } else if (isSticky && window.pageYOffset < 970) {
+    } else if (isSticky && window.pageYOffset < 600) {
       setSticky(false);
     }
   };
@@ -166,7 +169,7 @@ export function Navbar({
           )}
         </Sale>
       )}
-      {!isMobile && (
+      {!isMobile ? (
         <NavigationHeader>
           {isTablet ? (
             <>
@@ -310,7 +313,7 @@ export function Navbar({
                     severity="success"
                     aria-label="Cart"
                     onClick={() => (listLength ? navigate("/cart") : null)}
-                  />{" "}
+                  />
                   {listLength ? (
                     <Badge
                       className="small"
@@ -429,6 +432,89 @@ export function Navbar({
             </AdditionalInfoGrid>
           </AdditionalInfoWrapper>
         </NavigationHeader>
+      ) : (
+        <NavigationHeaderMobile>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "10px",
+              width: "100%",
+            }}
+          >
+            <img
+              src={isMobile ? snowFlake : logo}
+              width={isMobile ? "40" : "160"}
+              style={
+                !isMobile
+                  ? {
+                      marginLeft: "20px",
+                      cursor: "pointer",
+                    }
+                  : {
+                      marginLeft: "0px",
+                      cursor: "pointer",
+                    }
+              }
+              alt=""
+              onClick={() => navigate("/")}
+            />
+            {!isMobile &&
+              menuButtons.map((item) => {
+                const additionalProps = {
+                  onClick: () => item.onClick && item.onClick(),
+                  onTouchStart: () => item.onClick && item.onClick(),
+                };
+                return (
+                  <MenuButtonWrapper key={item.text} {...additionalProps}>
+                    <MenuButton>{item.text}</MenuButton>
+                  </MenuButtonWrapper>
+                );
+              })}
+            {!isMobile && (
+              <span className="p-input-icon-left">
+                <i className="pi pi-search" />
+                <InputText
+                  placeholder="Поиск по сайту"
+                  style={{
+                    borderRadius: "15px",
+                    height: "40px",
+                  }}
+                />
+              </span>
+            )}
+            {isMobile && (
+              <>
+                <Button
+                  icon="pi pi-info-circle"
+                  rounded
+                  text
+                  severity="success"
+                  aria-label="Presentation"
+                  onClick={() => setPresentationModalVisible(true)}
+                />
+                <Button
+                  icon="pi pi-briefcase"
+                  rounded
+                  text
+                  severity="success"
+                  aria-label="Partner"
+                  onClick={() => setPartnerModalVisible(true)}
+                />
+                <Button
+                  icon="pi pi-shopping-cart"
+                  rounded
+                  text
+                  severity="success"
+                  aria-label="Cart"
+                  onClick={() => (listLength ? navigate("/cart") : null)}
+                />
+                {menuButton()}
+              </>
+            )}
+          </div>
+        </NavigationHeaderMobile>
       )}
     </NavigationWrapper>
   );

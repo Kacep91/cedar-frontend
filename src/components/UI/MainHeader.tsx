@@ -122,6 +122,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       key: "0",
       label: "О нас",
       icon: "pi pi-fw pi-inbox",
+      url: "/aboutUs",
       children: [
         { key: "0-0", label: "О нас", url: "/aboutUs" },
         { key: "0-1", label: "О нас пишут", url: "" },
@@ -259,12 +260,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       <div id={"backButton"} style={{ visibility: "hidden", height: "0" }}>
         O_o
       </div>
-      {isTablet && (
+      {isTablet && isMobileMenuOpened && (
         <img
           onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}
           src={isMobileMenuOpened ? cross : menu}
           width="30"
-          style={{ zIndex: 999, position: "fixed", top: 50, right: 30 }}
+          style={{ zIndex: 1000, position: "fixed", top: 50, right: 30 }}
           alt=""
         />
       )}
@@ -303,6 +304,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         )}
       </Header>
       {!isMobile && isSticky ? <div style={{ height: "127.5px" }}></div> : null}
+      {isMobile && isSticky ? <div style={{ height: "105.3px" }}></div> : null}
       <Navbar
         setSticky={setSticky}
         isSticky={isSticky}
@@ -313,6 +315,14 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         isMobileMenuOpened={isMobileMenuOpened}
         setProductsPopupVisible={setProductsPopupVisible}
         isProductsPopupVisible={isProductsPopupVisible}
+        menuButton={() => (
+          <img
+            onClick={() => setMobileMenuOpened(!isMobileMenuOpened)}
+            src={isMobileMenuOpened ? cross : menu}
+            width="30"
+            alt=""
+          />
+        )}
       />
       {!isCart && (
         <>

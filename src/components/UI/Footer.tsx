@@ -5,9 +5,6 @@ export const Footer = () => {
     <div className="footer-basic">
       <footer>
         <div className="social">
-          <a href="https://instagram.com/siberia.organic?igshid=OGQ5ZDc2ODk2ZA==">
-            <i className="icon ion-social-instagram"></i>
-          </a>
           <a href="https://vk.com/siberia.organic">
             <img
               width="24"
