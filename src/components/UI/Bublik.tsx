@@ -18,6 +18,7 @@ export const Bublik = () => {
     <>
       <MainPageImageContainer>
         <MainPageImage
+          id={"mainPageImage"}
           src={isMobile ? nologo4 : alcenero}
           height={window?.innerHeight}
         />

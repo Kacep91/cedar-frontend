@@ -31,6 +31,7 @@ import { useNavigate } from "react-router";
 import { Badge } from "primereact/badge";
 import { useSelector } from "react-redux";
 import { CartSelectors } from "store/cart";
+import { ProgressSpinner } from "primereact/progressspinner";
 
 type NavbarType = {
   setPresentationModalVisible: (value: boolean) => void;
@@ -137,23 +138,39 @@ export function Navbar({
   const isTablet = useScreenSize("mobile");
   const isMobile = useScreenSize("smallMobile");
   const navigate = useNavigate();
+  const heightOfImage = document.getElementById("mainPageImage")?.offsetHeight;
 
   const checkScrollTop = () => {
-    if (!isSticky && window.pageYOffset >= 600) {
+    const value = heightOfImage;
+    if (value && !isSticky && window.pageYOffset >= value) {
       setSticky(true);
-    } else if (isSticky && window.pageYOffset < 600) {
+    } else if (value && isSticky && window.pageYOffset < value) {
       setSticky(false);
     }
   };
 
   useEffect(() => {
     window.addEventListener("scroll", checkScrollTop);
+    window.addEventListener("resize", checkScrollTop);
     return () => {
       window.removeEventListener("scroll", checkScrollTop);
+      window.removeEventListener("resize", checkScrollTop);
     };
-  }, [isSticky]);
+  }, [isSticky, heightOfImage]);
 
-  return (
+  return !heightOfImage ? (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "30vh",
+      }}
+    >
+      <ProgressSpinner />
+    </div>
+  ) : (
     <NavigationWrapper isOnTop={isSticky}>
       {!isMobileMenuOpened && (
         <Sale onClick={() => navigate("/goods")}>
