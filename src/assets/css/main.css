@@ -533,9 +533,19 @@ ol.gradient-list > li + li {
   width: 100%;
 }
 
+.p-scrolltop.p-link {
+  background: rgba(0, 0, 0, 0.7);
+}
+
 @media screen and (max-width: 1024px) {
   ol.gradient-list {
-    max-width: 800px;
+    max-width: 550px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  ol.gradient-list {
+    max-width: 320px;
   }
 }
 
@@ -1371,4 +1381,18 @@ ol.gradient-list > li + li {
       0 1px 1px rgba(0, 0, 0, 0.25);
     cursor: not-allowed;
   }
+}
+
+.swiper-button-disabled {
+  pointer-events: all !important;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  top: var(--swiper-navigation-top-offset, 33%) !important;
+  color: #008054 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #008054 !important;
 }

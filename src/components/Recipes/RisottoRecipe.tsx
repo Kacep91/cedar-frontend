@@ -29,6 +29,7 @@ import {
   arrayBufferToBase64,
 } from "utils/utils";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const RisottoRecipe = (recipe: any) => {
   const isTablet = useScreenSize("mobile");
@@ -71,6 +72,7 @@ export const RisottoRecipe = (recipe: any) => {
       <MainHeader isCart={true} />
       <BackLinkAtom to={"/"} children={"Назад"} />
       <ScrollToTopOnMount />
+      <ScrollTop />
       <RecipeWrapper>
         <RecipeHeader>
           <RecipeHeaderImage src={risotto} />

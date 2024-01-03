@@ -29,6 +29,7 @@ import {
   arrayBufferToBase64,
 } from "utils/utils";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const ToastRecipe = (recipe: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,6 +69,7 @@ export const ToastRecipe = (recipe: any) => {
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <ScrollToTopOnMount />
+      <ScrollTop />
       <RecipeWrapper>
         <RecipeHeader>
           <RecipeHeaderImage src={toast} />

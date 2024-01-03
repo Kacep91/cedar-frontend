@@ -27,7 +27,7 @@ import risotto from "../../assets/images/risotto.jpg";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useScreenSize } from "utils/hooks";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Badge } from "primereact/badge";
 import { useSelector } from "react-redux";
 import { CartSelectors } from "store/cart";
@@ -137,6 +137,7 @@ export function Navbar({
 
   const isTablet = useScreenSize("mobile");
   const isMobile = useScreenSize("smallMobile");
+  const location = useLocation();
   const navigate = useNavigate();
   const heightOfImage = document.getElementById("mainPageImage")?.offsetHeight;
 
@@ -158,7 +159,7 @@ export function Navbar({
     };
   }, [isSticky, heightOfImage]);
 
-  return !heightOfImage ? (
+  return !heightOfImage && location.pathname === "/" ? (
     <div
       style={{
         display: "flex",
@@ -171,7 +172,7 @@ export function Navbar({
       <ProgressSpinner />
     </div>
   ) : (
-    <NavigationWrapper isOnTop={isSticky}>
+    <NavigationWrapper isOnTop={isSticky} id="navigationPanel">
       {!isMobileMenuOpened && (
         <Sale onClick={() => navigate("/goods")}>
           {isMobile ? (

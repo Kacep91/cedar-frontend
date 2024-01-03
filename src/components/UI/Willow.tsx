@@ -26,6 +26,7 @@ import {
   arrayBufferToBase64,
 } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const Willow = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,7 @@ export const Willow = () => {
       <ScrollToTopOnMount />
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
+      <ScrollTop />
 
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>Иван-чай</h1>

@@ -30,12 +30,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { GoodsSelectors, GoodsActions } from "store/goods";
 import { categorizeProducts, selectedLabels } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import "swiper/css";
+import { ScrollTop } from "primereact/scrolltop";
 
-export const products = [
-  { src: aboutUs, text: "Наше производство", link: "/aboutUs" },
-];
+export const products = [{ src: aboutUs, text: "", link: "/aboutUs" }];
 
 export const MainPage = () => {
   const navigate = useNavigate();
@@ -89,9 +91,6 @@ export const MainPage = () => {
     }),
   ];
 
-  const [listLength, setListLength] = useState(3);
-  const totalLength = [...recipesResult].length || 1;
-
   useEffect(() => {
     const fetch = async () => {
       const res = await axios.get("https://siberia-organic.com:3000/recipes");
@@ -133,16 +132,11 @@ export const MainPage = () => {
     { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
-  const slidesPerWidth = {
-    1660: 3,
-    1220: 2,
-    800: 1,
-  };
-
   return (
     <>
       <Bublik />
       <MainHeader isCart={false} />
+      <ScrollTop />
       <AboutUsBlock>
         <h1>Кто мы? В чём наша миссия?</h1>
         <Branch src={branch} />
@@ -177,6 +171,9 @@ export const MainPage = () => {
       <RecipesContainer>
         <h1>Рецепты</h1>
         <Swiper
+          pagination={true}
+          navigation={true}
+          modules={[Pagination, Navigation]}
           spaceBetween={40}
           slidesPerView={
             width > 1660 ? 4 : width > 1220 ? 3 : width > 800 ? 2 : 1
@@ -194,36 +191,6 @@ export const MainPage = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* {recipesResult.slice(0, listLength).map((product) => (
-            <AboutUsWrapper
-              key={product.text}
-              onClick={() => navigate(product.link)}
-            >
-              <RecipesImage src={product.src} />
-              <AboutUsText>{product.text}</AboutUsText>
-            </AboutUsWrapper>
-          ))}
-          {listLength >= totalLength ? null : (
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <LoadMoreButton
-                text
-                rounded
-                onClick={() =>
-                  setListLength(
-                    listLength + 4 < totalLength ? listLength + 4 : totalLength,
-                  )
-                }
-              >
-                Загрузить еще...
-              </LoadMoreButton>
-            </div>
-          )} */}
       </RecipesContainer>
       <Footer />
     </>

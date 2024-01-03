@@ -26,6 +26,7 @@ import {
   arrayBufferToBase64,
 } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const Honey = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +65,7 @@ export const Honey = () => {
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <ScrollToTopOnMount />
+      <ScrollTop />
 
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>Сибирский мёд</h1>

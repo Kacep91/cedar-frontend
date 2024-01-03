@@ -53,7 +53,7 @@ export const AboutUs = () => {
               </p>
             </div>
           </BlockQuote> */}
-          <Map src={map} />
+          {/* <Map src={map} /> */}
         </AboutUsContainer>
         <ProductsText style={{ marginTop: "40px" }}>
           С 2019 года, объединившись в Органический кластер, разделяя принципы

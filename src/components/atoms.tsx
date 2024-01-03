@@ -365,6 +365,7 @@ export const ProductBuyButton = styled.div<{ isDelete?: boolean }>`
   outline: thin solid black;
   padding: 10px 10px;
   transition: all 0.2s;
+  cursor: pointer;
 
   &:hover {
     outline: none;
@@ -807,6 +808,7 @@ export const AboutUsWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+  user-select: none;
 `;
 
 export const AboutUsImage = styled.img`
@@ -1320,4 +1322,39 @@ export const CeoWrapper = styled.div`
     flex-direction: column;
     align-items: center;
   }
+`;
+
+export const StickyProductInfo = styled.div<{ isOnTop: boolean }>`
+  position: fixed;
+  top: -1px;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+  padding: 12.5px 10px 12.5px 10px;
+
+  @media screen and (max-width: 1024px) {
+    top: -1px;
+  }
+  @media screen and (max-width: 480px) {
+    top: -1px;
+  }
+`;
+
+export const StickyImage = styled.img`
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  object-fit: cover;
+  object-position: center;
+`;
+
+export const StickyName = styled.div`
+  font-size: 22px;
+  font-weight: 600;
 `;

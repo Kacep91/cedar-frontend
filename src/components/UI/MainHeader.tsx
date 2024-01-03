@@ -14,7 +14,7 @@ import { GoodsActions, GoodsSelectors, Slide } from "store/goods";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ProgressSpinner } from "primereact/progressspinner";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { transformArray } from "utils/utils";
 
 const nodeTemplate = (node: any, options: any) => {
@@ -98,7 +98,6 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
     useState(false);
 
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const slides = useSelector(GoodsSelectors.slidesList);
   const slidesResult = transformArray(slides);

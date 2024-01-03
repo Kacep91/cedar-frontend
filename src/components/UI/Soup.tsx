@@ -9,6 +9,7 @@ import { BackLinkAtom } from "./BackLink";
 import { Footer } from "./Footer";
 import MainHeader from "./MainHeader";
 import soup from "../../assets/images/soup.jpg";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const Soup = () => {
   return (
@@ -16,6 +17,7 @@ export const Soup = () => {
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
 
+      <ScrollTop />
       <div>
         <h1 style={{ textAlign: "center", margin: "60px 0" }}>
           Суп из лисичек

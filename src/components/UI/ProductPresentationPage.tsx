@@ -6,28 +6,42 @@ import {
   ItemListContainer,
   ItemListLabel,
   ItemListWrapper,
+  ProductBuyButton,
+  ProductBuySection,
   ProductPresentationDescriptionWrapper,
   ProductPresentationHeader,
   ProductPresentationHeaderImage,
   ProductPresentationRecipes,
   ProductPresentationWrapper,
   RecipeText,
+  StickyImage,
+  StickyName,
+  StickyProductInfo,
+  ToastHeader,
+  ToastLink,
+  ToastText,
+  ToastWrapper,
 } from "components/atoms";
 import { BackLinkAtom } from "components/UI/BackLink";
 import {
   arrayBufferToBase64,
   categorizeProducts,
   categorizeRecipeByName,
+  isInViewport,
   selectedLabels,
 } from "utils/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { GoodsActions, GoodsSelectors } from "store/goods";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { ItemListUnit } from "components/ItemListUnit";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
+import { CartActions, CartSelectors } from "store/cart";
+import { Toast } from "primereact/toast";
+import { useScreenSize } from "utils/hooks";
+import { ScrollTop } from "primereact/scrolltop";
 
 export type ProductPresentationPageProps = {
   minRequest: any;
@@ -66,10 +80,15 @@ export type PresentationPropDescription = {
 
 export const ProductPresentationPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useRef<Toast>(null);
   const dispatch = useDispatch();
   const goods = useSelector(GoodsSelectors.goodsList);
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
   const recipes = useSelector(GoodsSelectors.recipesList);
+  const list = useSelector(CartSelectors.list);
+  const { id } = useParams<{ id: string }>();
+  const isUnitInList =
+    list && list.length > 0 && list.find((item: any) => item?.id === id);
 
   useEffect(() => {
     const fetch = async () => {
@@ -109,7 +128,6 @@ export const ProductPresentationPage = () => {
     recipes.length === 0 && fetch();
   }, []);
 
-  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const data = goods.find((item: any) => item.id === id);
@@ -156,9 +174,51 @@ export const ProductPresentationPage = () => {
       )
     : [];
 
+  const [isSticky, setSticky] = useState(false);
+
+  const isTablet = useScreenSize("mobile");
+  const checkScrollTop = () => {
+    const value = isTablet ? 450 : 250;
+    if (value && !isSticky && window.pageYOffset >= value) {
+      setSticky(true);
+    } else if (value && isSticky && window.pageYOffset < value) {
+      setSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", checkScrollTop);
+    window.addEventListener("resize", checkScrollTop);
+    return () => {
+      window.removeEventListener("scroll", checkScrollTop);
+      window.removeEventListener("resize", checkScrollTop);
+    };
+  }, [isSticky]);
+
   return (
     <>
+      <Toast ref={toast} />
+      <ScrollTop />
       <MainHeader isCart={true} />
+      {isSticky && isTablet && (
+        <StickyProductInfo isOnTop={isSticky}>
+          <StickyImage
+            src={
+              data?.image && typeof data?.image === "string"
+                ? data?.image
+                : data?.image
+                  ? arrayBufferToBase64(
+                      data.image as unknown as {
+                        type: string;
+                        data: any[];
+                      },
+                    )
+                  : placeHolder
+            }
+          />
+          <StickyName>{data?.name}</StickyName>
+        </StickyProductInfo>
+      )}
       <ScrollToTopOnMount />
       <BackLinkAtom id={"backButton"} to={"/goods"} children={"Назад"} />
       {isLoading ? (
@@ -197,6 +257,76 @@ export const ProductPresentationPage = () => {
                   ? data?.description?.description
                   : typeof data?.description === "string" && data?.description}
               </DecriptionBlock>
+
+              <ProductBuySection style={{ justifyContent: "center" }}>
+                {isUnitInList ? (
+                  <ProductBuyButton
+                    id="buyButton"
+                    style={{ maxWidth: "320px", width: "100%" }}
+                    isDelete={true}
+                    onClick={() => {
+                      dispatch(CartActions.deleteItem({ id: id || "" }));
+                      toast?.current?.show({
+                        severity: "warn",
+                        content: (
+                          <ToastWrapper
+                            onClick={() => {
+                              navigate("/cart");
+                            }}
+                          >
+                            <ToastHeader>Успешно</ToastHeader>
+                            <ToastText>Товар удалён из корзины</ToastText>
+                          </ToastWrapper>
+                        ),
+                        life: 3000,
+                      });
+                    }}
+                  >
+                    Убрать
+                    <i
+                      className="pi pi-cart-plus"
+                      style={{
+                        color: "#708090",
+                        width: "16px",
+                        height: "16px",
+                      }}
+                    ></i>
+                  </ProductBuyButton>
+                ) : (
+                  <ProductBuyButton
+                    id="buyButton"
+                    style={{ maxWidth: "320px", width: "100%" }}
+                    onClick={() => {
+                      dispatch(CartActions.setItem(data as any));
+                      toast?.current?.show({
+                        severity: "success",
+                        content: (
+                          <ToastWrapper
+                            onClick={() => {
+                              navigate("/cart");
+                            }}
+                          >
+                            <ToastHeader>Успешно</ToastHeader>
+                            <ToastText>Товар добавлен в корзину</ToastText>
+                            <ToastLink>Перейти</ToastLink>
+                          </ToastWrapper>
+                        ),
+                        life: 3000,
+                      });
+                    }}
+                  >
+                    Купить
+                    <i
+                      className="pi pi-cart-plus"
+                      style={{
+                        color: "#708090",
+                        width: "16px",
+                        height: "16px",
+                      }}
+                    ></i>
+                  </ProductBuyButton>
+                )}
+              </ProductBuySection>
             </ProductPresentationHeader>
             {data?.description || data?.image || data?.name ? (
               <ProductPresentationDescriptionWrapper>

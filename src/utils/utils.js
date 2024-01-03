@@ -376,7 +376,9 @@ export function categorizeProducts(products, labels) {
 
 export function categorizeRecipeByName(inputArray) {
   const result = selectedLabels.find((item) => {
-    return inputArray.some((element) => item.match.includes(element));
+    return inputArray.some((element) =>
+      item.match.includes(element?.toLowerCase()),
+    );
   });
   return result ? result.label : null;
 }
@@ -392,11 +394,18 @@ export const selectedLabels = [
   },
   {
     label: "Сибирский мёд",
-    match: ["десерт", "медовой", "медово-"],
+    match: ["десерт", "медовой", "медово-", "медовик", "медово-лимонные"],
   },
   {
     label: "Сибирская ягода",
-    match: ["вяленая", "сушеная", "сушеными", "ягодами", "жимолость"],
+    match: [
+      "вяленая",
+      "сушеная",
+      "сушеными",
+      "ягодами",
+      "жимолость",
+      "жимолостью",
+    ],
   },
   {
     label: "Сибирские грибы",
@@ -448,3 +457,17 @@ export const transformRecipesToSlidesArray = (data) => {
     return [{ ...data }];
   }
 };
+
+export function isInViewport(element) {
+  if (!element) {
+    return null;
+  }
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <=
+      (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}

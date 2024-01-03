@@ -26,6 +26,7 @@ import {
   arrayBufferToBase64,
 } from "utils/utils";
 import { ProductPresentationPageProps } from "./ProductPresentationPage";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const Mushrooms = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +63,7 @@ export const Mushrooms = () => {
   return (
     <>
       <ScrollToTopOnMount />
+      <ScrollTop />
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       <div>

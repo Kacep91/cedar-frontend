@@ -34,9 +34,6 @@ export const Footer = () => {
         </div>
         <ul className="list-inline">
           <li className="list-inline-item">
-            <a href="#">Наверх</a>
-          </li>
-          <li className="list-inline-item">
             <a href="/aboutUs">О нас</a>
           </li>
           <li className="list-inline-item">

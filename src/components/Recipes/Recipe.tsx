@@ -33,6 +33,7 @@ import {
 import { ItemListUnit } from "components/ItemListUnit";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
 import { Galleria } from "primereact/galleria";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const GeneralRecipe = () => {
   const { id } = useParams<{ id: string }>();
@@ -85,8 +86,16 @@ export const GeneralRecipe = () => {
   const data = recipes.find((item: any) => item.id === id);
 
   const categorizedLabel =
-    data && categorizeRecipeByName(data?.name?.split(" "));
-  console.log("categorizedLabel", categorizedLabel);
+    data &&
+    categorizeRecipeByName(
+      data?.name?.replace(/,/g, "")?.replace(/"/g, "").split(" "),
+    );
+
+  console.log(
+    "data?.name",
+    data?.name?.replace(/,/g, "")?.replace(/"/g, "").split(" "),
+  );
+
   const totalLength = useMemo(
     () =>
       [...categorizedProducts].filter((item) =>
@@ -120,6 +129,7 @@ export const GeneralRecipe = () => {
     <>
       <MainHeader isCart={true} />
       <ScrollToTopOnMount />
+      <ScrollTop />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
       {isLoading ? (
         <div

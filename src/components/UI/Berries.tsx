@@ -26,6 +26,7 @@ import ScrollToTopOnMount from "utils/scrollRestorationFix";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ProgressSpinner } from "primereact/progressspinner";
+import { ScrollTop } from "primereact/scrolltop";
 
 export const Berries = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,7 @@ export const Berries = () => {
   return (
     <>
       <ScrollToTopOnMount />
+      <ScrollTop />
       <MainHeader isCart={true} />
       <BackLinkAtom id={"backButton"} to={"/"} children={"Назад"} />
 
