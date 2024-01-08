@@ -1274,23 +1274,20 @@ export const ProductPresentationRecipes = styled.div`
 `;
 
 export const CEOImage = styled.img`
-  width: 600px;
-  height: 600px;
+  height: 800px;
   object-fit: cover;
 
   @media screen and (max-width: 1024px) {
-    width: 450px;
-    height: 450px;
+    height: 600px;
   }
 
   @media screen and (max-width: 768px) {
-    width: 450px;
-    height: 450px;
+    height: 600px;
   }
 
   @media screen and (max-width: 460px) {
     width: 350px;
-    height: 350px;
+    height: 500px;
   }
 `;
 
@@ -1357,4 +1354,18 @@ export const StickyImage = styled.img`
 export const StickyName = styled.div`
   font-size: 22px;
   font-weight: 600;
+`;
+
+export const SiberiaLogoAboutUs = styled.img`
+  width: 200px;
+  margin-bottom: 20px;
+`;
+
+export const SiberiaBrandInfo = styled.div`
+  font-size: 20px;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

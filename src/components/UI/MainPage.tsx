@@ -171,7 +171,7 @@ export const MainPage = () => {
       <RecipesContainer>
         <h1>Рецепты</h1>
         <Swiper
-          pagination={true}
+          pagination={{ clickable: true }}
           navigation={true}
           modules={[Pagination, Navigation]}
           spaceBetween={40}

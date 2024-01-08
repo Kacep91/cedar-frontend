@@ -11,8 +11,11 @@ import {
   CeoFigure,
   CeoName,
   CeoWrapper,
+  SiberiaLogo,
+  SiberiaLogoAboutUs,
+  SiberiaBrandInfo,
 } from "components/atoms";
-import map from "../../assets/images/map.png";
+import siberiaLogo from "../../assets/images/siberiaLogo.png";
 import aleksandr from "../../assets/images/aleksandr.jpg";
 import { Footer } from "./Footer";
 import ScrollToTopOnMount from "utils/scrollRestorationFix";
@@ -26,34 +29,29 @@ export const AboutUs = () => {
       <AboutUsBlock>
         <h1>О нас</h1>
         <AboutUsContainer>
-          {/* <BlockQuote>
-            <div>
-              <p>
-                <span>МЫ</span> - заготовители, фермеры и переработчики. <br />
-              </p>
-              <p>
-                <span>МЫ</span> бережно используем сибирскую тайгу и землю,
-                сохраняя их в первозданном виде.
-                <br />
-              </p>
-              <p>
-                <span>МЫ</span> объединяем более 80 предпринимателей
-                Красноярского края
-                <br />
-              </p>
-              <p>
-                <span>МЫ</span> предлагаем простые и повседневные продукты не
-                забывая о вкусе и пользе.
-              </p>
-              <p>
-                <span>МЫ</span> заботимся о хрупком равновесии, существующем
-                между нашей планетой и людьми, которые ее населяют, поэтому
-                производим продукты, предназначенные для благополучия человека и
-                природы
-              </p>
-            </div>
-          </BlockQuote> */}
-          {/* <Map src={map} /> */}
+          <SiberiaBrandInfo>
+            <SiberiaLogoAboutUs src={siberiaLogo} />
+            <p>
+              <b>Бренд «SIBERIA organic» - это:</b>
+            </p>
+            <ul>
+              <li>
+                Снежинка, напоминающая нам о хрупкости экосистемы и одновременно
+                ее устойчивости к суровым климатическим условиям Сибири
+                (сибирские морозы и кристально чистый морозный воздух
+                обеспечивают естественный отбор растений).
+              </li>
+              <li>
+                Зеленый цвет логотипа, символизирующий бескрайние просторы дикой
+                Сибирской тайги и полноводные чистые реки .
+              </li>
+            </ul>
+            <p>
+              В нашем логотипе, как и в продукции бренда «SIBERIA organic», нет
+              ничего лишнего, только таежные дикоросы, только СИЛА СИБИРИ,
+              доступная каждому!
+            </p>
+          </SiberiaBrandInfo>
         </AboutUsContainer>
         <ProductsText style={{ marginTop: "40px" }}>
           С 2019 года, объединившись в Органический кластер, разделяя принципы
