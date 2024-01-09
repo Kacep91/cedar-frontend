@@ -1,11 +1,10 @@
 import {
   MainPageImage,
   MainPageImageContainer,
-  SiberiaLogo,
   SiberiaLogoWrapper,
 } from "components/atoms";
 import alcenero from "../../assets/images/alceneroNoLogo.jpg";
-import nologo4 from "../../assets/images/nologo4.png";
+import phone from "../../assets/images/phone.jpg";
 import siberiaText from "../../assets/images/siberiaText.svg";
 import siberiaBorder from "../../assets/images/siberiaBorder.svg";
 import siberiaRomb from "../../assets/images/siberiaRomb.svg";
@@ -16,11 +15,11 @@ export const Bublik = () => {
   const isMobile = useScreenSize("smallTablet");
   return (
     <>
-      <MainPageImageContainer>
+      <MainPageImageContainer height={window?.innerHeight - 105}>
         <MainPageImage
           id={"mainPageImage"}
-          src={isMobile ? nologo4 : alcenero}
-          height={window?.innerHeight}
+          src={isMobile ? phone : alcenero}
+          height={window?.innerHeight - 105}
         />
         <SiberiaLogoWrapper>
           <div

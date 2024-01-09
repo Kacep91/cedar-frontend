@@ -613,7 +613,7 @@ export const SiberiaLogoWrapper = styled.div`
   left: 50%;
   position: absolute;
   text-align: center;
-  top: 49%;
+  top: 48%;
   width: 280px;
   height: 280px;
   -webkit-transform: translate3d(-50%, -50%, 0);
