@@ -6,7 +6,6 @@ import {
   AboutUsText,
   AboutUsWrapper,
   Branch,
-  LoadMoreButton,
   ProductPageImage,
   ProductsBlock,
   RecipesContainer,
@@ -22,6 +21,8 @@ import cranberryIcon from "../../assets/images/cranberryIcon.png";
 import mushroomIcon from "../../assets/images/mushroomIcon.png";
 import honeyIcon from "../../assets/images/honeyIcon.png";
 import willowIcon from "../../assets/images/willowIcon.png";
+import video1 from "../../assets/video/video1.mp4";
+import video2 from "../../assets/video/video2.mp4";
 import { Bublik } from "./Bublik";
 import { useNavigate } from "react-router";
 import { Footer } from "./Footer";
@@ -36,6 +37,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css";
 import { ScrollTop } from "primereact/scrolltop";
+import ReactPlayer from "react-player";
+import { useScreenSize } from "utils/hooks";
 
 export const products = [{ src: aboutUs, text: "", link: "/aboutUs" }];
 
@@ -132,6 +135,9 @@ export const MainPage = () => {
     { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
+  const videos = [video1, video2];
+  const isMobile = useScreenSize("mobile");
+
   return (
     <>
       <Bublik />
@@ -167,6 +173,33 @@ export const MainPage = () => {
           ))}
         </AboutUsContainer>
       </ProductsBlock>
+
+      <RecipesContainer id="video" style={{ marginBottom: "20px" }}>
+        <h1 style={{ marginBottom: "-20px" }}>Видео о нас</h1>
+        <Swiper
+          pagination={{ clickable: true }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          spaceBetween={40}
+          centeredSlides
+          slidesPerView={1}
+        >
+          {videos.map((video) => (
+            <SwiperSlide key={Math.random()}>
+              {" "}
+              <AboutUsWrapper key={Math.random()}>
+                <ReactPlayer
+                  controls
+                  url={video}
+                  width={isMobile ? "92vw" : 450}
+                  height={800}
+                  style={{ display: "flex", justifyContent: "center" }}
+                />
+              </AboutUsWrapper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </RecipesContainer>
 
       <RecipesContainer>
         <h1>Рецепты</h1>

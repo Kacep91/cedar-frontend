@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "main": "index.tsx",
   "repository": "https://github.com/Kacep91/cedar.git",
   "description": "Cedar",
@@ -90,6 +90,7 @@
     "react-fullscreen-loader": "^0.1.23",
     "react-google-login": "^5.2.2",
     "react-loader-spinner": "^6.1.6",
+    "react-player": "^2.14.1",
     "react-pure-modal": "^2.2.5",
     "react-redux": "^9.0.4",
     "react-responsive": "^9.0.2",

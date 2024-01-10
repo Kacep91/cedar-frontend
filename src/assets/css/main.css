@@ -1393,6 +1393,12 @@ ol.gradient-list > li + li {
   pointer-events: all !important;
 }
 
+#video .swiper-button-prev,
+#video .swiper-button-next {
+  top: var(--swiper-navigation-top-offset, 50%) !important;
+  color: #008054 !important;
+}
+
 .swiper-button-prev,
 .swiper-button-next {
   top: var(--swiper-navigation-top-offset, 33%) !important;

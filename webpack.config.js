@@ -95,6 +95,9 @@ module.exports = async (env = {}, args) => {
         {
           test: /\.(png|woff|woff2|eot|ttf|jpg|jpeg)$/,
           type: "asset/resource",
+        }, {
+          test: /\.mp4$/,
+          use: 'file-loader?name=videos/[name].[ext]',
         },
         // Используем svgr/webpack loader для импортов
         //`import { ReactComponent as Something } from './image.svg'`
