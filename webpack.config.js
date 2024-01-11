@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const { name, version, description = "" } = require("./package.json");
 const {
@@ -136,6 +137,11 @@ module.exports = async (env = {}, args) => {
       ],
     },
     plugins: [
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: './src/js/tilda-animation-1.0.min.js', to: 'js' }
+        ]
+      }),
       new MiniCssExtractPlugin({
         filename: "styles.[chunkhash].css",
         experimentalUseImportModule: false,

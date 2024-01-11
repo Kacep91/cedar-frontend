@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "index.tsx",
   "repository": "https://github.com/Kacep91/cedar.git",
   "description": "Cedar",
@@ -48,6 +48,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-react-qa-classes": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "copy-webpack-plugin": "^12.0.0",
     "css-loader": "^6.9.0",
     "css-minimizer-webpack-plugin": "^5.0.1",
     "dotenv": "^16.3.1",

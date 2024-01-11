@@ -587,7 +587,7 @@ export const RadioButtonText = styled.div`
 
 export const MainPageImageContainer = styled.div<{ height?: number }>`
   max-width: 100%;
-  height: ${(props) => `${props.height ? props.height - 117 : props.height}px;`}
+  height: ${(props) => `${props.height}px;`}
   transition: height 1s;
   position: relative;
 
@@ -600,11 +600,6 @@ export const MainPageImage = styled.img<{ height?: number }>`
   height: 100%;
   object-fit: cover;
   object-position: center;
-
-  @media screen and (max-width: 460px) {
-    object-fit: fill;
-    object-position: center;
-  }
 `;
 
 export const SiberiaLogoWrapper = styled.div`

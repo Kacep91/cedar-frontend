@@ -15,11 +15,10 @@ export const Bublik = () => {
   const isMobile = useScreenSize("smallTablet");
   return (
     <>
-      <MainPageImageContainer height={window?.innerHeight - 105}>
+      <MainPageImageContainer height={isMobile ? window?.innerHeight - 105 : window?.innerHeight - 117}>
         <MainPageImage
           id={"mainPageImage"}
           src={isMobile ? phone : alcenero}
-          height={window?.innerHeight - 105}
         />
         <SiberiaLogoWrapper>
           <div
