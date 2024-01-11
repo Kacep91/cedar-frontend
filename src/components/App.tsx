@@ -43,14 +43,14 @@ const App = () => {
     dispatch(AuthActions.checkSessionStart());
   }, []);
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = './js/tilda-animation-1.0.min.js';
+    const script = document.createElement("script");
+    script.src = "./js/tilda-animation-1.0.min.js";
     script.async = true;
     document.body.appendChild(script);
 
     return () => {
       document.body.removeChild(script);
-    }
+    };
   }, []);
   const isSessionLoading = useSelector(AuthSelectors.isSessionLoading);
 
@@ -132,14 +132,14 @@ const useConcurrentTransition = () => {
   useEffect(() => {
     setOldLocation((oldLocation) =>
       oldLocation.pathname !== location.pathname ||
-        oldLocation.search !== location.search
+      oldLocation.search !== location.search
         ? location
         : oldLocation,
     );
   }, [location]);
 
   useEffect(() => {
-    startTransition(() => { });
+    startTransition(() => {});
   }, [oldLocation]);
 
   return oldLocation;

@@ -151,7 +151,7 @@ module.exports = async (env = {}, args) => {
         hash: true,
         template: "./src/index.html",
         filename: "index.html",
-        favicon: "./src/assets/images/favicon.ico",
+        favicon: "./src/favicon.ico",
       }),
       new webpack.DefinePlugin({
         __INFO__: JSON.stringify(info),
