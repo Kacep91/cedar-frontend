@@ -16,6 +16,7 @@ import axios from "axios";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { useNavigate } from "react-router";
 import { transformArray } from "utils/utils";
+import presentation from "../../assets/video/presentation.mp4";
 
 const nodeTemplate = (node: any, options: any) => {
   let label = <b>{node.label}</b>;
@@ -68,7 +69,11 @@ const itemTemplate = (item: Slide) => {
           onClick={() => console.log("dsd")}
           width="100%"
           height="500"
-          src={`${item.video}?autoplay=1&mute=1&rel=0&loop=1&modestbranding=1`}
+          src={
+            item.id === "presentation"
+              ? `${item.video}`
+              : `${item.video}?autoplay=1&mute=1&rel=0&loop=1&modestbranding=1`
+          }
           title="Siberia Organic Video"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -351,7 +356,10 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
             </SmallBackground>
           ) : (
             <Galleria
-              value={slidesResult}
+              value={[
+                ...slidesResult,
+                { id: "presentation", video: presentation },
+              ]}
               numVisible={1}
               circular
               style={{ height: "500px", width: "100%" }}
