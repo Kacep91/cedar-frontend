@@ -830,8 +830,8 @@ export const AboutUsImage = styled.img`
   }
 `;
 export const ProductPageImage = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 400px;
+  height: 400px;
   object-fit: cover;
   box-shadow:
     0 14px 28px rgba(0, 0, 0, 0.25),
@@ -1363,4 +1363,14 @@ export const SiberiaBrandInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const MainPageVideoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
 `;

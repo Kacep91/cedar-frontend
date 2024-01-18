@@ -37,7 +37,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css";
 import { ScrollTop } from "primereact/scrolltop";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
 import { useScreenSize } from "utils/hooks";
 
 export const products = [{ src: aboutUs, text: "", link: "/aboutUs" }];
@@ -159,20 +159,31 @@ export const MainPage = () => {
         </AboutUsContainer>
       </AboutUsBlock>
 
-      <ProductsBlock>
+      <RecipesContainer style={{ marginBottom: "20px" }}>
         <h1>Наши продукты</h1>
-        <AboutUsContainer>
+        <Swiper
+          pagination={{ clickable: true }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          spaceBetween={40}
+          centeredSlides
+          slidesPerView={
+            width > 1660 ? 3 : width > 1220 ? 3 : width > 800 ? 2 : 1
+          }
+        >
           {products2.map((product) => (
-            <AboutUsWrapper
-              key={product.text}
-              onClick={() => navigate(product.url)}
-            >
-              <ProductPageImage src={product.src} />
-              <AboutUsText>{product.text}</AboutUsText>
-            </AboutUsWrapper>
+            <SwiperSlide key={Math.random()}>
+              <AboutUsWrapper
+                key={product.text}
+                onClick={() => navigate(product.url)}
+              >
+                <ProductPageImage src={product.src} />
+                <AboutUsText>{product.text}</AboutUsText>
+              </AboutUsWrapper>
+            </SwiperSlide>
           ))}
-        </AboutUsContainer>
-      </ProductsBlock>
+        </Swiper>
+      </RecipesContainer>
 
       <RecipesContainer id="video" style={{ marginBottom: "20px" }}>
         <h1 style={{ marginBottom: "-20px" }}>Видео о нас</h1>

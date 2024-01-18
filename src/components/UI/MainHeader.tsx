@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Header, SmallBackground } from "../atoms";
+import { Header, MainPageVideoWrapper, SmallBackground } from "../atoms";
 import cross from "../../assets/images/cross.svg";
 import menu from "../../assets/images/menu.svg";
 import { PresentationModal } from "components/PresentationModal";
@@ -9,14 +9,9 @@ import { Tree, TreeEventNodeEvent } from "primereact/tree";
 import { classNames } from "primereact/utils";
 import { TreeNode } from "primereact/treenode";
 import Navbar from "./NavigationHeader";
-import { Galleria } from "primereact/galleria";
-import { GoodsActions, GoodsSelectors, Slide } from "store/goods";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { ProgressSpinner } from "primereact/progressspinner";
+import { Slide } from "store/goods";
 import { useNavigate } from "react-router";
-import { transformArray } from "utils/utils";
-import presentation from "../../assets/video/presentation.mp4";
+import VideoComponent from "./HeaderVideo";
 
 const nodeTemplate = (node: any, options: any) => {
   let label = <b>{node.label}</b>;
@@ -98,28 +93,8 @@ const itemTemplate = (item: Slide) => {
 
 const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const [isPartnerModalVisible, setPartnerModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isPresentationModalVisible, setPresentationModalVisible] =
     useState(false);
-
-  const dispatch = useDispatch();
-
-  const slides = useSelector(GoodsSelectors.slidesList);
-  const slidesResult = transformArray(slides);
-
-  useEffect(() => {
-    const fetch = async () => {
-      setIsLoading(true);
-      const res = await axios.get("https://siberia-organic.com:3000/slides");
-
-      if (res.data) {
-        dispatch(GoodsActions.setSlides(res.data));
-      }
-      setIsLoading(false);
-    };
-
-    slides.length === 0 && fetch();
-  }, []);
 
   const nodes = [
     {
@@ -330,47 +305,7 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       />
       {!isCart && (
         <>
-          {isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "500px",
-              }}
-            >
-              <ProgressSpinner />
-            </div>
-          ) : !isLoading && slides.length === 0 ? (
-            <SmallBackground>
-              <div className="catalog-banner-c1">
-                <div className="catalog-banner-head">
-                  <h1>SIBERIA Organic</h1>
-                </div>
-                <div className="catalog-banner-text">
-                  Уникальные напитки, сладости и снеки из натуральных сибирских
-                  продуктов!
-                </div>
-              </div>
-            </SmallBackground>
-          ) : (
-            <Galleria
-              value={[
-                ...slidesResult,
-                { id: "presentation", video: presentation },
-              ]}
-              numVisible={1}
-              circular
-              style={{ height: "500px", width: "100%" }}
-              showItemNavigatorsOnHover
-              showItemNavigators
-              showThumbnails={false}
-              item={itemTemplate}
-              autoPlay
-              transitionInterval={5000}
-            />
-          )}
+          <VideoComponent />
         </>
       )}
 
