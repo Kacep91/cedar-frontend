@@ -55,42 +55,6 @@ const togglerTemplate = (node: any, options: any) => {
   );
 };
 
-const itemTemplate = (item: Slide) => {
-  if (item.video) {
-    return (
-      <div style={{ width: "100%" }}>
-        <iframe
-          id={"iframeYouTube"}
-          onClick={() => console.log("dsd")}
-          width="100%"
-          height="500"
-          src={
-            item.id === "presentation"
-              ? `${item.video}`
-              : `${item.video}?autoplay=1&mute=1&rel=0&loop=1&modestbranding=1`
-          }
-          title="Siberia Organic Video"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
-      </div>
-    );
-  }
-  return (
-    <img
-      src={item.image || ""}
-      alt={""}
-      style={{
-        height: "500px",
-        width: "100%",
-        display: "block",
-        objectFit: "cover",
-      }}
-    />
-  );
-};
-
 const MainHeader = ({ isCart }: { isCart: boolean }) => {
   const [isPartnerModalVisible, setPartnerModalVisible] = useState(false);
   const [isPresentationModalVisible, setPresentationModalVisible] =

@@ -1,6 +1,20 @@
 import vkLogo from "../../assets/images/vkLogo.svg";
 import telegram from "../../assets/images/telegram.svg";
+import infoDocument from "../../assets/documents/Паспорт_организации.doc";
 export const Footer = () => {
+  const downloadFile = () => {
+    const link = document.createElement("a");
+    link.href = infoDocument;
+    link.download = "Паспорт_организации.doc";
+    link.style.display = "none";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="footer-basic">
       <footer>
@@ -40,7 +54,19 @@ export const Footer = () => {
             <a href="/goods">Продукты</a>
           </li>
           <li className="list-inline-item">
-            <a href="#">Документы</a>
+            <a
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                downloadFile();
+              }}
+            >
+              Документы
+            </a>
+          </li>
+          <li className="list-inline-item">
+            <a href="/contacts">Контакты</a>
           </li>
         </ul>
         <p className="copyright">Siberia Organic © 2023</p>

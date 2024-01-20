@@ -1374,3 +1374,21 @@ export const MainPageVideoWrapper = styled.div`
   background-repeat: no-repeat;
   position: relative;
 `;
+
+export const ContactsWrapper = styled.div`
+  margin: 40px 20px 20px 20px;
+  padding: 40px 40px 40px 40px;
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+  background-color: #ffffff;
+  font-family: "Open Sans";
+
+  h3 {
+    margin: 20px 0;
+  }
+`;
+
+export const ContactRow = styled.div`
+  margin: 10px 0;
+`;

@@ -166,7 +166,6 @@ export const MainPage = () => {
           navigation={true}
           modules={[Pagination, Navigation]}
           spaceBetween={40}
-          centeredSlides
           slidesPerView={
             width > 1660 ? 3 : width > 1220 ? 3 : width > 800 ? 2 : 1
           }

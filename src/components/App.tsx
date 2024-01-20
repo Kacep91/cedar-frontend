@@ -27,6 +27,7 @@ import { Mushrooms } from "./UI/Mushrooms";
 import { Willow } from "./UI/Willow";
 import { PersonalDataCollection } from "./UI/PersonalDataCollection";
 import { GeneralRecipe } from "./Recipes/Recipe";
+import { Contacts } from "./UI/Contacts";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -114,6 +115,7 @@ const AppRoutes = () => {
       <Route path={"/recipe/:id"} element={<GeneralRecipe />} />
 
       <Route path={"/personalAgreement"} element={<PersonalDataCollection />} />
+      <Route path={"/contacts"} element={<Contacts />} />
 
       <Route path={"/"} element={<MainPage />} />
 
