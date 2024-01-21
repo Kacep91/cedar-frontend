@@ -34,10 +34,15 @@ export const Contacts = () => {
         </ContactRow>
 
         <ContactRow>
-          <b>Телефон по вопросам сотрудничества</b>
+          <b>По вопросам сотрудничества</b>
         </ContactRow>
         <ContactRow>
           <a href="tel:89135349418">+7 913 534-94-18</a>
+        </ContactRow>
+        <ContactRow>
+          <a href="mailto:siberiaorganic24@gmail.com">
+            siberiaorganic24@gmail.com
+          </a>
         </ContactRow>
 
         <YandexMap />
@@ -59,9 +64,6 @@ export const Contacts = () => {
         <ContactRow>
           <b>Юридический адрес</b> 660048, Красноярский край, Красноярск г,
           Брянская 2-я ул, дом №47А, пом. 2
-        </ContactRow>
-        <ContactRow>
-          Тел <a href="tel:89135345264">+7 913 534 52 64</a>
         </ContactRow>
       </ContactsWrapper>
     </>
