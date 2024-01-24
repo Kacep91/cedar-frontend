@@ -28,6 +28,7 @@ import { Willow } from "./UI/Willow";
 import { PersonalDataCollection } from "./UI/PersonalDataCollection";
 import { GeneralRecipe } from "./Recipes/Recipe";
 import { Contacts } from "./UI/Contacts";
+import { Article } from "./UI/Article";
 
 const AppWrapper = styled.div`
   margin: 0 auto;
@@ -113,6 +114,7 @@ const AppRoutes = () => {
       <Route path={"/risottoRecipe"} element={<RisottoRecipe />} />
       <Route path={"/toastRecipe"} element={<ToastRecipe />} />
       <Route path={"/recipe/:id"} element={<GeneralRecipe />} />
+      <Route path={"/article/:title"} element={<Article />} />
 
       <Route path={"/personalAgreement"} element={<PersonalDataCollection />} />
       <Route path={"/contacts"} element={<Contacts />} />

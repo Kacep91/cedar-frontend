@@ -1356,6 +1356,14 @@ export const SiberiaLogoAboutUs = styled.img`
   margin-bottom: 20px;
 `;
 
+export const ArticleImage = styled.img`
+  margin-bottom: 20px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+`;
+
 export const SiberiaBrandInfo = styled.div`
   font-size: 20px;
   max-width: 820px;
@@ -1363,6 +1371,25 @@ export const SiberiaBrandInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+export const ArticleInfo = styled.div`
+  font-size: 20px;
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+
+  @media screen and (max-width: 1024px) {
+    max-width: 450px;
+  }
+  ul {
+    li {
+      margin: 20px 0;
+    }
+  }
 `;
 
 export const MainPageVideoWrapper = styled.div`

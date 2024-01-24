@@ -18,9 +18,11 @@ import {
 } from "../atoms";
 import logo from "../../assets/images/logo.png";
 import aboutUs from "../../assets/images/aboutUs.jpg";
-import goods from "../../assets/images/goods.jpg";
-import offer from "../../assets/images/offer.jpg";
-import lees from "../../assets/images/lees.jpg";
+import important from "../../assets/images/importantCut.jpg";
+import lees from "../../assets/images/leesCut.jpg";
+import join from "../../assets/images/joinCut.jpg";
+import gather from "../../assets/images/gatherCut.jpg";
+import honey from "../../assets/images/honeyCut.jpg";
 import snowFlake from "../../assets/images/snowFlake.png";
 import chips1 from "../../assets/images/chips1.png";
 import risotto from "../../assets/images/risotto.jpg";
@@ -67,16 +69,24 @@ export function Navbar({
       text: "О нас",
       links: [
         {
-          text: "О нас",
-          url: "",
+          text: "Siberia organic, как образ мысли и жизни",
+          url: "/article/important",
         },
         {
-          text: "О нас пишут",
-          url: "",
+          text: "Польза мёда",
+          url: "/article/honey",
         },
         {
-          text: "Контакты",
-          url: "",
+          text: "ЧГК на тему дикоросов",
+          url: "/article/lees",
+        },
+        {
+          text: "Наши лисички бережно собраны, вымыты и отобраны",
+          url: "/article/gather",
+        },
+        {
+          text: "Присоединяйтесь к нам",
+          url: "/article/join",
         },
       ],
       onClick: () => {
@@ -210,8 +220,12 @@ export function Navbar({
                   onClick={() => navigate("/")}
                 />
                 {menuButtons.map((item) => {
+                  const additionalProps = {
+                    onClick: () => item.onClick && item.onClick(),
+                    onTouchStart: () => item.onClick && item.onClick(),
+                  };
                   return (
-                    <MenuButtonWrapper key={item.text}>
+                    <MenuButtonWrapper key={item.text} {...additionalProps}>
                       <MenuButton>{item.text}</MenuButton>
                     </MenuButtonWrapper>
                   );
@@ -356,25 +370,62 @@ export function Navbar({
               </InfoCardHeader>
 
               <InfoCardHeader>
-                <InfoCardImage src={goods} />
+                <InfoCardImage
+                  src={important}
+                  onClick={() => {
+                    setLongPopupVisible(false);
+                    navigate("/article/important");
+                  }}
+                />
                 <InfoCardText>
-                  Вот такие товары можно найти в нашем ассортименте
+                  Siberia organic, как образ мысли и жизни
                 </InfoCardText>
               </InfoCardHeader>
 
               <InfoCardHeader>
-                <InfoCardImage src={offer} />
+                <InfoCardImage
+                  src={honey}
+                  onClick={() => {
+                    setLongPopupVisible(false);
+                    navigate("/article/honey");
+                  }}
+                />
+                <InfoCardText>Польза мёда</InfoCardText>
+              </InfoCardHeader>
+
+              <InfoCardHeader>
+                <InfoCardImage
+                  src={lees}
+                  onClick={() => {
+                    setLongPopupVisible(false);
+                    navigate("/article/lees");
+                  }}
+                />
+                <InfoCardText>ЧГК на тему дикоросов</InfoCardText>
+              </InfoCardHeader>
+
+              <InfoCardHeader>
+                <InfoCardImage
+                  src={gather}
+                  onClick={() => {
+                    setLongPopupVisible(false);
+                    navigate("/article/gather");
+                  }}
+                />
                 <InfoCardText>
-                  Гарантия качества - попробовал, понравилось - купил!
+                  Наши лисички бережно собраны, вымыты и отобраны
                 </InfoCardText>
               </InfoCardHeader>
 
               <InfoCardHeader>
-                <InfoCardImage src={lees} />
-                <InfoCardText>
-                  Именно из этих лисичек, бережно собранных, вымытых и
-                  отобранных - мы и делаем наше варенье
-                </InfoCardText>
+                <InfoCardImage
+                  src={join}
+                  onClick={() => {
+                    setLongPopupVisible(false);
+                    navigate("/article/join");
+                  }}
+                />
+                <InfoCardText>Присоединяйтесь к нам</InfoCardText>
               </InfoCardHeader>
             </AdditionalInfoBg>
           </AdditionalInfoWrapper>

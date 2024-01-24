@@ -67,9 +67,31 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
       icon: "pi pi-fw pi-inbox",
       url: "/aboutUs",
       children: [
-        { key: "0-0", label: "О нас", url: "/aboutUs" },
-        { key: "0-1", label: "О нас пишут", url: "" },
-        { key: "0-2", label: "Контакты", url: "" },
+        {
+          key: "0-0",
+          label: "Siberia organic, как образ мысли и жизни",
+          url: "/article/important",
+        },
+        {
+          key: "0-1",
+          label: "Польза мёда",
+          url: "/article/honey",
+        },
+        {
+          key: "0-2",
+          label: "ЧГК на тему дикоросов",
+          url: "/article/lees",
+        },
+        {
+          key: "0-3",
+          label: "Наши лисички бережно собраны, вымыты и отобраны",
+          url: "/article/gather",
+        },
+        {
+          key: "0-4",
+          label: "Присоединяйтесь к нам",
+          url: "/article/join",
+        },
       ],
     },
     {

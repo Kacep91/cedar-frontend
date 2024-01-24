@@ -15,6 +15,8 @@ export const Footer = () => {
     document.body.removeChild(link);
   };
 
+  const currentYear = new Date()?.getFullYear();
+
   return (
     <div className="footer-basic">
       <footer>
@@ -69,7 +71,7 @@ export const Footer = () => {
             <a href="/contacts">Контакты</a>
           </li>
         </ul>
-        <p className="copyright">Siberia Organic © 2023</p>
+        <p className="copyright">Siberia Organic © {currentYear}</p>
       </footer>
     </div>
   );
