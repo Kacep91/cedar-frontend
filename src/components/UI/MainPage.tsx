@@ -195,7 +195,9 @@ export const MainPage = () => {
           modules={[Pagination, Navigation]}
           spaceBetween={40}
           centeredSlides
-          slidesPerView={3}
+          slidesPerView={
+            width > 1660 ? 4 : width > 1220 ? 3 : width > 800 ? 2 : 1
+          }
         >
           {videos.map((video) => (
             <SwiperSlide key={Math.random()}>
@@ -207,6 +209,7 @@ export const MainPage = () => {
                   width={isMobile ? "92vw" : 450}
                   height={800}
                   style={{ display: "flex", justifyContent: "center" }}
+
                 />
               </AboutUsWrapper>
             </SwiperSlide>
