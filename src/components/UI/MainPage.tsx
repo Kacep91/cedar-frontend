@@ -23,6 +23,9 @@ import honeyIcon from "../../assets/images/honeyIcon.png";
 import willowIcon from "../../assets/images/willowIcon.png";
 import video1 from "../../assets/video/video1.mp4";
 import video2 from "../../assets/video/video2.mp4";
+import video3 from "../../assets/video/video3.mp4";
+import video4 from "../../assets/video/video4.mp4";
+import video5 from "../../assets/video/video5.mp4";
 import { Bublik } from "./Bublik";
 import { useNavigate } from "react-router";
 import { Footer } from "./Footer";
@@ -135,7 +138,7 @@ export const MainPage = () => {
     { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
-  const videos = [video1, video2];
+  const videos = [video1, video2, video3, video4, video5];
   const isMobile = useScreenSize("mobile");
 
   return (
@@ -192,7 +195,7 @@ export const MainPage = () => {
           modules={[Pagination, Navigation]}
           spaceBetween={40}
           centeredSlides
-          slidesPerView={1}
+          slidesPerView={3}
         >
           {videos.map((video) => (
             <SwiperSlide key={Math.random()}>
