@@ -744,7 +744,9 @@ export const AdditionalInfoWrapper = styled.div<{ isOpened?: boolean }>`
 
   @media screen and (max-width: 1370px) {
     top: 108px;
-    padding: 0 120px;
+    padding: 0 120px; 
+    max-height: 600px;
+    overflow: auto;
   }
 `;
 

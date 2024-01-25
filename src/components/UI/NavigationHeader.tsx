@@ -360,7 +360,7 @@ export function Navbar({
               </div>
             </div>
           )}
-          <AdditionalInfoWrapper isOpened={isLongPopupVisible}>
+          <AdditionalInfoWrapper isOpened={isLongPopupVisible} id="longPopup">
             <AdditionalInfoBg isOpened={isLongPopupVisible}>
               <InfoCardHeader onClick={() => navigate("/aboutUs")}>
                 <InfoCardImage src={aboutUs} />
@@ -518,13 +518,13 @@ export function Navbar({
               style={
                 !isMobile
                   ? {
-                      marginLeft: "20px",
-                      cursor: "pointer",
-                    }
+                    marginLeft: "20px",
+                    cursor: "pointer",
+                  }
                   : {
-                      marginLeft: "0px",
-                      cursor: "pointer",
-                    }
+                    marginLeft: "0px",
+                    cursor: "pointer",
+                  }
               }
               alt=""
               onClick={() => navigate("/")}
