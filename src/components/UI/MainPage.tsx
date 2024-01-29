@@ -7,7 +7,6 @@ import {
   AboutUsWrapper,
   Branch,
   ProductPageImage,
-  ProductsBlock,
   RecipesContainer,
   RecipesImage,
 } from "components/atoms";
@@ -65,9 +64,9 @@ export const MainPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  // width > 1660 ? 3 : width > 1220 ? 3 : width > 800 ? 2 : 1
   function getResponsiveValue(width: number) {
-    if (width > 1660) {
+    if (width > 1800) {
       return 4;
     } else if (width > 1220) {
       return 3;
@@ -169,9 +168,7 @@ export const MainPage = () => {
           navigation={true}
           modules={[Pagination, Navigation]}
           spaceBetween={40}
-          slidesPerView={
-            width > 1660 ? 3 : width > 1220 ? 3 : width > 800 ? 2 : 1
-          }
+          slidesPerView={getResponsiveValue(width)}
         >
           {products2.map((product) => (
             <SwiperSlide key={Math.random()}>
@@ -186,7 +183,6 @@ export const MainPage = () => {
           ))}
         </Swiper>
       </RecipesContainer>
-
       <RecipesContainer id="video" style={{ marginBottom: "20px" }}>
         <h1 style={{ marginBottom: "-20px" }}>Видео о нас</h1>
         <Swiper
@@ -194,14 +190,12 @@ export const MainPage = () => {
           navigation={true}
           modules={[Pagination, Navigation]}
           spaceBetween={40}
-          centeredSlides
           slidesPerView={
-            width > 1660 ? 4 : width > 1220 ? 3 : width > 800 ? 2 : 1
+            width > 1660 ? 3 : width > 1440 ? 3 : width > 1200 ? 2 : 1
           }
         >
           {videos.map((video) => (
             <SwiperSlide key={Math.random()}>
-              {" "}
               <AboutUsWrapper key={Math.random()}>
                 <ReactPlayer
                   controls
@@ -209,7 +203,6 @@ export const MainPage = () => {
                   width={isMobile ? "92vw" : 450}
                   height={800}
                   style={{ display: "flex", justifyContent: "center" }}
-
                 />
               </AboutUsWrapper>
             </SwiperSlide>

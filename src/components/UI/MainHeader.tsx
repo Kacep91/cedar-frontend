@@ -182,7 +182,13 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
 
   useEffect(() => {
     if (isLongPopupVisible) {
-      document.getElementById('longPopup')?.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+      document
+        .getElementById("longPopup")
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
       document.body.classList.add("noScroll");
     } else {
       setTimeout(() => document.body.classList.remove("noScroll"), 400);
@@ -197,9 +203,9 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         rect.top >= 0 &&
         rect.left >= 0 &&
         rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
+          (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <=
-        (window.innerWidth || document.documentElement.clientWidth)
+          (window.innerWidth || document.documentElement.clientWidth)
       );
     }
 

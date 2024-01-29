@@ -518,13 +518,13 @@ export function Navbar({
               style={
                 !isMobile
                   ? {
-                    marginLeft: "20px",
-                    cursor: "pointer",
-                  }
+                      marginLeft: "20px",
+                      cursor: "pointer",
+                    }
                   : {
-                    marginLeft: "0px",
-                    cursor: "pointer",
-                  }
+                      marginLeft: "0px",
+                      cursor: "pointer",
+                    }
               }
               alt=""
               onClick={() => navigate("/")}
