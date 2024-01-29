@@ -182,13 +182,11 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
 
   useEffect(() => {
     if (isLongPopupVisible) {
-      document
-        .getElementById("longPopup")
-        ?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-          inline: "nearest",
-        });
+      document.getElementById("longPopup")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+        inline: "nearest",
+      });
       document.body.classList.add("noScroll");
     } else {
       setTimeout(() => document.body.classList.remove("noScroll"), 400);
