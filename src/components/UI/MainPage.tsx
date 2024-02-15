@@ -41,7 +41,9 @@ import "swiper/css";
 import { ScrollTop } from "primereact/scrolltop";
 import ReactPlayer from "react-player/lazy";
 import { useScreenSize } from "utils/hooks";
-
+let settings: any = {
+  controls: true,
+};
 export const products = [{ src: aboutUs, text: "", link: "/aboutUs" }];
 
 export const MainPage = () => {
@@ -49,6 +51,13 @@ export const MainPage = () => {
   const dispatch = useDispatch();
   const categorizedProducts = useSelector(GoodsSelectors.categorizedProducts);
   const [width, setWidth] = useState(window.innerWidth);
+  const [isSafari, setIsSafari] = useState(false);
+
+  useEffect(() => {
+    const userAgent = navigator?.userAgent;
+    const safariPattern = /Version\/[\d\.]+.*Safari/;
+    setIsSafari(!!userAgent?.match(safariPattern));
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -107,6 +116,19 @@ export const MainPage = () => {
 
     recipesList.length === 0 && fetch();
   }, []);
+
+  useEffect(() => {
+    if (isSafari) {
+      settings = {
+        controls: true,
+        loop: true,
+        muted: true,
+        playing: true,
+        stopOnUnmount: true,
+        volume: 0.3,
+      };
+    }
+  }, [isSafari]);
 
   useEffect(() => {
     const fetch = async () => {
@@ -198,7 +220,8 @@ export const MainPage = () => {
             <SwiperSlide key={Math.random()}>
               <AboutUsWrapper key={Math.random()}>
                 <ReactPlayer
-                  controls
+                  key={`${String(isSafari)}_${Object.keys(settings)}_${video}`}
+                  {...settings}
                   url={video}
                   width={isMobile ? "92vw" : 450}
                   height={800}
