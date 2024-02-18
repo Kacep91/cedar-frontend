@@ -25,6 +25,8 @@ import video2 from "../../assets/video/video2.mp4";
 import video3 from "../../assets/video/video3.mp4";
 import video4 from "../../assets/video/video4.mp4";
 import video5 from "../../assets/video/video5.mp4";
+import video6 from "../../assets/video/video6.mp4";
+import video7 from "../../assets/video/video7.mp4";
 import { Bublik } from "./Bublik";
 import { useNavigate } from "react-router";
 import { Footer } from "./Footer";
@@ -123,7 +125,7 @@ export const MainPage = () => {
         controls: true,
         loop: true,
         muted: true,
-        playing: true,
+        playing: false,
         stopOnUnmount: true,
         volume: 0.3,
       };
@@ -159,7 +161,7 @@ export const MainPage = () => {
     { src: willowIcon, text: "Чай", url: "/willow" },
   ];
 
-  const videos = [video1, video2, video3, video4, video5];
+  const videos = [video1, video2, video3, video4, video5, video6, video7];
   const isMobile = useScreenSize("mobile");
 
   return (
