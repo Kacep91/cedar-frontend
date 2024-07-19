@@ -34,7 +34,7 @@ export const Footer = () => {
               src={vkLogo}
             />
           </a>
-          <a href="https://t.me/siberiaorganic">
+          <a href="https://t.me/+KDvUnToLyYA3YTQy">
             <img
               width="24"
               height="24"

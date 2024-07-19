@@ -156,6 +156,13 @@ export const PresentationModal = ({
                   object,
                 );
 
+                await axios
+                  .post(
+                    "https://siberia-organic.com:5000/sendTelegramCatalogue",
+                    { ...object },
+                  )
+                  .then((res) => console.log(res));
+
                 setTimeout(() => onClose());
                 toast.current?.show({
                   severity: "success",

@@ -244,6 +244,22 @@ export const GoodsButton = styled.div`
   }
 `;
 
+export const ImageBannerContainer = styled.div<{ height?: number | string }>`
+  max-width: 100%;
+  height: ${(props) => `${props.height}px;`}
+  transition: height 1s;
+  position: relative;
+
+  @media screen and (max-width: 460px) {
+    height: ${(props) => `${props.height}px;`}
+  }
+`;
+export const ImageBanner = styled.img<{ height?: number | string }>`
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+`;
+
 export const SmallBackground = styled.div`
   background-image: url(${smallBg});
   height: 500px;

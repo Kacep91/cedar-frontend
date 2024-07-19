@@ -49,6 +49,7 @@ export type ProductPresentationPageProps = {
   name?: string;
   amount?: number;
   image?: string | null;
+  url?: string;
   isHit?: boolean;
   isNew?: boolean;
   price?: number;
@@ -60,7 +61,7 @@ export type ProductPresentationPageProps = {
   dueDate?: string;
   ingridients?: string;
   pack?: string;
-  description?: PresentationPropDescription;
+  description?: string;
   creationDate?: string;
   tags?: string;
 };
@@ -143,16 +144,18 @@ export const ProductPresentationPage = () => {
           key={item2.name}
           {...item2}
           image={
-            item2?.image && typeof item2?.image === "string"
-              ? item2?.image
-              : item2?.image
-                ? arrayBufferToBase64(
+            item2?.url
+              ? item2?.url
+              : item2?.image && typeof item2?.image === "string"
+                ? item2?.image
+                : item2?.image
+                  ? arrayBufferToBase64(
                     item2.image as unknown as {
                       type: string;
                       data: any[];
                     },
                   )
-                : ""
+                  : ""
           }
         />
       ));
@@ -169,9 +172,9 @@ export const ProductPresentationPage = () => {
 
   const recipesResult = coProducts
     ? recipes?.filter(
-        (item) =>
-          categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
-      )
+      (item) =>
+        categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
+    )
     : [];
 
   const [isSticky, setSticky] = useState(false);
@@ -204,16 +207,18 @@ export const ProductPresentationPage = () => {
         <StickyProductInfo isOnTop={isSticky}>
           <StickyImage
             src={
-              data?.image && typeof data?.image === "string"
-                ? data?.image
-                : data?.image
-                  ? arrayBufferToBase64(
+              data?.url
+                ? data?.url
+                : data?.image && typeof data?.image === "string"
+                  ? data?.image
+                  : data?.image
+                    ? arrayBufferToBase64(
                       data.image as unknown as {
                         type: string;
                         data: any[];
                       },
                     )
-                  : placeHolder
+                    : placeHolder
             }
           />
           <StickyName>{data?.name}</StickyName>
@@ -239,24 +244,22 @@ export const ProductPresentationPage = () => {
             <ProductPresentationHeader>
               <ProductPresentationHeaderImage
                 src={
-                  data?.image && typeof data?.image === "string"
-                    ? data?.image
-                    : data?.image
-                      ? arrayBufferToBase64(
+                  data?.url
+                    ? data?.url
+                    : data?.image && typeof data?.image === "string"
+                      ? data?.image
+                      : data?.image
+                        ? arrayBufferToBase64(
                           data.image as unknown as {
                             type: string;
                             data: any[];
                           },
                         )
-                      : placeHolder
+                        : placeHolder
                 }
               />
               <RecipeText>{data?.name}</RecipeText>
-              <DecriptionBlock>
-                {data?.description?.description
-                  ? data?.description?.description
-                  : typeof data?.description === "string" && data?.description}
-              </DecriptionBlock>
+              <DecriptionBlock>{data?.description}</DecriptionBlock>
 
               <ProductBuySection style={{ justifyContent: "center" }}>
                 {isUnitInList ? (
@@ -334,35 +337,24 @@ export const ProductPresentationPage = () => {
                   <h1 style={{ textAlign: "center" }}>Характеристики</h1>
                 </div>
                 <ol className={"gradient-list"}>
-                  {data?.description?.volume || data?.volume ? (
+                  {data?.volume ? (
                     <li>
-                      <b>ОБЪЕМ</b>: {data?.description?.volume || data?.volume}
+                      <b>ОБЪЕМ</b>: {data?.volume}
                     </li>
                   ) : null}
-                  {data?.description?.dueDate || data?.dueDate ? (
+                  {data?.dueDate ? (
                     <li>
-                      <b>Срок годности</b>:{" "}
-                      {data?.description?.dueDate || data?.dueDate}
+                      <b>Срок годности и условия хранения</b>: {data?.dueDate}
                     </li>
                   ) : null}
-                  {data?.description ? (
+                  {(data?.pack as string) ? (
                     <li>
-                      <b>Условия хранения</b>: Хранить в прохладном, сухом
-                      месте. Избегать прямого попадания солнечных лучей.
+                      <b>Упаковка</b>: {data?.pack as string}
                     </li>
                   ) : null}
-                  {data?.description?.pack || (data?.pack as string) ? (
+                  {(data?.ingridients as string) ? (
                     <li>
-                      <b>Упаковка</b>:{" "}
-                      {data?.description?.pack || (data?.pack as string)}
-                    </li>
-                  ) : null}
-                  {data?.description?.ingridients ||
-                  (data?.ingridients as string) ? (
-                    <li>
-                      <b>Состав</b>:{" "}
-                      {data?.description?.ingridients ||
-                        (data?.ingridients as string)}
+                      <b>Состав</b>: {data?.ingridients as string}
                     </li>
                   ) : null}
                   {data?.description ? (

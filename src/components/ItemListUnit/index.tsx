@@ -17,7 +17,7 @@ import {
   ToastHeader,
   ToastLink,
 } from "../atoms";
-import { formatPrice, getWord } from "utils/utils";
+import { getWord } from "utils/utils";
 import placeHolder from "../../assets/images/placeHolder.png";
 import { CartActions, CartSelectors } from "store/cart";
 import { useDispatch } from "react-redux";
@@ -40,7 +40,7 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
       <Toast ref={toast} />
       <ProductCard>
         <ProductImage
-          src={`${props.image || placeHolder}`}
+          src={`${props.url || props.image || placeHolder}`}
           width="250"
           // preview
           height="250"

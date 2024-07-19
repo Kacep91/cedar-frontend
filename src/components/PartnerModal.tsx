@@ -417,6 +417,21 @@ export const PartnerModal = ({
                   object,
                 );
 
+                const postBody = {
+                  ...object,
+                  userTradeType:
+                    tradeTypeEnum[
+                      object.userTradeType as keyof typeof tradeTypeEnum
+                    ],
+                };
+
+                await axios
+                  .post(
+                    "https://siberia-organic.com:5000/sendTelegramPartner",
+                    { ...postBody },
+                  )
+                  .then((res) => console.log(res));
+
                 setTimeout(() => onClose());
                 toast.current?.show({
                   severity: "success",

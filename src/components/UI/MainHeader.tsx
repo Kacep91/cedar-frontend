@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Header, MainPageVideoWrapper, SmallBackground } from "../atoms";
+import {
+  Header,
+  ImageBanner,
+  ImageBannerContainer,
+  MainPageVideoWrapper,
+  SmallBackground,
+} from "../atoms";
 import cross from "../../assets/images/cross.svg";
 import menu from "../../assets/images/menu.svg";
 import { PresentationModal } from "components/PresentationModal";
@@ -11,6 +17,8 @@ import { TreeNode } from "primereact/treenode";
 import Navbar from "./NavigationHeader";
 import { Slide } from "store/goods";
 import { useNavigate } from "react-router";
+import banner from "../../assets/images/banner.png";
+import bannerSmall from "../../assets/images/bannerSmall.png";
 import VideoComponent from "./HeaderVideo";
 
 const nodeTemplate = (node: any, options: any) => {
@@ -140,6 +148,11 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
           label: "Сибирские бады",
           url: "/goods/#product_id_7",
         },
+        {
+          key: "1-8",
+          label: "Сибирское мясо",
+          url: "/goods/#product_id_8",
+        },
       ],
     },
     {
@@ -201,9 +214,9 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
         rect.top >= 0 &&
         rect.left >= 0 &&
         rect.bottom <=
-          (window.innerHeight || document.documentElement.clientHeight) &&
+        (window.innerHeight || document.documentElement.clientHeight) &&
         rect.right <=
-          (window.innerWidth || document.documentElement.clientWidth)
+        (window.innerWidth || document.documentElement.clientWidth)
       );
     }
 
@@ -302,6 +315,12 @@ const MainHeader = ({ isCart }: { isCart: boolean }) => {
           />
         )}
       />
+      {/* <ImageBannerContainer
+        height={
+          'auto'
+        }
+      >
+        <ImageBanner src={isMobile ? bannerSmall : banner} /></ImageBannerContainer> */}
       {!isCart && (
         <>
           <VideoComponent />

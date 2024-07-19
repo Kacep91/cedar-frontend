@@ -131,7 +131,7 @@ export const Cart = () => {
             }}
           ></i>
           <OrderListImage
-            src={item.image || placeHolder}
+            src={item.url || item.image || placeHolder}
             style={{ objectFit: "cover" }}
             alt={item.name}
           />

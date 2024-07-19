@@ -129,6 +129,10 @@ export function Navbar({
           text: "Сибирские бады",
           url: "/goods/#product_id_7",
         },
+        {
+          text: "Сибирское мясо",
+          url: "/goods/#product_id_8",
+        },
       ],
       onClick: () => {
         setLongPopupVisible(false);
@@ -234,13 +238,14 @@ export function Navbar({
                   className="p-input-icon-left"
                   style={isTablet ? { width: "20%" } : { width: "100%" }}
                 >
-                  <i className="pi pi-search" />
+                  <i className="pi pi-search" style={{ left: "7px" }} />
                   <InputText
                     placeholder="Поиск по сайту"
                     style={{
                       borderRadius: "15px",
                       height: "40px",
                       width: "100%",
+                      paddingLeft: "25px",
                     }}
                   />
                 </span>
@@ -318,12 +323,13 @@ export function Navbar({
                   );
                 })}
                 <span className="p-input-icon-left">
-                  <i className="pi pi-search" />
+                  <i className="pi pi-search" style={{ left: "7px" }} />
                   <InputText
                     placeholder="Поиск по сайту"
                     style={{
                       borderRadius: "15px",
                       height: "40px",
+                      paddingLeft: "25px",
                     }}
                   />
                 </span>
@@ -478,6 +484,10 @@ export function Navbar({
                     text: "Сибирские бады",
                     url: "/goods/#product_id_7",
                   },
+                  {
+                    text: "Сибирское мясо",
+                    url: "/goods/#product_id_8",
+                  },
                 ].map((item) => {
                   return (
                     <li key={item.text}>
@@ -518,13 +528,13 @@ export function Navbar({
               style={
                 !isMobile
                   ? {
-                      marginLeft: "20px",
-                      cursor: "pointer",
-                    }
+                    marginLeft: "20px",
+                    cursor: "pointer",
+                  }
                   : {
-                      marginLeft: "0px",
-                      cursor: "pointer",
-                    }
+                    marginLeft: "0px",
+                    cursor: "pointer",
+                  }
               }
               alt=""
               onClick={() => navigate("/")}
@@ -543,12 +553,13 @@ export function Navbar({
               })}
             {!isMobile && (
               <span className="p-input-icon-left">
-                <i className="pi pi-search" />
+                <i className="pi pi-search" style={{ left: "7px" }} />
                 <InputText
                   placeholder="Поиск по сайту"
                   style={{
                     borderRadius: "15px",
                     height: "40px",
+                    paddingLeft: "25px",
                   }}
                 />
               </span>

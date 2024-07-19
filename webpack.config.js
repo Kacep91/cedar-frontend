@@ -1,5 +1,4 @@
 const path = require("path");
-const glob = require("glob");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -7,11 +6,8 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 const { name, version, description = "" } = require("./package.json");
-const {
-  buildVersionInfo,
-} = require("./libs/buildVersionInfo/buildVersionInfo");
+const { buildVersionInfo } = require("./libs/buildVersionInfo/buildVersionInfo");
 
 module.exports = async (env = {}, args) => {
   const mode = args.mode;
@@ -19,7 +15,6 @@ module.exports = async (env = {}, args) => {
   const settings = env.settings || "79.174.95.133";
   require("dotenv").config({ path: "./.env" });
   require("dotenv").config({ path: `.env.${settings}` });
-
   const info = await buildVersionInfo({ name, version, description });
 
   const config = {
@@ -42,14 +37,15 @@ module.exports = async (env = {}, args) => {
       static: {
         directory: path.join(__dirname, 'src'),
       },
-      proxy: {
-        "/api": {
+      proxy: [
+        {
+          context: ["/api"],
           target: "https://siberia-organic.com:3000",
           logLevel: "debug",
           pathRewrite: { "^/api": "" },
           changeOrigin: true,
-        },
-      },
+        }
+      ],
       client: {
         overlay: false,
       },
@@ -96,13 +92,11 @@ module.exports = async (env = {}, args) => {
         {
           test: /\.(png|woff|woff2|eot|ttf|jpg|jpeg)$/,
           type: "asset/resource",
-        }, {
+        },
+        {
           test: /\.(mp4|doc)$/,
           use: 'file-loader?name=videos/[name].[ext]',
         },
-        // Используем svgr/webpack loader для импортов
-        //`import { ReactComponent as Something } from './image.svg'`
-        // https://github.com/svg/svgo
         {
           test: /\.svg$/,
           issuer: /\.[jt]sx?$/,
@@ -115,7 +109,6 @@ module.exports = async (env = {}, args) => {
                 svgoConfig: {
                   plugins: [
                     {
-                      // отключаем удаление viewBox в svg
                       removeViewBox: false,
                     },
                   ],
@@ -124,7 +117,6 @@ module.exports = async (env = {}, args) => {
                 ref: true,
               },
             },
-            // Для импорта в styled css url('./img/image.svg');
             {
               loader: "file-loader",
               options: {
@@ -132,7 +124,6 @@ module.exports = async (env = {}, args) => {
               },
             },
           ],
-          generator: { filename: "static/img/[name].[contenthash:6][ext]" },
         },
       ],
     },
@@ -160,19 +151,16 @@ module.exports = async (env = {}, args) => {
     ],
   };
 
-  // for development
   if (!isProd) {
-    config.plugins = [
-      ...config.plugins,
+    config.plugins.push(
       new ESLintPlugin({
         extensions: ["js", "mjs", "jsx", "ts", "tsx"],
         failOnError: false,
         cache: true,
-      }),
-    ];
+      })
+    );
   }
 
-  // for production
   if (isProd) {
     config.optimization = {
       minimize: true,
@@ -191,7 +179,6 @@ module.exports = async (env = {}, args) => {
           extractComments: false,
           terserOptions: {
             output: {
-              // вырезает комментарии
               comments: false,
             },
             compress: {
@@ -204,7 +191,6 @@ module.exports = async (env = {}, args) => {
             },
           },
         }),
-        // минимизирует css = удаляет переносы строк
         new CssMinimizerPlugin(),
       ],
       splitChunks: {

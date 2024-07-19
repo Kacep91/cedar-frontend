@@ -55,7 +55,7 @@ export const formatPrice = (price) => {
   return value;
 };
 
-export function useHoldPress(callback = () => {}, ms = 300) {
+export function useHoldPress(callback = () => { }, ms = 300) {
   // хук для удобной горизонтальной прокрутки графиков на экранах мобильных устройств
   const [startHoldPress, setStartHoldPress] = useState(false);
 
@@ -89,16 +89,16 @@ export const roundPercent = (value, digitsAfterDot = 2, retainDot = false) => {
   // округление чисел до 2 цифр после запятой
   return value
     ? String(
-        Number(
-          Math.round(
-            value.toString().trim().replace(",", ".").slice(0, 18) +
-              "e" +
-              digitsAfterDot,
-          ) +
-            "e-" +
-            digitsAfterDot,
-        ),
-      )
+      Number(
+        Math.round(
+          value.toString().trim().replace(",", ".").slice(0, 18) +
+          "e" +
+          digitsAfterDot,
+        ) +
+        "e-" +
+        digitsAfterDot,
+      ),
+    )
     : retainDot
       ? "0.0"
       : "0";
@@ -261,8 +261,8 @@ export function sumOfTime(timeOne, timeTwo) {
 
 export function secondsToTime(e, isMobile = false) {
   const m = Math.floor((e % 3600) / 60)
-      .toString()
-      .padStart(2, "0"),
+    .toString()
+    .padStart(2, "0"),
     s = Math.floor(e % 60)
       .toString()
       .padStart(2, "0");
@@ -386,25 +386,40 @@ export function categorizeRecipeByName(inputArray) {
 export const selectedLabels = [
   {
     label: "Сибирские напитки",
-    match: ["сбитень", "медово-", "кофе", "чай", "-чай"],
+    match: ["сироп", "сбитень", "медово-", "кофе", "чай", "-чай", "напиток"],
   },
   {
     label: "Сибирские сладости",
-    match: ["печенье", "цукаты", "урбеч", "пралине", "варенье", "джем"],
+    match: [
+      "печенье",
+      "цукаты",
+      "урбеч",
+      "пралине",
+      "варенье",
+      "джем",
+      "чипсы",
+    ],
   },
   {
     label: "Сибирский мёд",
-    match: ["десерт", "медовой", "медово-", "медовик", "медово-лимонные"],
+    match: [
+      "мёд",
+      "десерт",
+      "медовой",
+      "медово-",
+      "медовик",
+      "медово-лимонные",
+    ],
   },
   {
     label: "Сибирская ягода",
     match: [
-      "вяленая",
       "сушеная",
       "сушеными",
       "ягодами",
       "жимолость",
       "жимолостью",
+      "молотая",
     ],
   },
   {
@@ -412,8 +427,8 @@ export const selectedLabels = [
     match: ["гриб", "грибами", "грибов", "лисичк", "приправа", "суп"],
   },
   {
-    label: "Сибирское масло",
-    match: ["пищевое масло"],
+    label: "Сибирское масло и уксус",
+    match: ["пищевое масло", "кедровое", "уксус"],
   },
   {
     label: "Сибирская косметика",
@@ -421,7 +436,11 @@ export const selectedLabels = [
   },
   {
     label: "Сибирские бады",
-    match: ["спре", "комплекс"],
+    match: ["спре", "комплекс", "проростки", "протеин"],
+  },
+  {
+    label: "Сибирское мясо",
+    match: ["оленина"],
   },
   {
     label: "Сибирская гранола",
@@ -467,7 +486,7 @@ export function isInViewport(element) {
     rect.top >= 0 &&
     rect.left >= 0 &&
     rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
+    (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 }

@@ -162,16 +162,18 @@ export const Honey = () => {
                           key={item2.name}
                           {...item2}
                           image={
-                            item2?.image && typeof item2?.image === "string"
-                              ? item2?.image
-                              : item2?.image
-                                ? arrayBufferToBase64(
-                                    item2.image as unknown as {
-                                      type: string;
-                                      data: any[];
-                                    },
-                                  )
-                                : ""
+                            item2?.url
+                              ? item2?.url
+                              : item2?.image && typeof item2?.image === "string"
+                                ? item2?.image
+                                : item2?.image
+                                  ? arrayBufferToBase64(
+                                      item2.image as unknown as {
+                                        type: string;
+                                        data: any[];
+                                      },
+                                    )
+                                  : ""
                           }
                         />
                       ));
