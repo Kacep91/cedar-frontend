@@ -119,7 +119,9 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
           ) : (
             <ProductBuyButton
               onClick={() => {
-                dispatch(CartActions.setItem(props as any));
+                dispatch(
+                  CartActions.setItem({ data: props as any, quantity: 1 }),
+                );
                 toast?.current?.show({
                   severity: "success",
                   content: (
@@ -137,7 +139,7 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
                 });
               }}
             >
-              Купить
+              В корзину
               <i
                 className="pi pi-cart-plus"
                 style={{ color: "#708090", width: "16px", height: "16px" }}

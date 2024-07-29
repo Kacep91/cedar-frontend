@@ -1,4 +1,5 @@
 export type ProductCardType = {
+  quantity?: number;
   name: string;
   volume: string | null;
   price: string | null;
@@ -10,4 +11,9 @@ export type ProductCardType = {
   image: string;
   amount: number;
   id: string;
+};
+
+export type ProductCardTypeWithQuantity = {
+  data: ProductCardType;
+  quantity?: number;
 };

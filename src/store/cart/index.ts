@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { getSavedCartInfo } from "../../utils/localStorageHelper";
-import { ProductCardType } from "components/UI/types";
+import {
+  ProductCardType,
+  ProductCardTypeWithQuantity,
+} from "components/UI/types";
 
 export type CartState = {
   isLoading: boolean;
@@ -10,7 +13,7 @@ export type CartState = {
 
 export const initialState: CartState = {
   isLoading: false,
-  list: getSavedCartInfo() || [],
+  list: [],
 };
 
 export const cartSlice = createSlice({
@@ -33,13 +36,16 @@ export const cartSlice = createSlice({
         isLoading: value,
       };
     },
-    setItem: (state, action: PayloadAction<ProductCardType>) => {
-      const item = action.payload;
+    setItem: (state, action: PayloadAction<ProductCardTypeWithQuantity>) => {
+      const { data: item, quantity } = action.payload;
       const isItemInList = state.list.find((item2) => item2.id === item.id);
       const listWithoutItem = state.list.filter(
         (item2) => item2.id !== item.id
       );
-      const result = isItemInList ? { ...isItemInList, ...item } : { ...item };
+      const newItem = { ...item, quantity: quantity || 1 };
+      const result = isItemInList
+        ? { ...isItemInList, ...newItem }
+        : { ...newItem };
 
       return {
         ...state,

@@ -150,11 +150,11 @@ export const ProductPresentationPage = () => {
                 ? item2?.image
                 : item2?.image
                   ? arrayBufferToBase64(
-                    item2.image as unknown as {
-                      type: string;
-                      data: any[];
-                    },
-                  )
+                      item2.image as unknown as {
+                        type: string;
+                        data: any[];
+                      },
+                    )
                   : ""
           }
         />
@@ -172,9 +172,9 @@ export const ProductPresentationPage = () => {
 
   const recipesResult = coProducts
     ? recipes?.filter(
-      (item) =>
-        categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
-    )
+        (item) =>
+          categorizeRecipeByName(item?.name?.split(" ")) === coProducts?.label,
+      )
     : [];
 
   const [isSticky, setSticky] = useState(false);
@@ -213,11 +213,11 @@ export const ProductPresentationPage = () => {
                   ? data?.image
                   : data?.image
                     ? arrayBufferToBase64(
-                      data.image as unknown as {
-                        type: string;
-                        data: any[];
-                      },
-                    )
+                        data.image as unknown as {
+                          type: string;
+                          data: any[];
+                        },
+                      )
                     : placeHolder
             }
           />
@@ -250,11 +250,11 @@ export const ProductPresentationPage = () => {
                       ? data?.image
                       : data?.image
                         ? arrayBufferToBase64(
-                          data.image as unknown as {
-                            type: string;
-                            data: any[];
-                          },
-                        )
+                            data.image as unknown as {
+                              type: string;
+                              data: any[];
+                            },
+                          )
                         : placeHolder
                 }
               />
@@ -300,7 +300,9 @@ export const ProductPresentationPage = () => {
                     id="buyButton"
                     style={{ maxWidth: "320px", width: "100%" }}
                     onClick={() => {
-                      dispatch(CartActions.setItem(data as any));
+                      dispatch(
+                        CartActions.setItem({ data: data as any, quantity: 1 }),
+                      );
                       toast?.current?.show({
                         severity: "success",
                         content: (
@@ -318,7 +320,7 @@ export const ProductPresentationPage = () => {
                       });
                     }}
                   >
-                    Купить
+                    В корзину
                     <i
                       className="pi pi-cart-plus"
                       style={{

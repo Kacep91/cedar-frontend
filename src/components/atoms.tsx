@@ -274,7 +274,7 @@ export const ItemListWrapper = styled.div`
 `;
 
 export const ItemListLabel = styled.div`
-  position: "relative";
+  position: relative;
   font-size: 36px;
   text-align: center;
   font-weight: bold;
@@ -424,12 +424,8 @@ export const CheckOrderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
-  box-shadow:
-    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
-    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   width: 100%;
   padding: 20px;
 `;
@@ -437,7 +433,21 @@ export const CheckOrderWrapper = styled.div`
 export const CheckOrderHeading = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const CheckOrderClearButton = styled(Button)`
+  background-color: red;
+  padding: 8px 16px;
+  color: white !important;
+  font-size: 18px;
+  border-radius: 16px;
+  margin-left: 20px;
+
+  span {
+    font-family: "Raleway", sans-serif;
+  }
 `;
 
 export const OrderConfirmWrapper = styled.div`
@@ -477,56 +487,86 @@ export const RadioGroup = styled.div<{ isMobile?: boolean }>`
 `;
 
 export const OrderListItem = styled.div`
-  display: grid;
+  display: flex;
   width: 100%;
-  padding: 20px;
-  grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 100%;
-  gap: 20px;
+  gap: 10px;
+  padding: 0px;
+  justify-content: space-between;
   align-items: center;
+  position: relative;
 
-  @media screen and (max-width: 1060px) {
-    display: grid;
-    width: 100%;
-    padding: 0px;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    align-items: center;
-    grid-template-rows: 40% 40% 20%;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
   }
 `;
 
 export const OrderListImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   box-shadow:
     0px 3px 3px -2px rgba(0, 0, 0, 0.2),
     0px 3px 4px 0px rgba(0, 0, 0, 0.14),
     0px 1px 8px 0px rgba(0, 0, 0, 0.12);
   border-radius: 15px;
+
+  @media screen and (max-width: 1024px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 export const OrderListName = styled.div`
   display: flex;
   flex-direction: column;
-  position: "relative" span {
-    font-weight: bold;
+  position: relative;
+  font-size: 20px;
+  margin-left: 20px;
+  min-width: 300px;
+
+  @media screen and (max-width: 1024px) {
+    margin-left: 10px;
+    min-width: auto;
+    font-size: 16px;
   }
 `;
 
 export const OrderListPrice = styled.div`
-  display: flex;
-  font-size: 24px;
-  font-weight: bold;
-  position: relative;
+  display: inline-block;
+  padding: 6px 4px 4px;
+  background-color: #ebeef3;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  border-radius: 4px;
+  width: fit-content;
 `;
 
 export const OrderListTotal = styled.div`
   display: flex;
-  font-size: 24px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   font-weight: bold;
   position: relative;
+  width: 100%;
+  padding: 16px;
+  background-color: #f8f9fc;
+  border-radius: 8px;
+  max-height: 180px;
 `;
+
+export const OrderListTotalHeading = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 20px;
+  width: 100%;
+`;
+
+export const OrderListTotalPrice = styled.div`
+  font-weight: bold;
+`;
+
 export const OrderListHeaders = styled.div`
   display: grid;
   width: 100%;
@@ -537,15 +577,27 @@ export const OrderListHeaders = styled.div`
   align-items: center;
 `;
 
+export const OrderListCustomWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 384px;
+  grid-template-rows: auto 1fr;
+  grid-column-gap: 32px;
+  grid-row-gap: 24px;
+  width: 100%;
+
+  @media screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export const OrderListCustom = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
   border-radius: 15px;
   width: 100%;
-  @media screen and (max-width: 1060px) {
-    gap: 80px;
-  }
+  gap: 20px;
 `;
 
 export const ToastWrapper = styled.div`
@@ -1436,4 +1488,131 @@ export const ContactsWrapper = styled.div`
 
 export const ContactRow = styled.div`
   margin: 10px 0;
+`;
+
+export const CartBuyButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  background-color: #56af31;
+  padding: 8px 16px;
+  color: white !important;
+  width: 80%;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 10px;
+
+  @media screen and (max-width: 1280px) {
+    margin-bottom: 0px;
+    margin-right: 20px;
+    font-size: 20px;
+  }
+`;
+
+export const CartSelfDeliveryButton = styled(Button)`
+  display: flex;
+  justify-content: center;
+  background-color: #0ea5e9;
+  padding: 8px 16px;
+  color: white !important;
+  width: 80%;
+  text-align: center;
+  border-radius: 8px;
+
+  @media screen and (max-width: 1280px) {
+    font-size: 20px;
+  }
+`;
+
+export const CartButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  align-items: center;
+
+  @media screen and (max-width: 1280px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const EmptyCartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+export const EmptyCartIcon = styled.img`
+  width: 120px;
+`;
+
+export const EmptyCartText = styled.div`
+  font-size: 24px;
+  max-width: 400px;
+  text-align: center;
+`;
+
+export const EmptyCartGoodsButton = styled(Button)`
+  background-color: #0ea5e9;
+  padding: 8px 16px;
+  color: white !important;
+  font-size: 24px;
+  border-radius: 16px;
+  margin-top: 16px;
+`;
+
+export const CartSubtractButton = styled(Button)`
+  background-color: red;
+  padding: 8px 16px;
+  color: white !important;
+  font-size: 18px;
+  border-radius: 16px;
+  margin-left: 20px;
+
+  span {
+    font-family: "Raleway", sans-serif;
+  }
+`;
+export const CartAddButton = styled(Button)`
+  background-color: red;
+  padding: 8px 16px;
+  color: white !important;
+  font-size: 18px;
+  border-radius: 16px;
+  margin-left: 20px;
+
+  span {
+    font-family: "Raleway", sans-serif;
+  }
+`;
+
+export const FinalCartListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const FinalCartHeading = styled.h5`
+  text-align: center;
+`;
+
+export const FinalCartList = styled.ul`
+  padding: 0 0 0 20px;
+  margin: 0;
+  font-size: 20px;
+`;
+
+export const FinalCartListItem = styled.li`
+  font-size: 20px;
+`;
+
+export const FinalCartTotalPrice = styled.div`
+  font-size: 20px;
+  font-weight: bold;
 `;
