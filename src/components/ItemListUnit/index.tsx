@@ -17,7 +17,7 @@ import {
   ToastHeader,
   ToastLink,
 } from "../atoms";
-import { getWord } from "utils/utils";
+import { formatPrice, getWord } from "utils/utils";
 import placeHolder from "../../assets/images/placeHolder.png";
 import { CartActions, CartSelectors } from "store/cart";
 import { useDispatch } from "react-redux";
@@ -83,10 +83,10 @@ export const ItemListUnit = (props: ProductPresentationPageProps) => {
             }
           >
             {
-              // props.price
-              //   ? `${formatPrice(String(props.price)?.trim())} ₽`
-              //   :
-              "Скоро"
+              props.price
+                ? `${formatPrice(String(props.price)?.trim())} ₽`
+                : "Скоро"
+
             }
           </ProductNewPrice>
           {isUnitInList ? (
